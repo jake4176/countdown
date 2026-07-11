@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CountDown</title>
+  <meta name="description" content="A simple, beautiful global countdown timer.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="logo">⏳ CountDown</div>
+    <select id="langSelect" class="lang-select" aria-label="Language"></select>
+  </header>
+
+  <main class="container">
+    <div id="emptyState" class="center-state">
+      <p class="muted" data-i18n="noEventPrompt">Set an event to get started</p>
+      <button id="emptySetBtn" class="btn btn-primary" data-i18n="setEvent">Set Event</button>
+    </div>
+
+    <div id="countdownView" class="countdown-view hidden">
+      <h1 id="eventName" class="event-name">—</h1>
+      <p id="eventTime" class="event-time muted">—</p>
+      <div class="countdown">
+        <div class="time-unit">
+          <span class="time-value" id="days">00</span>
+          <span class="time-label" data-i18n="days">Days</span>
+        </div>
+        <div class="time-unit">
+          <span class="time-value" id="hours">00</span>
+          <span class="time-label" data-i18n="hours">Hours</span>
+        </div>
+        <div class="time-unit">
+          <span class="time-value" id="minutes">00</span>
+          <span class="time-label" data-i18n="minutes">Minutes</span>
+        </div>
+        <div class="time-unit">
+          <span class="time-value" id="seconds">00</span>
+          <span class="time-label" data-i18n="seconds">Seconds</span>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="setBtn" class="btn" data-i18n="setEvent">Set Event</button>
+        <button id="shareBtn" class="btn" data-i18n="share">Share</button>
+      </div>
+    </div>
+
+    <div id="expiredView" class="center-state hidden">
+      <h1 class="event-name" data-i18n="expiredTitle">Time is up!</h1>
+      <p class="muted" data-i18n="expiredMessage">The event time has been reached.</p>
+      <button id="expiredSetBtn" class="btn btn-primary" data-i18n="setEvent">Set Event</button>
+    </div>
+  </main>
+
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <h2 id="modalTitle" class="modal-title" data-i18n="setEvent">Set Event</h2>
+      <label class="field">
+        <span data-i18n="eventName">Event name</span>
+        <input type="text" id="inputName" maxlength="60" autocomplete="off">
+      </label>
+      <label class="field">
+        <span data-i18n="selectDateTime">Date &amp; time</span>
+        <input type="datetime-local" id="inputDate">
+      </label>
+      <div class="modal-actions">
+        <button id="cancelBtn" class="btn" data-i18n="cancel">Cancel</button>
+        <button id="saveBtn" class="btn btn-primary" data-i18n="save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
