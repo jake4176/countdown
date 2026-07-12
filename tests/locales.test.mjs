@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { translations, t, SUPPORTED_LANGS } from '../locales.js';
 
-const KEYS = ['days','hours','minutes','seconds','setEvent','share','eventName','selectDateTime','save','cancel','expiredTitle','expiredMessage','shareCopied','noEventPrompt'];
+const KEYS = ['modeCountdown','modeStopwatch','start','pause','reset','minutes','seconds','customInput','timesUp'];
 
 test('SUPPORTED_LANGS contains the 5 languages', () => {
   assert.deepEqual(SUPPORTED_LANGS, ['ko','en','es','ja','zh']);
@@ -17,12 +17,12 @@ test('every supported lang has every key', () => {
 });
 
 test('t returns translation for known lang', () => {
-  assert.equal(t('days', 'ko'), '일');
-  assert.equal(t('days', 'en'), 'Days');
+  assert.equal(t('start', 'ko'), '시작');
+  assert.equal(t('start', 'en'), 'Start');
 });
 
 test('t falls back to en for unknown lang', () => {
-  assert.equal(t('days', 'xx'), 'Days');
+  assert.equal(t('start', 'xx'), 'Start');
 });
 
 test('t falls back to key for missing key', () => {
