@@ -1,10 +1,20 @@
-import { breakdownRemaining, encodeEvent, decodeEvent } from './core.js';
+import { formatTime, parseDuration } from './core.js';
 import { t, SUPPORTED_LANGS } from './locales.js';
 
-const STORAGE_KEY = 'countdown.event';
-const LANG_KEY = 'countdown.lang';
+const MODE_KEY = 'timer.mode';
+const DUR_KEY = 'timer.duration';
+const LANG_KEY = 'timer.lang';
 
-const state = { event: null, lang: 'en', timer: null };
+const state = {
+  mode: 'countdown',     // 'countdown' | 'stopwatch'
+  status: 'idle',        // 'idle' | 'running' | 'paused'
+  duration: 25 * 60,     // 카운트다운 총 시간(초)
+  elapsed: 0,            // 현재 실행에서 경과한 초
+  baseElapsed: 0,        // 시작/재개 시점에 고정된 경과값
+  startedAt: 0,          // 시작/재개 타임스탬프
+  lang: 'en',
+  timer: null,
+};
 
 // ---------- i18n ----------
 function detectLang() {
@@ -22,7 +32,7 @@ function applyLang(lang) {
     el.textContent = t(el.dataset.i18n, lang);
   });
   populateLangSelect();
-  renderEventTime();
+  updateButtons();
 }
 
 function populateLangSelect() {
@@ -37,129 +47,179 @@ function populateLangSelect() {
   });
 }
 
-// ---------- event state ----------
-function loadEvent() {
-  const params = new URLSearchParams(location.search);
-  const encoded = params.get('e');
-  if (encoded) {
-    const ev = decodeEvent(encoded);
-    if (ev) return ev;
+// ---------- audio (Web Audio API, 파일 의존성 없음) ----------
+let audioCtx = null;
+function ensureAudio() {
+  if (!audioCtx) {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch { audioCtx = null; }
   }
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (raw) {
-    try { return JSON.parse(raw); } catch { return null; }
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function beep() {
+  if (!audioCtx) return;
+  const now = audioCtx.currentTime;
+  for (let i = 0; i < 3; i++) {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = 880;
+    const t0 = now + i * 0.45;
+    gain.gain.setValueAtTime(0, t0);
+    gain.gain.linearRampToValueAtTime(0.3, t0 + 0.05);
+    gain.gain.linearRampToValueAtTime(0, t0 + 0.25);
+    osc.connect(gain).connect(audioCtx.destination);
+    osc.start(t0);
+    osc.stop(t0 + 0.3);
   }
-  return null;
 }
 
-function saveEvent(ev) {
-  state.event = ev;
-  if (ev) localStorage.setItem(STORAGE_KEY, JSON.stringify(ev));
-  else localStorage.removeItem(STORAGE_KEY);
+// ---------- timer core ----------
+function currentElapsed() {
+  return state.baseElapsed + (Date.now() - state.startedAt) / 1000;
 }
 
-// ---------- rendering ----------
-function show(viewId) {
-  ['emptyState', 'countdownView', 'expiredView'].forEach(id => {
-    document.getElementById(id).classList.add('hidden');
-  });
-  document.getElementById(viewId).classList.remove('hidden');
-}
-
-function renderEventTime() {
-  if (!state.event) return;
-  const target = new Date(state.event.targetISO);
-  const el = document.getElementById('eventTime');
-  el.textContent = isNaN(target)
-    ? ''
-    : new Intl.DateTimeFormat(state.lang, { dateStyle: 'full', timeStyle: 'short' }).format(target);
-}
-
-function setVal(id, n, animate) {
-  const el = document.getElementById(id);
-  const text = String(n).padStart(2, '0');
-  if (el.textContent !== text) {
-    el.textContent = text;
-    if (animate) {
-      el.classList.remove('tick');
-      void el.offsetWidth; // reflow to restart animation
-      el.classList.add('tick');
-    }
+function start() {
+  if (state.mode === 'countdown' && state.duration <= 0) return;
+  if (state.status === 'running') return;
+  ensureAudio();
+  // 완료 상태에서 재시작 시 처음부터
+  if (state.mode === 'countdown' && state.elapsed >= state.duration) {
+    state.elapsed = 0;
+    document.body.classList.remove('completed');
   }
+  state.status = 'running';
+  state.baseElapsed = state.elapsed;
+  state.startedAt = Date.now();
+  state.timer = setInterval(tick, 200);
+  updateButtons();
+}
+
+function pause() {
+  if (state.status !== 'running') return;
+  state.status = 'paused';
+  clearInterval(state.timer);
+  state.timer = null;
+  state.elapsed = currentElapsed();
+  updateButtons();
+}
+
+function reset() {
+  clearInterval(state.timer);
+  state.timer = null;
+  state.status = 'idle';
+  state.elapsed = 0;
+  state.baseElapsed = 0;
+  document.body.classList.remove('completed');
+  render();
+  updateButtons();
 }
 
 function tick() {
-  if (!state.event) return;
-  const remaining = new Date(state.event.targetISO).getTime() - Date.now();
-  if (remaining <= 0) {
-    stopTimer();
-    show('expiredView');
+  state.elapsed = currentElapsed();
+  if (state.mode === 'countdown' && state.elapsed >= state.duration) {
+    state.elapsed = state.duration;
+    complete();
     return;
   }
-  const { days, hours, minutes, seconds } = breakdownRemaining(remaining);
-  setVal('days', days);
-  setVal('hours', hours);
-  setVal('minutes', minutes);
-  setVal('seconds', seconds, true);
+  render();
 }
 
-function startTimer() {
-  stopTimer();
-  tick();
-  state.timer = setInterval(tick, 1000);
-}
-function stopTimer() {
-  if (state.timer) { clearInterval(state.timer); state.timer = null; }
-}
-
-// ---------- modal ----------
-function toLocalInputValue(d) {
-  const pad = n => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+function complete() {
+  clearInterval(state.timer);
+  state.timer = null;
+  state.status = 'idle';
+  render();
+  beep();
+  document.body.classList.add('completed');
+  showToast(t('timesUp', state.lang));
+  updateButtons();
 }
 
-function openModal() {
-  const nameInput = document.getElementById('inputName');
-  const dateInput = document.getElementById('inputDate');
-  nameInput.value = state.event?.name || '';
-  dateInput.value = toLocalInputValue(new Date(Date.now() + 86400000)); // 내일 같은 시각
-  document.getElementById('modal').classList.remove('hidden');
-  nameInput.focus();
-}
-function closeModal() { document.getElementById('modal').classList.add('hidden'); }
-
-function saveFromModal() {
-  const name = document.getElementById('inputName').value.trim();
-  const dateVal = document.getElementById('inputDate').value;
-  if (!name || !dateVal) return;
-  // datetime-local 값은 현지 시간 → Date 생성자로 현지 해석 → ISO(UTC) 저장
-  const targetISO = new Date(dateVal).toISOString();
-  saveEvent({ name, targetISO });
-  closeModal();
-  document.getElementById('eventName').textContent = name;
-  renderEventTime();
-  show('countdownView');
-  startTimer();
+function setDuration(sec) {
+  if (state.mode !== 'countdown') return;
+  if (state.status === 'running') return;
+  state.duration = sec > 0 ? sec : 0;
+  state.elapsed = 0;
+  state.baseElapsed = 0;
+  state.status = 'idle';
+  document.body.classList.remove('completed');
+  localStorage.setItem(DUR_KEY, String(state.duration));
+  document.querySelectorAll('.preset-btn').forEach(b => {
+    b.classList.toggle('active', Number(b.dataset.min) * 60 === state.duration);
+  });
+  render();
+  updateButtons();
 }
 
-// ---------- share ----------
+function setMode(mode) {
+  reset();
+  state.mode = mode;
+  document.getElementById('modeCountdown').classList.toggle('active', mode === 'countdown');
+  document.getElementById('modeStopwatch').classList.toggle('active', mode === 'stopwatch');
+  document.body.classList.toggle('stopwatch', mode === 'stopwatch');
+  localStorage.setItem(MODE_KEY, mode);
+  render();
+  updateButtons();
+}
+
+// ---------- rendering ----------
+function setRing(progress) {
+  document.getElementById('ring').style.setProperty('--progress', Math.max(0, Math.min(1, progress)));
+}
+
+function render() {
+  let displaySec;
+  if (state.mode === 'countdown') {
+    const remaining = Math.max(0, state.duration - state.elapsed);
+    displaySec = Math.ceil(remaining);
+    setRing(state.duration > 0 ? remaining / state.duration : 0);
+  } else {
+    displaySec = Math.floor(state.elapsed);
+    setRing(1);
+  }
+  document.getElementById('display').textContent = formatTime(displaySec);
+}
+
+function updateButtons() {
+  const btn = document.getElementById('startBtn');
+  btn.textContent = state.status === 'running' ? t('pause', state.lang) : t('start', state.lang);
+}
+
+// ---------- toast ----------
 let toastTimer;
-function showToast() {
+function showToast(msg) {
   const el = document.getElementById('toast');
-  el.textContent = t('shareCopied', state.lang);
+  el.textContent = msg;
   el.classList.remove('hidden');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.add('hidden'), 2200);
+  toastTimer = setTimeout(() => el.classList.add('hidden'), 2500);
 }
 
-function share() {
-  if (!state.event) return;
-  const url = `${location.origin}${location.pathname}?e=${encodeEvent(state.event)}`;
-  if (navigator.clipboard?.writeText) {
-    navigator.clipboard.writeText(url).then(showToast).catch(() => prompt('Copy this link:', url));
-  } else {
-    prompt('Copy this link:', url);
-  }
+// ---------- handlers ----------
+function onStart() {
+  ensureAudio();
+  if (state.status === 'running') pause();
+  else start();
+}
+
+function onPreset(e) {
+  setDuration(Number(e.currentTarget.dataset.min) * 60);
+}
+
+function onCustomInput() {
+  if (state.status !== 'idle') return;
+  const m = document.getElementById('inputMin').value;
+  const s = document.getElementById('inputSec').value;
+  if (m === '' && s === '') return;
+  setDuration(parseDuration(m, s));
+}
+
+function onKeydown(e) {
+  const tag = e.target.tagName;
+  if (tag === 'INPUT' || tag === 'SELECT' || tag === 'BUTTON') return;
+  if (e.code === 'Space') { e.preventDefault(); onStart(); }
+  else if (e.key === 'r' || e.key === 'R') reset();
 }
 
 // ---------- init ----------
@@ -167,27 +227,29 @@ function init() {
   state.lang = detectLang();
   applyLang(state.lang);
 
-  state.event = loadEvent();
+  state.mode = localStorage.getItem(MODE_KEY) === 'stopwatch' ? 'stopwatch' : 'countdown';
+  const savedDur = parseInt(localStorage.getItem(DUR_KEY), 10);
+  if (savedDur > 0) state.duration = savedDur;
 
   document.getElementById('langSelect').addEventListener('change', e => applyLang(e.target.value));
-  document.getElementById('setBtn').addEventListener('click', openModal);
-  document.getElementById('emptySetBtn').addEventListener('click', openModal);
-  document.getElementById('expiredSetBtn').addEventListener('click', openModal);
-  document.getElementById('shareBtn').addEventListener('click', share);
-  document.getElementById('cancelBtn').addEventListener('click', closeModal);
-  document.getElementById('saveBtn').addEventListener('click', saveFromModal);
-  document.getElementById('modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  document.getElementById('startBtn').addEventListener('click', onStart);
+  document.getElementById('resetBtn').addEventListener('click', reset);
+  document.getElementById('modeCountdown').addEventListener('click', () => setMode('countdown'));
+  document.getElementById('modeStopwatch').addEventListener('click', () => setMode('stopwatch'));
+  document.querySelectorAll('.preset-btn').forEach(b => b.addEventListener('click', onPreset));
+  document.getElementById('inputMin').addEventListener('input', onCustomInput);
+  document.getElementById('inputSec').addEventListener('input', onCustomInput);
+  document.addEventListener('keydown', onKeydown);
 
-  if (state.event) {
-    document.getElementById('eventName').textContent = state.event.name;
-    renderEventTime();
-    const remaining = new Date(state.event.targetISO).getTime() - Date.now();
-    if (remaining <= 0) show('expiredView');
-    else { show('countdownView'); startTimer(); }
-  } else {
-    show('emptyState');
-  }
+  document.getElementById('modeCountdown').classList.toggle('active', state.mode === 'countdown');
+  document.getElementById('modeStopwatch').classList.toggle('active', state.mode === 'stopwatch');
+  document.body.classList.toggle('stopwatch', state.mode === 'stopwatch');
+  document.querySelectorAll('.preset-btn').forEach(b => {
+    b.classList.toggle('active', Number(b.dataset.min) * 60 === state.duration);
+  });
+
+  render();
+  updateButtons();
 }
 
 init();
