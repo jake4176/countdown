@@ -3,75 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CountDown</title>
-  <meta name="description" content="A simple, beautiful global countdown timer.">
+  <title>Timer</title>
+  <meta name="description" content="A simple, beautiful countdown timer and stopwatch.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="bg-glow" aria-hidden="true"></div>
 
   <header class="topbar">
-    <div class="logo">⏳ CountDown</div>
+    <div class="logo">⏳ Timer</div>
     <select id="langSelect" class="lang-select" aria-label="Language"></select>
   </header>
 
   <main class="container">
-    <div id="emptyState" class="center-state">
-      <p class="muted" data-i18n="noEventPrompt">Set an event to get started</p>
-      <button id="emptySetBtn" class="btn btn-primary" data-i18n="setEvent">Set Event</button>
+    <div class="mode-toggle" role="tablist">
+      <button id="modeCountdown" class="mode-btn active" role="tab" data-i18n="modeCountdown">Countdown</button>
+      <button id="modeStopwatch" class="mode-btn" role="tab" data-i18n="modeStopwatch">Stopwatch</button>
     </div>
 
-    <div id="countdownView" class="countdown-view hidden">
-      <h1 id="eventName" class="event-name">—</h1>
-      <p id="eventTime" class="event-time muted">—</p>
-      <div class="countdown">
-        <div class="time-unit">
-          <span class="time-value" id="days">00</span>
-          <span class="time-label" data-i18n="days">Days</span>
-        </div>
-        <div class="time-unit">
-          <span class="time-value" id="hours">00</span>
-          <span class="time-label" data-i18n="hours">Hours</span>
-        </div>
-        <div class="time-unit">
-          <span class="time-value" id="minutes">00</span>
-          <span class="time-label" data-i18n="minutes">Minutes</span>
-        </div>
-        <div class="time-unit">
-          <span class="time-value" id="seconds">00</span>
-          <span class="time-label" data-i18n="seconds">Seconds</span>
-        </div>
+    <div class="ring-wrap" id="ringWrap">
+      <div class="ring" id="ring"></div>
+      <div class="display" id="display" aria-live="polite">25:00</div>
+    </div>
+
+    <div id="setupArea" class="setup-area">
+      <div class="presets">
+        <button class="preset-btn" data-min="5">5</button>
+        <button class="preset-btn" data-min="15">15</button>
+        <button class="preset-btn" data-min="30">30</button>
+        <button class="preset-btn" data-min="60">60</button>
+        <span class="preset-unit" data-i18n="minutes">min</span>
       </div>
-      <div class="actions">
-        <button id="setBtn" class="btn" data-i18n="setEvent">Set Event</button>
-        <button id="shareBtn" class="btn" data-i18n="share">Share</button>
+      <div class="custom-input">
+        <span class="custom-label" data-i18n="customInput">Custom</span>
+        <label class="num-field">
+          <input type="number" id="inputMin" min="0" max="999" placeholder="0">
+          <span data-i18n="minutes">min</span>
+        </label>
+        <label class="num-field">
+          <input type="number" id="inputSec" min="0" max="59" placeholder="0">
+          <span data-i18n="seconds">sec</span>
+        </label>
       </div>
     </div>
 
-    <div id="expiredView" class="center-state hidden">
-      <h1 class="event-name" data-i18n="expiredTitle">Time is up!</h1>
-      <p class="muted" data-i18n="expiredMessage">The event time has been reached.</p>
-      <button id="expiredSetBtn" class="btn btn-primary" data-i18n="setEvent">Set Event</button>
+    <div class="controls">
+      <button id="startBtn" class="btn btn-primary" data-i18n="start">Start</button>
+      <button id="resetBtn" class="btn" data-i18n="reset">Reset</button>
     </div>
   </main>
-
-  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-card">
-      <h2 id="modalTitle" class="modal-title" data-i18n="setEvent">Set Event</h2>
-      <label class="field">
-        <span data-i18n="eventName">Event name</span>
-        <input type="text" id="inputName" maxlength="60" autocomplete="off">
-      </label>
-      <label class="field">
-        <span data-i18n="selectDateTime">Date &amp; time</span>
-        <input type="datetime-local" id="inputDate">
-      </label>
-      <div class="modal-actions">
-        <button id="cancelBtn" class="btn" data-i18n="cancel">Cancel</button>
-        <button id="saveBtn" class="btn btn-primary" data-i18n="save">Save</button>
-      </div>
-    </div>
-  </div>
 
   <div id="toast" class="toast hidden"></div>
 
