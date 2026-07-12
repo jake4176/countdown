@@ -1,39 +1,47 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { breakdownRemaining, encodeEvent, decodeEvent } from '../core.js';
+import { breakdownTime, formatTime, parseDuration } from '../core.js';
 
-test('breakdownRemaining splits ms into d/h/m/s', () => {
-  // 1d 2h 3m 4s
-  assert.deepEqual(breakdownRemaining(93784000), { days: 1, hours: 2, minutes: 3, seconds: 4 });
+test('breakdownTime splits seconds into h/m/s', () => {
+  assert.deepEqual(breakdownTime(3661), { h: 1, m: 1, s: 1 });
 });
 
-test('breakdownRemaining floors partial seconds', () => {
-  assert.deepEqual(breakdownRemaining(1500), { days: 0, hours: 0, minutes: 0, seconds: 1 });
+test('breakdownTime handles minutes only', () => {
+  assert.deepEqual(breakdownTime(65), { h: 0, m: 1, s: 5 });
 });
 
-test('breakdownRemaining clamps negative to zero', () => {
-  assert.deepEqual(breakdownRemaining(-5000), { days: 0, hours: 0, minutes: 0, seconds: 0 });
+test('breakdownTime handles zero', () => {
+  assert.deepEqual(breakdownTime(0), { h: 0, m: 0, s: 0 });
 });
 
-test('encode/decode round-trip with ASCII name', () => {
-  const ev = { name: 'New Year', targetISO: '2026-01-01T00:00:00.000Z' };
-  assert.deepEqual(decodeEvent(encodeEvent(ev)), ev);
+test('breakdownTime clamps negative to zero', () => {
+  assert.deepEqual(breakdownTime(-10), { h: 0, m: 0, s: 0 });
 });
 
-test('encode/decode round-trip with Korean name', () => {
-  const ev = { name: '새해 첫 출근', targetISO: '2026-01-05T00:00:00.000Z' };
-  assert.deepEqual(decodeEvent(encodeEvent(ev)), ev);
+test('formatTime MM:SS under an hour', () => {
+  assert.equal(formatTime(0), '00:00');
+  assert.equal(formatTime(65), '01:05');
+  assert.equal(formatTime(90), '01:30');
+  assert.equal(formatTime(599), '09:59');
 });
 
-test('decodeEvent returns null for invalid base64', () => {
-  assert.equal(decodeEvent('not-valid-base64!!'), null);
+test('formatTime HH:MM:SS at/over an hour', () => {
+  assert.equal(formatTime(3600), '01:00:00');
+  assert.equal(formatTime(3661), '01:01:01');
 });
 
-test('decodeEvent returns null for empty string', () => {
-  assert.equal(decodeEvent(''), null);
+test('parseDuration combines minutes and seconds', () => {
+  assert.equal(parseDuration(25, 0), 1500);
+  assert.equal(parseDuration(1, 30), 90);
+  assert.equal(parseDuration(0, 45), 45);
 });
 
-test('decodeEvent returns null for JSON missing required fields', () => {
-  const bad = btoa(encodeURIComponent(JSON.stringify({ name: 'x' })));
-  assert.equal(decodeEvent(bad), null);
+test('parseDuration treats invalid/empty as 0', () => {
+  assert.equal(parseDuration('', ''), 0);
+  assert.equal(parseDuration('abc', 'xyz'), 0);
+  assert.equal(parseDuration(null, undefined), 0);
+});
+
+test('parseDuration clamps negatives to 0', () => {
+  assert.equal(parseDuration(-5, -10), 0);
 });

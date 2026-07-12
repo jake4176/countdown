@@ -1,28 +1,25 @@
-// 순수 로직: 시간 분해 + 공유 인코딩. DOM/브라우저 전역에 의존하지 않는다.
+// 순수 로직: 시간 포맷·파싱. DOM/브라우저 전역에 의존하지 않는다.
 
-export function breakdownRemaining(ms) {
-  if (ms < 0) ms = 0;
-  const totalSeconds = Math.floor(ms / 1000);
-  const days = Math.floor(totalSeconds / 86400);
-  const hours = Math.floor((totalSeconds % 86400) / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
-  return { days, hours, minutes, seconds };
+// 초를 시/분/초로 분해. 음수는 0으로 클램프.
+export function breakdownTime(totalSeconds) {
+  if (totalSeconds < 0) totalSeconds = 0;
+  totalSeconds = Math.floor(totalSeconds);
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+  return { h, m, s };
 }
 
-export function encodeEvent(event) {
-  // 유니코드(한글 등)를 안전하게 위해 먼저 encodeURIComponent 후 Base64.
-  const json = JSON.stringify(event);
-  return btoa(encodeURIComponent(json));
+// 표시용 문자열. 1시간 미만은 MM:SS, 이상은 HH:MM:SS.
+export function formatTime(totalSeconds) {
+  const { h, m, s } = breakdownTime(totalSeconds);
+  const pad = n => String(n).padStart(2, '0');
+  return h > 0 ? `${pad(h)}:${pad(m)}:${pad(s)}` : `${pad(m)}:${pad(s)}`;
 }
 
-export function decodeEvent(str) {
-  if (!str) return null;
-  try {
-    const obj = JSON.parse(decodeURIComponent(atob(str)));
-    if (!obj || typeof obj.name !== 'string' || typeof obj.targetISO !== 'string') return null;
-    return { name: obj.name, targetISO: obj.targetISO };
-  } catch {
-    return null;
-  }
+// 분·초 입력을 총 초로 변환. 잘못된 값은 0, 음수는 0으로 클램프.
+export function parseDuration(minutes, seconds) {
+  const m = Math.max(0, Math.floor(Number(minutes) || 0));
+  const s = Math.max(0, Math.floor(Number(seconds) || 0));
+  return m * 60 + s;
 }
