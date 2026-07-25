@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>작업 세션 플래너: 하루 일정표 만들기 — 오늘의 집중</title>
+  <meta name="description" content="시작 시각과 세션 수·길이·휴식을 입력하면 집중과 휴식을 배치한 하루 작업 일정표와 종료 시각을 만들어 주는 무료 작업 세션 플래너입니다.">
+  <link rel="canonical" href="https://focus-timer.example/calculators/work-session/">
+  <meta name="theme-color" content="#6c5ce7">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="오늘의 집중">
+  <meta property="og:title" content="작업 세션 플래너: 하루 일정표 만들기 — 오늘의 집중">
+  <meta property="og:description" content="시작 시각과 세션 구성으로 휴식까지 포함한 하루 일정표를 만듭니다.">
+  <meta property="og:url" content="https://focus-timer.example/calculators/work-session/">
+  <meta property="og:image" content="https://focus-timer.example/og-image.png">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="작업 세션 플래너: 하루 일정표 만들기 — 오늘의 집중">
+  <meta name="twitter:description" content="시작 시각과 세션 구성으로 휴식까지 포함한 하루 일정표를 만듭니다.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://focus-timer.example/"},{"@type":"ListItem","position":2,"name":"계산기","item":"https://focus-timer.example/calculators/"},{"@type":"ListItem","position":3,"name":"작업 세션 플래너","item":"https://focus-timer.example/calculators/work-session/"}]}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"일정표는 어떻게 만들어지나요?","acceptedAnswer":{"@type":"Answer","text":"입력한 시작 시각부터 세션 길이만큼 집중 구간을 넣고, 세션 사이마다 휴식을 배치합니다. 긴 휴식 주기를 정하면 그 주기마다 긴 휴식이 들어가고, 마지막 세션 뒤에는 휴식을 넣지 않습니다."}},
+    {"@type":"Question","name":"긴 휴식 주기를 끄려면 어떻게 하나요?","acceptedAnswer":{"@type":"Answer","text":"긴 휴식 주기를 0으로 두면 모든 휴식이 짧은 휴식으로 처리됩니다. 포모도로처럼 4번째마다 길게 쉬고 싶다면 4로 설정하세요."}},
+    {"@type":"Question","name":"종료 시각이 자정을 넘어가면 어떻게 표시되나요?","acceptedAnswer":{"@type":"Answer","text":"다음 날로 넘어가는 시각은 (+1d)처럼 며칠 뒤인지 함께 표시됩니다. 심야 작업 계획을 세울 때 참고하세요."}}
+  ]}
+  </script>
+</head>
+<body>
+  <a href="#main" class="skip-link">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">🎯</span>오늘의 집중</a>
+      <button class="nav-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="primary-nav">☰</button>
+      <nav id="primary-nav" class="nav" aria-label="주요 메뉴">
+        <a href="/">Home</a>
+        <a href="/pomodoro/">Focus Timer</a>
+        <a href="/productivity/">Productivity</a>
+        <a href="/study-timer/">Study</a>
+        <a href="/deep-work/">Deep Work</a>
+        <a href="/resources/">Resources</a>
+        <a href="/about/">About</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="wrap">
+    <nav class="breadcrumb" aria-label="탐색 경로"><ol><li><a href="/">홈</a></li><li><a href="/calculators/">계산기</a></li><li aria-current="page">작업 세션 플래너</li></ol></nav>
+    <article class="article">
+      <header>
+        <h1>작업 세션 플래너</h1>
+        <p class="article-meta">시작 시각과 세션 구성을 넣으면 휴식까지 포함한 하루 일정표를 만들어 줍니다.</p>
+      </header>
+
+      <div class="calc-card">
+        <div id="calc-worksession" class="calc-form">
+          <div class="calc-field"><label for="wc-start">시작 시각</label><input type="time" id="wc-start" value="09:00"></div>
+          <div class="calc-field"><label for="wc-sessions">세션 수</label><input type="number" id="wc-sessions" min="1" max="20" inputmode="numeric" value="4"></div>
+          <div class="calc-field"><label for="wc-session">세션 길이 (분)</label><input type="number" id="wc-session" min="1" max="180" inputmode="numeric" value="50"></div>
+          <div class="calc-field"><label for="wc-break">짧은 휴식 (분)</label><input type="number" id="wc-break" min="0" max="60" inputmode="numeric" value="10"></div>
+          <div class="calc-field"><label for="wc-longevery">긴 휴식 주기 (0=없음)</label><input type="number" id="wc-longevery" min="0" max="12" inputmode="numeric" value="4"></div>
+          <div class="calc-field"><label for="wc-longbreak">긴 휴식 (분)</label><input type="number" id="wc-longbreak" min="0" max="120" inputmode="numeric" value="20"></div>
+        </div>
+        <div id="wc-result" class="calc-result" aria-live="polite"></div>
+      </div>
+
+      <h2>어떻게 만들어지나요?</h2>
+      <p>시작 시각부터 세션 길이만큼 집중 구간을 배치하고, 세션 사이에 휴식을 넣습니다. 긴 휴식 주기를 정하면 그 주기마다 긴 휴식이 들어갑니다. 완성한 일정을 실제로 실행할 때는 <a href="/#timer">타이머</a>의 직접 설정으로 각 세션 길이를 맞춰 사용할 수 있습니다.</p>
+
+      <h2>자주 묻는 질문</h2>
+      <div class="faq-list">
+        <details class="faq-item"><summary>일정표는 어떻게 만들어지나요?</summary><div class="faq-body"><p>입력한 시작 시각부터 세션 길이만큼 집중 구간을 넣고, 세션 사이마다 휴식을 배치합니다. 긴 휴식 주기를 정하면 그 주기마다 긴 휴식이 들어가고, 마지막 세션 뒤에는 휴식을 넣지 않습니다.</p></div></details>
+        <details class="faq-item"><summary>긴 휴식 주기를 끄려면 어떻게 하나요?</summary><div class="faq-body"><p>긴 휴식 주기를 0으로 두면 모든 휴식이 짧은 휴식으로 처리됩니다. 포모도로처럼 4번째마다 길게 쉬고 싶다면 4로 설정하세요.</p></div></details>
+        <details class="faq-item"><summary>종료 시각이 자정을 넘어가면 어떻게 표시되나요?</summary><div class="faq-body"><p>다음 날로 넘어가는 시각은 (+1d)처럼 며칠 뒤인지 함께 표시됩니다. 심야 작업 계획을 세울 때 참고하세요.</p></div></details>
+      </div>
+
+      <aside class="related">
+        <h2>함께 보면 좋은 것</h2>
+        <ul>
+          <li><a href="/productivity/time-blocking/">타임블로킹으로 하루 설계하기</a></li>
+          <li><a href="/deep-work/">딥워크와 60분 집중 타이머</a></li>
+          <li><a href="/calculators/project-time/">프로젝트 시간 계산기</a></li>
+        </ul>
+      </aside>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>오늘의 집중</h4>
+          <p>집중할 시간과 쉴 시간을 간단하게 관리하는 무료 웹 타이머입니다. 이 사이트는 생산성 보조 도구이며 의료 서비스가 아닙니다.</p>
+        </div>
+        <div>
+          <h4>둘러보기</h4>
+          <ul>
+            <li><a href="/">타이머</a></li>
+            <li><a href="/pomodoro/">포모도로</a></li>
+            <li><a href="/study-timer/">공부 타이머</a></li>
+            <li><a href="/deep-work/">딥워크</a></li>
+            <li><a href="/break-guide/">휴식 가이드</a></li>
+            <li><a href="/productivity/">집중 가이드</a></li>
+            <li><a href="/dashboard/">대시보드</a></li>
+            <li><a href="/resources/">자료실</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>사이트 정보</h4>
+          <ul>
+            <li><a href="/about/">소개</a></li>
+            <li><a href="/contact/">문의</a></li>
+            <li><a href="/privacy/">개인정보처리방침</a></li>
+            <li><a href="/terms/">이용약관</a></li>
+            <li><a href="/disclaimer/">면책 안내</a></li>
+            <li><a href="/sitemap/">사이트맵</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> 오늘의 집중. All rights reserved.</span>
+        <span>집중 기록은 브라우저에만 저장됩니다.</span>
+      </div>
+    </div>
+  </footer>
+  <script src="/config.js"></script>
+  <script src="/site.js" defer></script>
+  <script type="module" src="/calculators.js"></script>
+</body>
+</html>

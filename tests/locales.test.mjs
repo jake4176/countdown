@@ -2,10 +2,10 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { translations, t, SUPPORTED_LANGS } from '../locales.js';
 
-const KEYS = ['modeCountdown','modeStopwatch','start','pause','reset','minutes','seconds','customInput','timesUp'];
+const KEYS = Object.keys(translations.en);
 
-test('SUPPORTED_LANGS contains the 5 languages', () => {
-  assert.deepEqual(SUPPORTED_LANGS, ['ko','en','es','ja','zh']);
+test('SUPPORTED_LANGS is ko and en', () => {
+  assert.deepEqual(SUPPORTED_LANGS, ['ko', 'en']);
 });
 
 test('every supported lang has every key', () => {
@@ -14,6 +14,10 @@ test('every supported lang has every key', () => {
       assert.equal(typeof translations[lang][key], 'string', `${lang}.${key} missing`);
     });
   });
+});
+
+test('ko and en have the same key set', () => {
+  assert.deepEqual(Object.keys(translations.ko).sort(), Object.keys(translations.en).sort());
 });
 
 test('t returns translation for known lang', () => {
@@ -27,4 +31,9 @@ test('t falls back to en for unknown lang', () => {
 
 test('t falls back to key for missing key', () => {
   assert.equal(t('nonexistent', 'ko'), 'nonexistent');
+});
+
+test('t interpolates variables', () => {
+  assert.equal(t('tipStep', 'en', { n: 1, total: 2 }), 'Tip 1 of 2');
+  assert.equal(t('tipStep', 'ko', { n: 1, total: 2 }), '팁 1 / 2');
 });

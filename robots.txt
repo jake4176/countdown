@@ -1,0 +1,6 @@
+# 오늘의 집중 — robots.txt
+# 배포 전 아래 Sitemap 도메인을 실제 도메인으로 바꾸세요.
+User-agent: *
+Allow: /
+
+Sitemap: https://focus-timer.example/sitemap.xml

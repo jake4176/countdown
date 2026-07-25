@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title data-i18n="studyTimerTitle">Study Timer Guide — Today's Focus</title>
+  <meta name="description" content="오늘의 집중 30분 공부 프리셋으로 공부를 블록으로 나누는 실전 사용법. 프리셋 선택, 블록 안 인출 배치, 휴식 제안, 집중 기록 확인까지 화면 그대로 안내합니다.">
+  <link rel="canonical" href="https://focus-timer.example/study-timer/">
+  <meta name="theme-color" content="#6c5ce7">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="오늘의 집중">
+  <meta property="og:title" content="공부 타이머 활용법 — 오늘의 집중">
+  <meta property="og:description" content="오늘의 집중 30분 공부 프리셋으로 공부를 블록으로 나누는 실전 사용법을 화면 그대로 안내합니다.">
+  <meta property="og:url" content="https://focus-timer.example/study-timer/">
+  <meta property="og:image" content="https://focus-timer.example/og-image.png">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="공부 타이머 활용법 — 오늘의 집중">
+  <meta name="twitter:description" content="오늘의 집중 30분 공부 프리셋으로 공부를 블록으로 나누는 실전 사용법을 안내합니다.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://focus-timer.example/"},{"@type":"ListItem","position":2,"name":"공부 타이머","item":"https://focus-timer.example/study-timer/"}]}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"공부할 때 30분 프리셋과 직접 설정 중 무엇을 쓰면 되나요?","acceptedAnswer":{"@type":"Answer","text":"기본은 30분 공부 프리셋으로 시작하시길 권합니다. 집중이 자주 끊긴다면 직접 설정 칸에 20~25분을 넣어 더 짧게, 흐름이 잘 이어진다면 40~50분을 넣어 더 길게 조정할 수 있습니다. 직접 설정은 1초부터 24시간까지 가능합니다."}},
+    {"@type":"Question","name":"한 블록 안에서 인출 연습 시간을 따로 재려면 어떻게 하나요?","acceptedAnswer":{"@type":"Answer","text":"별도의 인출 타이머를 두기보다, 30분 블록을 마음속으로 나눠 쓰는 방법이 간단합니다. 앞 20분은 학습, 남은 10분은 책을 덮고 백지에 떠올려 적는 식입니다. 남은 시간이 10분쯤일 때 인출을 시작하도록 타이머의 남은 시간을 참고하세요."}},
+    {"@type":"Question","name":"오늘 몇 블록을 공부했는지 어떻게 확인하나요?","acceptedAnswer":{"@type":"Answer","text":"메인 화면 아래 '오늘의 집중' 통계의 완료 세션 수가 오늘 마친 집중 블록의 개수입니다. 누적 집중 시간과 최근 7일 막대그래프도 함께 볼 수 있어, 며칠 단위의 공부 흐름을 확인하기 좋습니다. 기록은 이 브라우저에만 저장됩니다."}}
+  ]}
+  </script>
+</head>
+<body>
+  <a href="#main" class="skip-link" data-i18n="skipToMain">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
+      <div class="header-actions">
+        <button type="button" id="langToggle" class="lang-toggle" data-next-lang="ko" aria-label="Change language">한국어</button>
+        <button class="nav-toggle" data-i18n-aria="openMenu" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">☰</button>
+      </div>
+      <nav id="primary-nav" class="nav" aria-label="Primary">
+        <a href="/" data-i18n="navHome">Home</a>
+        <a href="/pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
+        <a href="/productivity/" data-i18n="navProductivity">Productivity</a>
+        <a href="/study-timer/" data-i18n="navStudy" aria-current="page">Study</a>
+        <a href="/deep-work/" data-i18n="navDeepWork">Deep Work</a>
+        <a href="/resources/" data-i18n="navResources">Resources</a>
+        <a href="/about/" data-i18n="navAbout">About</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <article class="article">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/" data-i18n="breadcrumbHome">Home</a></li><li aria-current="page" data-i18n="navStudy">Study</li></ol></nav>
+
+      <div data-lang="ko">
+        <header>
+          <h1>공부 타이머 활용법</h1>
+          <p class="article-meta">최종 업데이트 2026년 7월 12일 · 약 4분</p>
+        </header>
+
+        <div class="summary-box">
+          <h2>이 페이지에서 다루는 것</h2>
+          <ul>
+            <li>오늘의 집중 <strong>30분 공부 프리셋</strong>으로 공부를 다룰 수 있는 크기의 블록으로 나누는 실전 사용법을 다룹니다.</li>
+            <li>프리셋 선택 → 블록 안 학습·인출 배치 → 휴식 → 집중 기록 확인까지 화면 그대로 따라 할 수 있습니다.</li>
+            <li>매일 흔들리지 않는 공부 루틴을 설계하는 방법은 <a href="/productivity/study-routine/">흔들리지 않는 공부 루틴 만들기</a>에서 다룹니다.</li>
+          </ul>
+        </div>
+
+        <p class="lead">"몇 시간 공부했다"보다 "무엇을 얼마나 제대로 했다"가 중요합니다. 세 시간을 통째로 마주하면 막막하지만, 30분짜리 블록 여섯 개로 나누면 지금 당장 할 하나가 분명해집니다. 이 페이지에서는 그 블록 학습을 이 타이머로 실천하는 법을 안내합니다.</p>
+
+        <h2>오늘의 집중에서 공부 타이머 쓰는 법</h2>
+        <div class="steps">
+          <div class="step"><div class="num">1</div><h3>공부 30분 프리셋 선택</h3><p>빠른 타이머에서 <strong>📚 공부 30분</strong> 카드를 누릅니다. 오늘 할 공부를 "수학 문제집 3쪽"처럼 30분이면 끝낼 덩어리로 미리 나눠 두면 시작이 쉽습니다.</p></div>
+          <div class="step"><div class="num">2</div><h3>블록 안을 학습과 인출로 나누기</h3><p>시작(스페이스바) 후 앞 20분은 학습에 씁니다. 타이머의 남은 시간이 10분쯤 되면 책을 덮고, 방금 배운 것을 백지에 떠올려 적는 인출로 넘어갑니다.</p></div>
+          <div class="step"><div class="num">3</div><h3>끝나면 짧게 쉬기</h3><p>30분이 끝나면 알림음과 함께 휴식이 제안됩니다. 제안을 누르거나 짧은 휴식 5분 프리셋으로 눈과 몸을 회복한 뒤 다음 과목 블록으로 넘어갑니다.</p></div>
+          <div class="step"><div class="num">4</div><h3>완료 블록 기록 확인</h3><p>블록을 마칠 때마다 아래 <strong>오늘의 집중</strong> 통계의 완료 세션 수와 누적 시간이 올라갑니다. 오늘 몇 블록을 소화했는지 숫자로 확인하면 동기가 이어집니다.</p></div>
+        </div>
+        <div class="callout"><p>인출 연습은 배운 내용을 다시 보지 않고 스스로 꺼내 보는 방법입니다. 눈으로 다시 읽는 것보다 힘들게 느껴지지만, 그 어려움이 기억을 붙잡는 데 도움이 될 수 있습니다. 30분 블록의 마지막 몇 분을 인출에 남겨 두는 습관을 권합니다.</p></div>
+
+        <div class="ad-slot ad-inarticle" aria-hidden="true"><div class="ad-inner" data-i18n="adPlaceholder">Ad slot (placeholder)</div></div>
+
+        <h2>30분 블록 배분 예시</h2>
+        <p>세 과목을 준비한다면 오후를 이렇게 블록으로 짤 수 있습니다. 어려운 과목을 머리가 맑은 앞쪽에 두는 것이 요령입니다. 참고용 예시이며 컨디션에 맞게 블록 수를 줄여도 됩니다.</p>
+        <div class="table-scroll">
+          <table class="compare">
+            <caption>오후 공부 30분 블록 배분 예시 (참고용)</caption>
+            <thead><tr><th scope="col">시간</th><th scope="col">과목</th><th scope="col">블록 구성</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">14:00–14:30</th><td>수학</td><td>기출 20분 + 백지 인출 10분</td></tr>
+              <tr><th scope="row">14:30–14:40</th><td>휴식</td><td>스트레칭, 물 마시기</td></tr>
+              <tr><th scope="row">14:40–15:10</th><td>영어</td><td>지문 독해 20분 + 어휘 인출 10분</td></tr>
+              <tr><th scope="row">15:10–15:20</th><td>휴식</td><td>눈 감고 쉬기</td></tr>
+              <tr><th scope="row">15:20–15:50</th><td>국사</td><td>흐름 정리 15분 + 빈칸 채우기 15분</td></tr>
+              <tr><th scope="row">15:50–16:10</th><td>긴 휴식</td><td>가벼운 산책</td></tr>
+              <tr><th scope="row">16:10–16:40</th><td>수학</td><td>틀린 문제 다시 풀기</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>이렇게 조정하세요</h2>
+        <ul>
+          <li><strong>집중이 짧게 끊긴다면</strong> 직접 설정 칸에 20~25분을 넣어 블록을 줄여 보세요.</li>
+          <li><strong>흐름이 길게 이어진다면</strong> 딥워크 60분 프리셋으로 한 과목을 깊게 파도 좋습니다.</li>
+          <li><strong>쉬다가 다음 블록을 놓친다면</strong> '다음 타이머 자동 시작'을 켜서 휴식 뒤 곧바로 다음 집중이 이어지게 하세요.</li>
+        </ul>
+
+        <p><a class="btn btn-primary" href="/#timer">공부 프리셋으로 지금 시작</a></p>
+
+        <h2>자주 묻는 질문</h2>
+        <div class="faq-list">
+          <details class="faq-item"><summary>공부할 때 30분 프리셋과 직접 설정 중 무엇을 쓰면 되나요?</summary><div class="faq-body"><p>기본은 30분 공부 프리셋으로 시작하시길 권합니다. 집중이 자주 끊긴다면 직접 설정 칸에 20~25분을 넣어 더 짧게, 흐름이 잘 이어진다면 40~50분을 넣어 더 길게 조정할 수 있습니다. 직접 설정은 1초부터 24시간까지 가능합니다.</p></div></details>
+          <details class="faq-item"><summary>한 블록 안에서 인출 연습 시간을 따로 재려면 어떻게 하나요?</summary><div class="faq-body"><p>별도의 인출 타이머를 두기보다, 30분 블록을 마음속으로 나눠 쓰는 방법이 간단합니다. 앞 20분은 학습, 남은 10분은 책을 덮고 백지에 떠올려 적는 식입니다. 남은 시간이 10분쯤일 때 인출을 시작하도록 타이머의 남은 시간을 참고하세요.</p></div></details>
+          <details class="faq-item"><summary>오늘 몇 블록을 공부했는지 어떻게 확인하나요?</summary><div class="faq-body"><p>메인 화면 아래 '오늘의 집중' 통계의 완료 세션 수가 오늘 마친 집중 블록의 개수입니다. 누적 집중 시간과 최근 7일 막대그래프도 함께 볼 수 있어, 며칠 단위의 공부 흐름을 확인하기 좋습니다. 기록은 이 브라우저에만 저장됩니다.</p></div></details>
+        </div>
+
+        <div class="ad-slot ad-inarticle" aria-hidden="true"><div class="ad-inner" data-i18n="adPlaceholder">Ad slot (placeholder)</div></div>
+
+        <aside class="related">
+          <h2>함께 읽으면 좋은 글</h2>
+          <ul>
+            <li><a href="/productivity/study-routine/">흔들리지 않는 공부 루틴 만들기</a></li>
+            <li><a href="/pomodoro/">포모도로 공부법 소개와 타이머 사용법</a></li>
+            <li><a href="/deep-work/">딥워크 집중법과 60분 집중 타이머</a></li>
+          </ul>
+        </aside>
+
+        <p class="updated">최종 업데이트: 2026년 7월 12일</p>
+      </div>
+
+      <div data-lang="en">
+        <header>
+          <h1>Study timer guide</h1>
+          <p class="article-meta">Last updated July 12, 2026 · ~4 min read</p>
+        </header>
+
+        <div class="summary-box">
+          <h2>What this page covers</h2>
+          <ul>
+            <li>How to split study into manageable blocks with the <strong>30-minute Study preset</strong> on Today's Focus.</li>
+            <li>Follow along on screen: pick a preset → learn and recall inside each block → rest → check your log.</li>
+            <li>For building a steady daily routine, see <a href="/productivity/study-routine/">Build a study routine</a>.</li>
+          </ul>
+        </div>
+
+        <p class="lead">"What did I actually learn?" matters more than "how many hours did I sit." Three hours at once feels overwhelming; six 30-minute blocks make the next task obvious. This page shows how to practice block study with this timer.</p>
+
+        <h2>Using the study timer on Today's Focus</h2>
+        <div class="steps">
+          <div class="step"><div class="num">1</div><h3>Select the 30-minute Study preset</h3><p>Tap the <strong>📚 Study 30 min</strong> card under Quick presets. Split today's work into chunks you can finish in 30 minutes — e.g. "three pages of math problems" — so starting is easier.</p></div>
+          <div class="step"><div class="num">2</div><h3>Split the block into learning and recall</h3><p>After you start (spacebar), use the first ~20 minutes for learning. When about 10 minutes remain, close the book and recall what you learned on a blank page.</p></div>
+          <div class="step"><div class="num">3</div><h3>Take a short break when it ends</h3><p>When 30 minutes are up, you'll get a sound and a break suggestion. Accept it or pick the 5-minute Short Break preset, then move to the next subject block.</p></div>
+          <div class="step"><div class="num">4</div><h3>Check completed blocks in your log</h3><p>Each finished block adds to <strong>Today's focus</strong> stats — session count and total time. Seeing the number helps momentum carry through the day.</p></div>
+        </div>
+        <div class="callout"><p>Recall practice means pulling information from memory without looking back. It feels harder than rereading, but that effort can help material stick. Try reserving the last few minutes of each 30-minute block for recall.</p></div>
+
+        <div class="ad-slot ad-inarticle" aria-hidden="true"><div class="ad-inner" data-i18n="adPlaceholder">Ad slot (placeholder)</div></div>
+
+        <h2>Sample 30-minute block schedule</h2>
+        <p>If you're preparing three subjects, you might block an afternoon like this. Put the hardest subject first while your mind is fresh. This is a reference example — reduce blocks to match your energy.</p>
+        <div class="table-scroll">
+          <table class="compare">
+            <caption>Afternoon study blocks — sample (reference only)</caption>
+            <thead><tr><th scope="col">Time</th><th scope="col">Subject</th><th scope="col">Block plan</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">2:00–2:30 PM</th><td>Math</td><td>Past papers 20 min + blank-page recall 10 min</td></tr>
+              <tr><th scope="row">2:30–2:40 PM</th><td>Break</td><td>Stretch, drink water</td></tr>
+              <tr><th scope="row">2:40–3:10 PM</th><td>English</td><td>Reading 20 min + vocabulary recall 10 min</td></tr>
+              <tr><th scope="row">3:10–3:20 PM</th><td>Break</td><td>Close eyes, rest</td></tr>
+              <tr><th scope="row">3:20–3:50 PM</th><td>History</td><td>Outline 15 min + fill-in-the-blank 15 min</td></tr>
+              <tr><th scope="row">3:50–4:10 PM</th><td>Long break</td><td>Light walk</td></tr>
+              <tr><th scope="row">4:10–4:40 PM</th><td>Math</td><td>Redo missed problems</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Adjust to fit you</h2>
+        <ul>
+          <li><strong>If focus breaks often</strong>, enter 20–25 minutes in Custom to shorten blocks.</li>
+          <li><strong>If flow lasts longer</strong>, try the 60-minute Deep Work preset for one subject.</li>
+          <li><strong>If you miss the next block after resting</strong>, turn on Auto-start next so focus resumes right after a break.</li>
+        </ul>
+
+        <p><a class="btn btn-primary" href="/#timer">Start with the Study preset</a></p>
+
+        <h2>FAQ</h2>
+        <div class="faq-list">
+          <details class="faq-item"><summary>Should I use the 30-minute preset or Custom for studying?</summary><div class="faq-body"><p>Start with the 30-minute Study preset. If focus breaks often, enter 20–25 minutes in Custom; if flow is strong, try 40–50 minutes. Custom accepts anything from 1 second to 24 hours.</p></div></details>
+          <details class="faq-item"><summary>How do I time recall practice inside one block?</summary><div class="faq-body"><p>Rather than a second timer, mentally split the 30 minutes: ~20 minutes learning, then ~10 minutes with the book closed, recalling on paper. Watch the remaining time and switch when about 10 minutes are left.</p></div></details>
+          <details class="faq-item"><summary>How do I see how many blocks I finished today?</summary><div class="faq-body"><p>Under the main timer, <strong>Today's focus</strong> shows completed sessions — that's your block count for the day. Total time and a 7-day chart help you see patterns over several days. Logs stay only in this browser.</p></div></details>
+        </div>
+
+        <div class="ad-slot ad-inarticle" aria-hidden="true"><div class="ad-inner" data-i18n="adPlaceholder">Ad slot (placeholder)</div></div>
+
+        <aside class="related">
+          <h2>Related reads</h2>
+          <ul>
+            <li><a href="/productivity/study-routine/">Build a study routine</a></li>
+            <li><a href="/pomodoro/">Pomodoro intro &amp; timer how-to</a></li>
+            <li><a href="/deep-work/">Deep work &amp; 60-minute focus timer</a></li>
+          </ul>
+        </aside>
+
+        <p class="updated">Last updated: July 12, 2026</p>
+      </div>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4 class="brand-text">Today's Focus</h4>
+          <p data-i18n="footerBlurb">A free web timer for focus and breaks.</p>
+        </div>
+        <div>
+          <h4 data-i18n="footerExplore">Explore</h4>
+          <ul>
+            <li><a href="/" data-i18n="footerTimer">Timer</a></li>
+            <li><a href="/pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
+            <li><a href="/study-timer/" data-i18n="footerStudy">Study timer</a></li>
+            <li><a href="/deep-work/" data-i18n="footerDeep">Deep work</a></li>
+            <li><a href="/break-guide/" data-i18n="footerBreak">Break guide</a></li>
+            <li><a href="/productivity/" data-i18n="footerGuides">Guides</a></li>
+            <li><a href="/dashboard/" data-i18n="footerDash">Dashboard</a></li>
+            <li><a href="/resources/" data-i18n="footerRes">Resources</a></li>
+            <li><a href="/calculators/" data-i18n="footerCalc">Calculators</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="footerSite">Site</h4>
+          <ul>
+            <li><a href="/about/" data-i18n="footerAbout">About</a></li>
+            <li><a href="/contact/" data-i18n="footerContact">Contact</a></li>
+            <li><a href="/privacy/" data-i18n="footerPrivacy">Privacy</a></li>
+            <li><a href="/terms/" data-i18n="footerTerms">Terms</a></li>
+            <li><a href="/disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
+            <li><a href="/sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> <span class="brand-text">Today's Focus</span>. <span data-i18n="footerCopy">All rights reserved.</span></span>
+        <span data-i18n="footerLocal">Focus logs stay in your browser.</span>
+      </div>
+    </div>
+  </footer>
+  <script src="/config.js"></script>
+  <script src="/site.js" defer></script>
+  <script type="module" src="/page.js"></script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공부 시간 계산기: 세션·일수 계산 — 오늘의 집중</title>
+  <meta name="description" content="공부할 총 분량과 세션 길이를 입력하면 필요한 공부 세션 수, 휴식 포함 총 시간, 하루 가용 시간 기준 소요 일수를 계산하는 무료 공부 시간 계산기입니다.">
+  <link rel="canonical" href="https://focus-timer.example/calculators/study-time/">
+  <meta name="theme-color" content="#6c5ce7">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="오늘의 집중">
+  <meta property="og:title" content="공부 시간 계산기: 세션·일수 계산 — 오늘의 집중">
+  <meta property="og:description" content="공부 분량과 세션 길이로 세션 수·총 시간·소요 일수를 계산합니다.">
+  <meta property="og:url" content="https://focus-timer.example/calculators/study-time/">
+  <meta property="og:image" content="https://focus-timer.example/og-image.png">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="공부 시간 계산기: 세션·일수 계산 — 오늘의 집중">
+  <meta name="twitter:description" content="공부 분량과 세션 길이로 세션 수·총 시간·소요 일수를 계산합니다.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://focus-timer.example/"},{"@type":"ListItem","position":2,"name":"계산기","item":"https://focus-timer.example/calculators/"},{"@type":"ListItem","position":3,"name":"공부 시간 계산기","item":"https://focus-timer.example/calculators/study-time/"}]}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"공부 세션 수는 어떻게 나오나요?","acceptedAnswer":{"@type":"Answer","text":"공부할 총 시간을 세션 한 번의 길이(기본 30분)로 나눈 뒤 올림합니다. 예를 들어 총 3시간을 30분 세션으로 하면 6번의 세션이 됩니다."}},
+    {"@type":"Question","name":"며칠 걸리는지는 어떻게 계산하나요?","acceptedAnswer":{"@type":"Answer","text":"하루에 공부할 수 있는 시간을 입력하면, 총 공부 시간을 그 값으로 나눠 올림한 일수를 보여 줍니다. 하루 가용 시간을 비워 두면 일수는 계산하지 않습니다."}},
+    {"@type":"Question","name":"세션 길이는 얼마가 좋나요?","acceptedAnswer":{"@type":"Answer","text":"정답은 없습니다. 집중이 자주 끊기면 25분, 흐름이 이어지면 30~50분이 무난합니다. 값을 바꾸면 세션 수와 총 시간이 다시 계산되니 비교해 보세요."}}
+  ]}
+  </script>
+</head>
+<body>
+  <a href="#main" class="skip-link">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">🎯</span>오늘의 집중</a>
+      <button class="nav-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="primary-nav">☰</button>
+      <nav id="primary-nav" class="nav" aria-label="주요 메뉴">
+        <a href="/">Home</a>
+        <a href="/pomodoro/">Focus Timer</a>
+        <a href="/productivity/">Productivity</a>
+        <a href="/study-timer/">Study</a>
+        <a href="/deep-work/">Deep Work</a>
+        <a href="/resources/">Resources</a>
+        <a href="/about/">About</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="wrap">
+    <nav class="breadcrumb" aria-label="탐색 경로"><ol><li><a href="/">홈</a></li><li><a href="/calculators/">계산기</a></li><li aria-current="page">공부 시간 계산기</li></ol></nav>
+    <article class="article">
+      <header>
+        <h1>공부 시간 계산기</h1>
+        <p class="article-meta">공부할 분량과 세션 길이로 세션 수·총 시간·소요 일수를 계산합니다.</p>
+      </header>
+
+      <div class="calc-card">
+        <div id="calc-study" class="calc-form">
+          <div class="calc-field"><label for="sc-hours">총 공부 시간 (시간)</label><input type="number" id="sc-hours" min="0" max="200" inputmode="numeric" value="3"></div>
+          <div class="calc-field"><label for="sc-minutes">총 공부 시간 (분)</label><input type="number" id="sc-minutes" min="0" max="59" inputmode="numeric" value="0"></div>
+          <div class="calc-field"><label for="sc-session">세션 길이 (분)</label><input type="number" id="sc-session" min="1" max="180" inputmode="numeric" value="30"></div>
+          <div class="calc-field"><label for="sc-break">휴식 (분)</label><input type="number" id="sc-break" min="0" max="60" inputmode="numeric" value="5"></div>
+          <div class="calc-field"><label for="sc-daily">하루 가용 시간 (시간, 선택)</label><input type="number" id="sc-daily" min="0" max="24" inputmode="numeric" value="0"></div>
+        </div>
+        <div id="sc-result" class="calc-result" aria-live="polite"></div>
+      </div>
+
+      <h2>어떻게 계산하나요?</h2>
+      <p>총 공부 시간을 세션 길이로 나눈 뒤 올림해 세션 수를 구하고, 세션 사이의 휴식을 더해 실제 소요 시간을 계산합니다. 하루에 공부할 수 있는 시간을 입력하면 며칠이 걸리는지도 함께 알려 줍니다. 시험이 정해져 있다면 <a href="/calculators/exam-countdown/">시험 카운트다운</a>과 함께 쓰면 하루 계획을 세우기 좋습니다.</p>
+
+      <h2>자주 묻는 질문</h2>
+      <div class="faq-list">
+        <details class="faq-item"><summary>공부 세션 수는 어떻게 나오나요?</summary><div class="faq-body"><p>공부할 총 시간을 세션 한 번의 길이(기본 30분)로 나눈 뒤 올림합니다. 예를 들어 총 3시간을 30분 세션으로 하면 6번의 세션이 됩니다.</p></div></details>
+        <details class="faq-item"><summary>며칠 걸리는지는 어떻게 계산하나요?</summary><div class="faq-body"><p>하루에 공부할 수 있는 시간을 입력하면, 총 공부 시간을 그 값으로 나눠 올림한 일수를 보여 줍니다. 하루 가용 시간을 비워 두면 일수는 계산하지 않습니다.</p></div></details>
+        <details class="faq-item"><summary>세션 길이는 얼마가 좋나요?</summary><div class="faq-body"><p>정답은 없습니다. 집중이 자주 끊기면 25분, 흐름이 이어지면 30~50분이 무난합니다. 값을 바꾸면 세션 수와 총 시간이 다시 계산되니 비교해 보세요.</p></div></details>
+      </div>
+
+      <aside class="related">
+        <h2>함께 보면 좋은 것</h2>
+        <ul>
+          <li><a href="/study-timer/">공부 타이머 활용법</a></li>
+          <li><a href="/productivity/study-routine/">공부 루틴 만드는 방법</a></li>
+          <li><a href="/calculators/exam-countdown/">시험 카운트다운</a></li>
+        </ul>
+      </aside>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>오늘의 집중</h4>
+          <p>집중할 시간과 쉴 시간을 간단하게 관리하는 무료 웹 타이머입니다. 이 사이트는 생산성 보조 도구이며 의료 서비스가 아닙니다.</p>
+        </div>
+        <div>
+          <h4>둘러보기</h4>
+          <ul>
+            <li><a href="/">타이머</a></li>
+            <li><a href="/pomodoro/">포모도로</a></li>
+            <li><a href="/study-timer/">공부 타이머</a></li>
+            <li><a href="/deep-work/">딥워크</a></li>
+            <li><a href="/break-guide/">휴식 가이드</a></li>
+            <li><a href="/productivity/">집중 가이드</a></li>
+            <li><a href="/dashboard/">대시보드</a></li>
+            <li><a href="/resources/">자료실</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>사이트 정보</h4>
+          <ul>
+            <li><a href="/about/">소개</a></li>
+            <li><a href="/contact/">문의</a></li>
+            <li><a href="/privacy/">개인정보처리방침</a></li>
+            <li><a href="/terms/">이용약관</a></li>
+            <li><a href="/disclaimer/">면책 안내</a></li>
+            <li><a href="/sitemap/">사이트맵</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> 오늘의 집중. All rights reserved.</span>
+        <span>집중 기록은 브라우저에만 저장됩니다.</span>
+      </div>
+    </div>
+  </footer>
+  <script src="/config.js"></script>
+  <script src="/site.js" defer></script>
+  <script type="module" src="/calculators.js"></script>
+</body>
+</html>

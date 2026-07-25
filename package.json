@@ -5,6 +5,8 @@
   "private": true,
   "scripts": {
     "test": "node --test",
-    "dev": "node serve.mjs"
+    "dev": "node serve.mjs",
+    "lint": "node scripts/lint.mjs",
+    "build": "node scripts/build.mjs"
   }
 }

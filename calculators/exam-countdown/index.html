@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>시험 카운트다운: 남은 시간 계산 — 오늘의 집중</title>
+  <meta name="description" content="시험 날짜와 시각을 입력하면 남은 날짜와 시간을 실시간으로 보여 주고, 하루 학습 세션 수로 남은 세션을 가늠해 주는 무료 시험 카운트다운입니다.">
+  <link rel="canonical" href="https://focus-timer.example/calculators/exam-countdown/">
+  <meta name="theme-color" content="#6c5ce7">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="오늘의 집중">
+  <meta property="og:title" content="시험 카운트다운: 남은 시간 계산 — 오늘의 집중">
+  <meta property="og:description" content="시험까지 남은 날짜·시간을 실시간으로 보여 주고 남은 학습 세션을 가늠합니다.">
+  <meta property="og:url" content="https://focus-timer.example/calculators/exam-countdown/">
+  <meta property="og:image" content="https://focus-timer.example/og-image.png">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="시험 카운트다운: 남은 시간 계산 — 오늘의 집중">
+  <meta name="twitter:description" content="시험까지 남은 날짜·시간을 실시간으로 보여 주고 남은 학습 세션을 가늠합니다.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://focus-timer.example/"},{"@type":"ListItem","position":2,"name":"계산기","item":"https://focus-timer.example/calculators/"},{"@type":"ListItem","position":3,"name":"시험 카운트다운","item":"https://focus-timer.example/calculators/exam-countdown/"}]}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"남은 시간은 실시간으로 바뀌나요?","acceptedAnswer":{"@type":"Answer","text":"네. 시험 날짜와 시각을 입력하면 남은 날짜와 오늘 남은 시간(시·분·초)이 매초 갱신됩니다."}},
+    {"@type":"Question","name":"입력한 시험 날짜는 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"입력한 날짜와 시각은 이 브라우저에만 저장되어 다음에 방문해도 남아 있습니다. 서버로 전송되지 않으며, 브라우저 데이터를 지우면 함께 사라집니다."}},
+    {"@type":"Question","name":"남은 학습 세션은 어떻게 계산하나요?","acceptedAnswer":{"@type":"Answer","text":"하루에 할 세션 수를 입력하면 남은 날짜에 그 수를 곱해 대략적인 남은 세션을 보여 줍니다. 계획을 세우기 위한 참고치입니다."}}
+  ]}
+  </script>
+</head>
+<body>
+  <a href="#main" class="skip-link">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">🎯</span>오늘의 집중</a>
+      <button class="nav-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="primary-nav">☰</button>
+      <nav id="primary-nav" class="nav" aria-label="주요 메뉴">
+        <a href="/">Home</a>
+        <a href="/pomodoro/">Focus Timer</a>
+        <a href="/productivity/">Productivity</a>
+        <a href="/study-timer/">Study</a>
+        <a href="/deep-work/">Deep Work</a>
+        <a href="/resources/">Resources</a>
+        <a href="/about/">About</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="wrap">
+    <nav class="breadcrumb" aria-label="탐색 경로"><ol><li><a href="/">홈</a></li><li><a href="/calculators/">계산기</a></li><li aria-current="page">시험 카운트다운</li></ol></nav>
+    <article class="article">
+      <header>
+        <h1>시험 카운트다운</h1>
+        <p class="article-meta">시험까지 남은 시간을 실시간으로 보여 주고, 남은 학습 세션을 가늠해 줍니다.</p>
+      </header>
+
+      <div class="calc-card">
+        <div id="calc-exam" class="calc-form">
+          <div class="calc-field"><label for="ec-date">시험 날짜</label><input type="date" id="ec-date"></div>
+          <div class="calc-field"><label for="ec-time">시험 시각</label><input type="time" id="ec-time" value="09:00"></div>
+          <div class="calc-field"><label for="ec-daily">하루 학습 세션 수 (선택)</label><input type="number" id="ec-daily" min="0" max="30" inputmode="numeric" value="0"></div>
+        </div>
+        <div id="ec-result" class="calc-result" aria-live="polite"></div>
+      </div>
+
+      <h2>어떻게 쓰나요?</h2>
+      <p>시험 날짜와 시각을 고르면 남은 시간이 매초 갱신됩니다. 하루에 할 학습 세션 수를 넣으면 남은 세션을 대략 가늠할 수 있어, <a href="/calculators/study-time/">공부 시간 계산기</a>와 함께 학습 계획을 세우기 좋습니다. 실제 학습은 <a href="/#timer">타이머</a>로 세션을 기록하며 진행해 보세요.</p>
+      <div class="callout note"><p>남은 시간은 압박이 아니라 계획의 기준입니다. 무리한 밤샘보다 매일 꾸준한 세션이 시험 준비에 더 도움이 될 수 있습니다.</p></div>
+
+      <h2>자주 묻는 질문</h2>
+      <div class="faq-list">
+        <details class="faq-item"><summary>남은 시간은 실시간으로 바뀌나요?</summary><div class="faq-body"><p>네. 시험 날짜와 시각을 입력하면 남은 날짜와 오늘 남은 시간(시·분·초)이 매초 갱신됩니다.</p></div></details>
+        <details class="faq-item"><summary>입력한 시험 날짜는 저장되나요?</summary><div class="faq-body"><p>입력한 날짜와 시각은 이 브라우저에만 저장되어 다음에 방문해도 남아 있습니다. 서버로 전송되지 않으며, 브라우저 데이터를 지우면 함께 사라집니다.</p></div></details>
+        <details class="faq-item"><summary>남은 학습 세션은 어떻게 계산하나요?</summary><div class="faq-body"><p>하루에 할 세션 수를 입력하면 남은 날짜에 그 수를 곱해 대략적인 남은 세션을 보여 줍니다. 계획을 세우기 위한 참고치입니다.</p></div></details>
+      </div>
+
+      <aside class="related">
+        <h2>함께 보면 좋은 것</h2>
+        <ul>
+          <li><a href="/calculators/study-time/">공부 시간 계산기</a></li>
+          <li><a href="/productivity/study-routine/">공부 루틴 만드는 방법</a></li>
+          <li><a href="/study-timer/">공부 타이머 활용법</a></li>
+        </ul>
+      </aside>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>오늘의 집중</h4>
+          <p>집중할 시간과 쉴 시간을 간단하게 관리하는 무료 웹 타이머입니다. 이 사이트는 생산성 보조 도구이며 의료 서비스가 아닙니다.</p>
+        </div>
+        <div>
+          <h4>둘러보기</h4>
+          <ul>
+            <li><a href="/">타이머</a></li>
+            <li><a href="/pomodoro/">포모도로</a></li>
+            <li><a href="/study-timer/">공부 타이머</a></li>
+            <li><a href="/deep-work/">딥워크</a></li>
+            <li><a href="/break-guide/">휴식 가이드</a></li>
+            <li><a href="/productivity/">집중 가이드</a></li>
+            <li><a href="/dashboard/">대시보드</a></li>
+            <li><a href="/resources/">자료실</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>사이트 정보</h4>
+          <ul>
+            <li><a href="/about/">소개</a></li>
+            <li><a href="/contact/">문의</a></li>
+            <li><a href="/privacy/">개인정보처리방침</a></li>
+            <li><a href="/terms/">이용약관</a></li>
+            <li><a href="/disclaimer/">면책 안내</a></li>
+            <li><a href="/sitemap/">사이트맵</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> 오늘의 집중. All rights reserved.</span>
+        <span>집중 기록은 브라우저에만 저장됩니다.</span>
+      </div>
+    </div>
+  </footer>
+  <script src="/config.js"></script>
+  <script src="/site.js" defer></script>
+  <script type="module" src="/calculators.js"></script>
+</body>
+</html>

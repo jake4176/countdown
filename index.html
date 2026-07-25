@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Today's Focus — Pomodoro &amp; Productivity Timer</title>
-  <meta name="description" content="Free focus timer with session tracking, distraction logging, and a simple dashboard. Pomodoro, study, and deep-work presets — start in one tap.">
+  <title data-i18n="docTitle">Today's Focus — Pomodoro &amp; Productivity Timer</title>
+  <meta name="description" content="Free focus timer with session tracking, distraction logging, and a simple dashboard. Pomodoro, study, and deep-work presets — start in one tap. English / 한국어.">
   <link rel="canonical" href="https://focus-timer.example/">
   <meta name="theme-color" content="#6c5ce7">
 
@@ -15,6 +15,7 @@
   <meta property="og:url" content="https://focus-timer.example/">
   <meta property="og:image" content="https://focus-timer.example/og-image.png">
   <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ko_KR">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Today's Focus — Pomodoro &amp; Productivity Timer">
   <meta name="twitter:description" content="More than a timer. Log focus sessions, track distractions, and build a focus habit.">
@@ -29,64 +30,50 @@
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "Today's Focus",
+    "alternateName": "오늘의 집중",
     "url": "https://focus-timer.example/",
     "applicationCategory": "ProductivityApplication",
     "operatingSystem": "Web",
-    "browserRequirements": "Requires JavaScript. Runs in any modern browser.",
+    "inLanguage": ["en", "ko"],
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "featureList": [
-      "Pomodoro, study, and deep-work focus timer",
-      "Session labels and history",
-      "Distraction tracking and patterns",
-      "Daily goals and streaks",
-      "Focus insights dashboard"
-    ],
-    "description": "Free web productivity tool that logs focus sessions and distractions in your browser only."
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      { "@type": "Question", "name": "Why is Pomodoro 25 minutes?", "acceptedAnswer": { "@type": "Answer", "text": "25 minutes is a common starting length — short enough to begin easily, long enough for a real work block. Treat it as a default and adjust to fit you." } },
-      { "@type": "Question", "name": "Does a study timer improve focus?", "acceptedAnswer": { "@type": "Answer", "text": "A timer clarifies when you start and stop. It does not magically increase focus, but it makes starting easier and time visible, which helps habits." } },
-      { "@type": "Question", "name": "Can I pause the timer?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Pause or reset when life interrupts. Getting back into a session matters more than a perfect streak of unbroken blocks." } },
-      { "@type": "Question", "name": "What should I do on a break?", "acceptedAnswer": { "@type": "Answer", "text": "Step away from the screen, move a little, or drink water. High-stimulation breaks can make the next focus block harder." } },
-      { "@type": "Question", "name": "Are my focus logs stored on a server?", "acceptedAnswer": { "@type": "Answer", "text": "No. Everything stays in your browser's local storage. Clearing site data removes your history." } },
-      { "@type": "Question", "name": "Does it work on mobile?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The layout is responsive. If a mobile browser throttles background tabs, remaining time is recalculated from the real end time." } }
-    ]
+    "description": "Free web focus timer with English and Korean. Session tracking stays in your browser."
   }
   </script>
 </head>
 <body class="home-compact">
-  <a href="#timer" class="skip-link">Skip to timer</a>
+  <a href="#timer" class="skip-link" data-i18n="skipToTimer">Skip to timer</a>
 
   <header class="site-header">
     <div class="wrap">
       <a class="brand" href="/">
         <span class="brand-mark" aria-hidden="true">◎</span>
-        Today's Focus
+        <span class="brand-text">Today's Focus</span>
       </a>
-      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">☰</button>
+      <div class="header-actions">
+        <button type="button" id="langToggle" class="lang-toggle" data-next-lang="ko" aria-label="Change language">한국어</button>
+        <button class="nav-toggle" data-i18n-aria="openMenu" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">☰</button>
+      </div>
       <nav id="primary-nav" class="nav" aria-label="Primary">
-        <a href="/" aria-current="page">Home</a>
-        <a href="#timer">Timer</a>
-        <a href="/productivity/">Guides</a>
-        <a href="/about/">About</a>
+        <a href="/" aria-current="page" data-i18n="navHome">Home</a>
+        <a href="#timer" data-i18n="navTimer">Timer</a>
+        <a href="/productivity/" data-i18n="navProductivity">Productivity</a>
+        <a href="/study-timer/" data-i18n="navStudy">Study</a>
+        <a href="/deep-work/" data-i18n="navDeepWork">Deep Work</a>
+        <a href="/resources/" data-i18n="navResources">Resources</a>
+        <a href="/about/" data-i18n="navAbout">About</a>
       </nav>
     </div>
   </header>
 
   <main id="main">
     <section class="hero hero-compact wrap">
-      <h1>Today's Focus</h1>
-      <p class="sub">Start a focus session in one tap.</p>
+      <h1 class="brand-text">Today's Focus</h1>
+      <p class="sub" data-i18n="heroSub">Start a focus session in one tap.</p>
     </section>
 
-    <section id="timer" class="section section-timer wrap" aria-label="Focus timer">
+    <section id="timer" class="section section-timer wrap" data-i18n-aria="timerRegion" aria-label="Focus timer">
       <div class="timer-panel" id="timerPanel">
-        <span class="mode-pill" id="modePill">🍅 Ready to focus</span>
+        <span class="mode-pill" id="modePill">🍅 Ready</span>
         <div class="ring-wrap">
           <div class="ring" id="ring" aria-hidden="true"></div>
           <div class="ring-center">
@@ -95,215 +82,235 @@
           </div>
         </div>
         <div class="label-row">
-          <label for="sessionLabel">What are you focusing on? (optional)</label>
-          <input type="text" id="sessionLabel" class="session-label" maxlength="40" placeholder="e.g. Math homework, write report" autocomplete="off">
+          <label for="sessionLabel" data-i18n="sessionLabel">What are you focusing on? (optional)</label>
+          <input type="text" id="sessionLabel" class="session-label" maxlength="40" data-i18n-placeholder="sessionPlaceholder" placeholder="e.g. Math homework" autocomplete="off">
         </div>
         <div class="controls">
-          <button id="startBtn" class="btn btn-primary" aria-label="Start">Start</button>
-          <button id="addMinBtn" class="btn" aria-label="Add 1 minute">+1 min</button>
-          <button id="resetBtn" class="btn" aria-label="Reset">Reset</button>
+          <button id="startBtn" class="btn btn-primary" data-i18n="start" data-i18n-aria="start">Start</button>
+          <button id="addMinBtn" class="btn" data-i18n="addMin" data-i18n-aria="addMinAria">+1 min</button>
+          <button id="resetBtn" class="btn" data-i18n="reset" data-i18n-aria="reset">Reset</button>
         </div>
         <div class="timer-options" id="distractWrap" hidden>
           <span class="distract-control">
-            <button id="distractBtn" class="btn btn-distract" type="button" aria-label="Log distraction (D)">Log distraction</button>
-            <span class="distract-hint">This session</span>
+            <button id="distractBtn" class="btn btn-distract" type="button" data-i18n="logDistract" data-i18n-aria="logDistractAria">Log distraction</button>
+            <span class="distract-hint" data-i18n="thisSession">This session</span>
             <span class="distract-count" id="distractCount" aria-live="polite">0</span>
           </span>
         </div>
         <div class="timer-options">
           <label class="switch">
             <input type="checkbox" id="soundToggle" checked>
-            <span>Sound</span>
+            <span data-i18n="sound">Sound</span>
           </label>
           <label class="switch">
             <input type="checkbox" id="autoStartToggle">
-            <span>Auto-start next</span>
+            <span data-i18n="autoStart">Auto-start next</span>
           </label>
-          <button id="notifyBtn" class="btn btn-ghost" type="button" hidden>Enable notifications</button>
-          <button id="tipsAgainBtn" class="btn btn-ghost" type="button">Show tips again</button>
+          <button id="notifyBtn" class="btn btn-ghost" type="button" hidden data-i18n="enableNotify">Enable notifications</button>
+          <button id="tipsAgainBtn" class="btn btn-ghost" type="button" data-i18n="tipsAgain">Show tips again</button>
         </div>
         <div class="timer-options">
           <span class="custom-time">
-            <label for="inputMin">Custom</label>
-            <input type="number" id="inputMin" min="0" max="1440" inputmode="numeric" placeholder="min" aria-label="Minutes">
+            <label for="inputMin" data-i18n="custom">Custom</label>
+            <input type="number" id="inputMin" min="0" max="1440" inputmode="numeric" data-i18n-placeholder="minPh" data-i18n-aria="minutesAria" placeholder="min" aria-label="Minutes">
             <span aria-hidden="true">:</span>
-            <input type="number" id="inputSec" min="0" max="59" inputmode="numeric" placeholder="sec" aria-label="Seconds">
+            <input type="number" id="inputSec" min="0" max="59" inputmode="numeric" data-i18n-placeholder="secPh" data-i18n-aria="secondsAria" placeholder="sec" aria-label="Seconds">
           </span>
           <p class="field-error" id="customError" role="alert" hidden></p>
         </div>
       </div>
     </section>
 
-    <section class="section wrap" aria-label="Quick timer presets">
+    <section class="section wrap" data-i18n-aria="presetsRegion" aria-label="Quick timer presets">
       <div class="section-head">
-        <h2>Quick presets</h2>
-        <p>Tap a card to load it into the timer above.</p>
+        <h2 data-i18n="quickPresets">Quick presets</h2>
+        <p data-i18n="quickPresetsSub">Tap a card to load it into the timer above.</p>
       </div>
       <div class="preset-grid" id="presetGrid"></div>
-      <noscript><p style="text-align:center;color:var(--ink-soft)">Turn on JavaScript to use the timer. Guides below still work.</p></noscript>
+      <noscript><p style="text-align:center;color:var(--ink-soft)" data-i18n="noscript">Turn on JavaScript to use the timer.</p></noscript>
     </section>
 
-    <div class="hero-summary wrap hero-summary-inline" aria-label="Today at a glance">
-      <div class="metric"><b id="heroSessions">0</b><span>Sessions today</span></div>
-      <div class="metric"><b id="heroTime">0 min</b><span>Focus time</span></div>
-      <div class="metric"><b id="heroStreak">0</b><span>Day streak</span></div>
+    <div class="hero-summary wrap hero-summary-inline" data-i18n-aria="glanceAria" aria-label="Today at a glance">
+      <div class="metric"><b id="heroSessions">0</b><span data-i18n="sessionsToday">Sessions today</span></div>
+      <div class="metric"><b id="heroTime">0</b><span data-i18n="focusTime">Focus time</span></div>
+      <div class="metric"><b id="heroStreak">0</b><span data-i18n="dayStreak">Day streak</span></div>
     </div>
 
-    <section class="section wrap" aria-label="What you can do">
+    <section class="section wrap" data-i18n-aria="featuresRegion" aria-label="What you can do">
       <div class="section-head">
-        <h2>More than a timer</h2>
-        <p>Sessions stack into patterns you can review anytime.</p>
+        <h2 data-i18n="moreThan">More than a timer</h2>
+        <p data-i18n="moreThanSub">Sessions stack into patterns you can review anytime.</p>
       </div>
       <div class="feature-grid">
         <article class="feature">
           <span class="f-icon" aria-hidden="true">📋</span>
-          <h3>Session log</h3>
-          <p>Label what you worked on. Completed focus blocks save with time and date.</p>
-          <a class="f-link" href="/dashboard/">Open dashboard →</a>
+          <h3 data-i18n="featLog">Session log</h3>
+          <p data-i18n="featLogBody">Label what you worked on.</p>
+          <a class="f-link" href="/dashboard/" data-i18n="featLogLink">Open dashboard →</a>
         </article>
         <article class="feature">
           <span class="f-icon" aria-hidden="true">🔍</span>
-          <h3>Distraction patterns</h3>
-          <p>Tap once when focus breaks. See patterns by session and weekday.</p>
-          <a class="f-link" href="/dashboard/">See patterns →</a>
+          <h3 data-i18n="featDistract">Distraction patterns</h3>
+          <p data-i18n="featDistractBody">Tap once when focus breaks.</p>
+          <a class="f-link" href="/dashboard/" data-i18n="featDistractLink">See patterns →</a>
         </article>
         <article class="feature">
           <span class="f-icon" aria-hidden="true">🔥</span>
-          <h3>Goals &amp; streaks</h3>
-          <p>Set a daily target and keep a streak without overcomplicating the day.</p>
-          <a class="f-link" href="#stats">Today's goal →</a>
+          <h3 data-i18n="featGoal">Goals &amp; streaks</h3>
+          <p data-i18n="featGoalBody">Set a daily target and keep a streak.</p>
+          <a class="f-link" href="#stats" data-i18n="featGoalLink">Today's goal →</a>
         </article>
         <article class="feature">
           <span class="f-icon" aria-hidden="true">🧠</span>
-          <h3>Deep work</h3>
-          <p>Use the 60-minute preset when you need longer uninterrupted blocks.</p>
-          <a class="f-link" href="/deep-work/">Deep work guide →</a>
+          <h3 data-i18n="featDeep">Deep work</h3>
+          <p data-i18n="featDeepBody">Use the 60-minute preset for longer blocks.</p>
+          <a class="f-link" href="/deep-work/" data-i18n="featDeepLink">Deep work guide →</a>
         </article>
       </div>
     </section>
 
     <div class="ad-slot" aria-hidden="true">
-      <div class="ad-inner">Ad slot (placeholder)</div>
+      <div class="ad-inner" data-i18n="adSlot">Ad slot (placeholder)</div>
     </div>
 
-    <section id="stats" class="section wrap" aria-label="Today's focus stats">
+    <section id="stats" class="section wrap" data-i18n-aria="statsRegion" aria-label="Today's focus stats">
       <div class="section-head">
-        <h2>Today</h2>
-        <p>Sessions, time, distractions, and streak. Stored only in this browser.</p>
+        <h2 data-i18n="today">Today</h2>
+        <p data-i18n="todaySub">Sessions, time, distractions, and streak.</p>
       </div>
       <div class="stats-grid">
-        <div class="stat-tile"><b id="statSessions">0</b><span>Sessions</span></div>
-        <div class="stat-tile"><b id="statTime">0 min</b><span>Focus time</span></div>
-        <div class="stat-tile"><b id="statDistract">0</b><span>Distractions</span></div>
-        <div class="stat-tile"><b id="statStreak">0</b><span>Streak (days)</span></div>
+        <div class="stat-tile"><b id="statSessions">0</b><span data-i18n="statSessions">Sessions</span></div>
+        <div class="stat-tile"><b id="statTime">0</b><span data-i18n="statTime">Focus time</span></div>
+        <div class="stat-tile"><b id="statDistract">0</b><span data-i18n="statDistract">Distractions</span></div>
+        <div class="stat-tile"><b id="statStreak">0</b><span data-i18n="statStreak">Streak (days)</span></div>
       </div>
 
       <div class="card goal-card">
         <div class="goal-head">
-          <h3>Daily goal</h3>
+          <h3 data-i18n="dailyGoal">Daily goal</h3>
           <span class="goal-edit">
-            <label for="goalTarget" class="visually-hidden">Goal number</label>
+            <label for="goalTarget" class="visually-hidden" data-i18n="goalNumber">Goal number</label>
             <input type="number" id="goalTarget" min="1" max="999" inputmode="numeric" value="4">
-            <label for="goalType" class="visually-hidden">Goal unit</label>
-            <select id="goalType" aria-label="Goal unit">
-              <option value="sessions">sessions</option>
-              <option value="minutes">minutes</option>
+            <label for="goalType" class="visually-hidden" data-i18n="goalUnit">Goal unit</label>
+            <select id="goalType" data-i18n-aria="goalUnit" aria-label="Goal unit">
+              <option value="sessions" data-i18n="unitSessions">sessions</option>
+              <option value="minutes" data-i18n="unitMinutes">minutes</option>
             </select>
           </span>
         </div>
         <div class="goal-track"><div class="goal-fill" id="goalBar"></div></div>
-        <p class="goal-value" id="goalText">0 / 4 sessions</p>
+        <p class="goal-value" id="goalText">0 / 4</p>
       </div>
 
       <div class="card">
-        <h3 style="margin-top:0;font-size:1.05rem">Last 7 days (minutes)</h3>
-        <div class="week-chart" id="weekChart" role="img" aria-label="Focus minutes for the last 7 days"></div>
+        <h3 style="margin-top:0;font-size:1.05rem" data-i18n="weekChart">Last 7 days (minutes)</h3>
+        <div class="week-chart" id="weekChart" role="img" data-i18n-aria="weekChartAria" aria-label="Focus minutes"></div>
       </div>
 
       <div class="card" style="margin-top:1rem">
         <div class="goal-head">
-          <h3>Recent sessions</h3>
-          <a href="/dashboard/" class="btn btn-ghost">Insights →</a>
+          <h3 data-i18n="recentSessions">Recent sessions</h3>
+          <a href="/dashboard/" class="btn btn-ghost" data-i18n="insights">Insights →</a>
         </div>
         <ul class="recent-list" id="recentSessions">
-          <li class="recent-empty">No completed sessions yet. Start the timer above.</li>
+          <li class="recent-empty" data-i18n="recentEmpty">No completed sessions yet.</li>
         </ul>
         <div style="text-align:right;margin-top:0.75rem">
-          <button id="resetDataBtn" class="btn btn-ghost" type="button">Clear history</button>
+          <button id="resetDataBtn" class="btn btn-ghost" type="button" data-i18n="clearHistory">Clear history</button>
         </div>
       </div>
     </section>
 
-    <section class="section wrap" aria-label="How to use">
+    <section class="section wrap" data-i18n-aria="howRegion" aria-label="How to use">
       <div class="section-head">
-        <h2>Start in 3 steps</h2>
-        <p>If it is your first time, follow this.</p>
+        <h2 data-i18n="howTitle">Start in 3 steps</h2>
+        <p data-i18n="howSub">If it is your first time, follow this.</p>
       </div>
       <div class="steps">
-        <div class="step"><div class="num">1</div><h3>Pick a length</h3><p>Begin with Pomodoro 25. Stretch to 30 or 60 when it feels easy.</p></div>
-        <div class="step"><div class="num">2</div><h3>Clear distractions</h3><p>Mute alerts and open what you need before you hit Start.</p></div>
-        <div class="step"><div class="num">3</div><h3>Break, then repeat</h3><p>When it ends, step away briefly so the next block is easier.</p></div>
+        <div class="step"><div class="num">1</div><h3 data-i18n="step1">Pick a length</h3><p data-i18n="step1Body">Begin with Pomodoro 25.</p></div>
+        <div class="step"><div class="num">2</div><h3 data-i18n="step2">Clear distractions</h3><p data-i18n="step2Body">Mute alerts before you hit Start.</p></div>
+        <div class="step"><div class="num">3</div><h3 data-i18n="step3">Break, then repeat</h3><p data-i18n="step3Body">Step away briefly when it ends.</p></div>
       </div>
     </section>
 
-    <section class="section wrap" aria-label="Method comparison">
+    <section class="section wrap" data-i18n-aria="compareRegion" aria-label="Method comparison">
       <div class="section-head">
-        <h2>Which length fits?</h2>
-        <p>Match focus and break length to the work.</p>
+        <h2 data-i18n="compareTitle">Which length fits?</h2>
+        <p data-i18n="compareSub">Match focus and break length to the work.</p>
       </div>
       <div class="table-scroll">
         <table class="compare">
-          <caption>Common focus patterns (general guide)</caption>
+          <caption data-i18n="compareCaption">Common focus patterns</caption>
           <thead>
-            <tr><th scope="col">Method</th><th scope="col">Focus</th><th scope="col">Break</th><th scope="col">Best for</th></tr>
+            <tr>
+              <th scope="col" data-i18n="thMethod">Method</th>
+              <th scope="col" data-i18n="thFocus">Focus</th>
+              <th scope="col" data-i18n="thBreak">Break</th>
+              <th scope="col" data-i18n="thBest">Best for</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><th scope="row">Pomodoro</th><td>25 min</td><td>5 min (15 after 4)</td><td>Getting started or frequent interruptions</td></tr>
-            <tr><th scope="row">Study block</th><td>30 min</td><td>5–10 min</td><td>Drills, review, steady study rhythm</td></tr>
-            <tr><th scope="row">Deep work</th><td>60 min</td><td>10–15 min</td><td>Writing, planning, coding</td></tr>
+            <tr>
+              <th scope="row" data-i18n="rowPomo">Pomodoro</th>
+              <td data-i18n="rowPomoFocus">25 min</td>
+              <td data-i18n="rowPomoBreak">5 min (15 after 4)</td>
+              <td data-i18n="rowPomoBest">Getting started</td>
+            </tr>
+            <tr>
+              <th scope="row" data-i18n="rowStudy">Study block</th>
+              <td data-i18n="rowStudyFocus">30 min</td>
+              <td data-i18n="rowStudyBreak">5–10 min</td>
+              <td data-i18n="rowStudyBest">Steady study rhythm</td>
+            </tr>
+            <tr>
+              <th scope="row" data-i18n="rowDeep">Deep work</th>
+              <td data-i18n="rowDeepFocus">60 min</td>
+              <td data-i18n="rowDeepBreak">10–15 min</td>
+              <td data-i18n="rowDeepBest">Writing, planning, coding</td>
+            </tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <section class="section wrap" aria-label="Guides">
+    <section class="section wrap" data-i18n-aria="guidesRegion" aria-label="Guides">
       <div class="section-head">
-        <h2>Focus guides</h2>
-        <p>Practical reads to pair with the timer.</p>
+        <h2 data-i18n="guidesTitle">Focus guides</h2>
+        <p data-i18n="guidesSub">Practical reads to pair with the timer.</p>
       </div>
       <div class="post-grid">
         <article class="post-card">
-          <h3><a href="/productivity/pomodoro-method/">Pomodoro method guide</a></h3>
-          <p>How to apply 25/5 in a real day, plus common mistakes.</p>
-          <div class="meta"><span>Guide</span><span>~6 min</span></div>
+          <h3><a href="/productivity/pomodoro-method/" data-i18n="post1">Pomodoro method guide</a></h3>
+          <p data-i18n="post1Body">How to apply 25/5 in a real day.</p>
+          <div class="meta"><span data-i18n="guideMeta">Guide</span><span>~6 min</span></div>
         </article>
         <article class="post-card">
-          <h3><a href="/productivity/how-to-focus/">When focus will not stick</a></h3>
-          <p>Check environment, sleep, and task size before blaming willpower.</p>
-          <div class="meta"><span>Guide</span><span>~7 min</span></div>
+          <h3><a href="/productivity/how-to-focus/" data-i18n="post2">When focus will not stick</a></h3>
+          <p data-i18n="post2Body">Check environment before blaming willpower.</p>
+          <div class="meta"><span data-i18n="guideMeta">Guide</span><span>~7 min</span></div>
         </article>
         <article class="post-card">
-          <h3><a href="/productivity/study-routine/">Build a study routine</a></h3>
-          <p>Design around time, place, and cues so streaks last longer.</p>
-          <div class="meta"><span>Guide</span><span>~7 min</span></div>
+          <h3><a href="/productivity/study-routine/" data-i18n="post3">Build a study routine</a></h3>
+          <p data-i18n="post3Body">Design around time, place, and cues.</p>
+          <div class="meta"><span data-i18n="guideMeta">Guide</span><span>~7 min</span></div>
         </article>
         <article class="post-card">
-          <h3><a href="/productivity/deep-work-routine/">Deep work routine</a></h3>
-          <p>Protect a distraction-free hour and place it in your day.</p>
-          <div class="meta"><span>Guide</span><span>~6 min</span></div>
+          <h3><a href="/productivity/deep-work-routine/" data-i18n="post4">Deep work routine</a></h3>
+          <p data-i18n="post4Body">Protect a distraction-free hour.</p>
+          <div class="meta"><span data-i18n="guideMeta">Guide</span><span>~6 min</span></div>
         </article>
       </div>
     </section>
 
-    <section class="section wrap" aria-label="FAQ">
-      <div class="section-head"><h2>FAQ</h2></div>
+    <section class="section wrap" data-i18n-aria="faqRegion" aria-label="FAQ">
+      <div class="section-head"><h2 data-i18n="faqTitle">FAQ</h2></div>
       <div class="faq-list">
-        <details class="faq-item"><summary>Why is Pomodoro 25 minutes?</summary><div class="faq-body"><p>25 minutes is a common starting length — short enough to begin easily, long enough for a real work block. Treat it as a default and adjust to fit you.</p></div></details>
-        <details class="faq-item"><summary>Does a study timer improve focus?</summary><div class="faq-body"><p>A timer clarifies when you start and stop. It does not magically increase focus, but it makes starting easier and time visible, which helps habits.</p></div></details>
-        <details class="faq-item"><summary>Can I pause the timer?</summary><div class="faq-body"><p>Yes. Pause or reset when life interrupts. Getting back into a session matters more than unbroken perfection.</p></div></details>
-        <details class="faq-item"><summary>What should I do on a break?</summary><div class="faq-body"><p>Step away from the screen, move a little, or drink water. High-stimulation breaks can make the next focus block harder.</p></div></details>
-        <details class="faq-item"><summary>Are my focus logs stored on a server?</summary><div class="faq-body"><p>No. Everything stays in your browser's local storage. Clearing site data removes your history.</p></div></details>
-        <details class="faq-item"><summary>Does it work on mobile?</summary><div class="faq-body"><p>Yes. The layout is responsive. If a mobile browser throttles background tabs, remaining time is recalculated from the real end time.</p></div></details>
+        <details class="faq-item"><summary data-i18n="faq1q">Why is Pomodoro 25 minutes?</summary><div class="faq-body"><p data-i18n="faq1a">25 minutes is a common starting length.</p></div></details>
+        <details class="faq-item"><summary data-i18n="faq2q">Does a study timer improve focus?</summary><div class="faq-body"><p data-i18n="faq2a">A timer clarifies when you start and stop.</p></div></details>
+        <details class="faq-item"><summary data-i18n="faq3q">Can I pause the timer?</summary><div class="faq-body"><p data-i18n="faq3a">Yes. Pause or reset when life interrupts.</p></div></details>
+        <details class="faq-item"><summary data-i18n="faq4q">What should I do on a break?</summary><div class="faq-body"><p data-i18n="faq4a">Step away from the screen briefly.</p></div></details>
+        <details class="faq-item"><summary data-i18n="faq5q">Are my focus logs stored on a server?</summary><div class="faq-body"><p data-i18n="faq5a">No. Everything stays in your browser.</p></div></details>
+        <details class="faq-item"><summary data-i18n="faq6q">Does it work on mobile?</summary><div class="faq-body"><p data-i18n="faq6a">Yes. The layout is responsive.</p></div></details>
       </div>
     </section>
   </main>
@@ -312,38 +319,38 @@
     <div class="wrap">
       <div class="footer-grid">
         <div class="footer-brand">
-          <h4>Today's Focus</h4>
-          <p>A free web timer for focus and breaks. A productivity aid — not a medical service.</p>
+          <h4 class="brand-text">Today's Focus</h4>
+          <p data-i18n="footerBlurb">A free web timer for focus and breaks.</p>
         </div>
         <div>
-          <h4>Explore</h4>
+          <h4 data-i18n="footerExplore">Explore</h4>
           <ul>
-            <li><a href="/">Timer</a></li>
-            <li><a href="/pomodoro/">Pomodoro</a></li>
-            <li><a href="/study-timer/">Study timer</a></li>
-            <li><a href="/deep-work/">Deep work</a></li>
-            <li><a href="/break-guide/">Break guide</a></li>
-            <li><a href="/productivity/">Guides</a></li>
-            <li><a href="/dashboard/">Dashboard</a></li>
-            <li><a href="/resources/">Resources</a></li>
-            <li><a href="/calculators/">Calculators</a></li>
+            <li><a href="/" data-i18n="footerTimer">Timer</a></li>
+            <li><a href="/pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
+            <li><a href="/study-timer/" data-i18n="footerStudy">Study timer</a></li>
+            <li><a href="/deep-work/" data-i18n="footerDeep">Deep work</a></li>
+            <li><a href="/break-guide/" data-i18n="footerBreak">Break guide</a></li>
+            <li><a href="/productivity/" data-i18n="footerGuides">Guides</a></li>
+            <li><a href="/dashboard/" data-i18n="footerDash">Dashboard</a></li>
+            <li><a href="/resources/" data-i18n="footerRes">Resources</a></li>
+            <li><a href="/calculators/" data-i18n="footerCalc">Calculators</a></li>
           </ul>
         </div>
         <div>
-          <h4>Site</h4>
+          <h4 data-i18n="footerSite">Site</h4>
           <ul>
-            <li><a href="/about/">About</a></li>
-            <li><a href="/contact/">Contact</a></li>
-            <li><a href="/privacy/">Privacy</a></li>
-            <li><a href="/terms/">Terms</a></li>
-            <li><a href="/disclaimer/">Disclaimer</a></li>
-            <li><a href="/sitemap/">Sitemap</a></li>
+            <li><a href="/about/" data-i18n="footerAbout">About</a></li>
+            <li><a href="/contact/" data-i18n="footerContact">Contact</a></li>
+            <li><a href="/privacy/" data-i18n="footerPrivacy">Privacy</a></li>
+            <li><a href="/terms/" data-i18n="footerTerms">Terms</a></li>
+            <li><a href="/disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
+            <li><a href="/sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© <span data-year>2026</span> Today's Focus. All rights reserved.</span>
-        <span>Focus logs stay in your browser.</span>
+        <span>© <span data-year>2026</span> <span class="brand-text">Today's Focus</span>. <span data-i18n="footerCopy">All rights reserved.</span></span>
+        <span data-i18n="footerLocal">Focus logs stay in your browser.</span>
       </div>
     </div>
   </footer>

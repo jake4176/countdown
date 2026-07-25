@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title data-i18n="pomodoroPageTitle">Pomodoro Study Method &amp; Timer Guide — Today's Focus</title>
+  <meta name="description" content="Practice Pomodoro with Today's Focus timer. From choosing the 25-minute preset to break suggestions, auto-start, and focus logs — follow along on screen.">
+  <link rel="canonical" href="https://focus-timer.example/pomodoro/">
+  <meta name="theme-color" content="#6c5ce7">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Today's Focus">
+  <meta property="og:title" content="Pomodoro Study Method &amp; Timer Guide — Today's Focus">
+  <meta property="og:description" content="Practice Pomodoro with Today's Focus timer. From the 25-minute preset to break suggestions, auto-start, and focus logs.">
+  <meta property="og:url" content="https://focus-timer.example/pomodoro/">
+  <meta property="og:image" content="https://focus-timer.example/og-image.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ko_KR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pomodoro Study Method &amp; Timer Guide — Today's Focus">
+  <meta name="twitter:description" content="Practice Pomodoro with Today's Focus timer — preset, breaks, auto-start, and focus logs.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://focus-timer.example/" },
+      { "@type": "ListItem", "position": 2, "name": "Pomodoro", "item": "https://focus-timer.example/pomodoro/" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "If I pick the Pomodoro preset on Today's Focus, does it automatically count four rounds?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No — it does not count four rounds for you. The 25-minute preset runs one focus countdown, then suggests a 5-minute break. With 'Auto-start next timer' on, the suggested timer starts automatically; with it off, it starts only when you press the suggestion. Check how many focus rounds you've done in the 'Today's Focus' stats completed session count below."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I stop alerts from going off during focus?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use the 'Sound' switch under the timer to turn off the end chime. Browser notifications are requested only if you press 'Enable browser notifications' — leave that off if you do not want them. For messenger and other distractions, use your device's Do Not Disturb mode."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "If I step away before 25 minutes end, is the time still accurate?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Remaining time is recalculated from the actual end time, so it stays accurate even if you switch tabs or the screen turns off. Refreshing the page restores an in-progress timer."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a href="#main" class="skip-link" data-i18n="skipToMain">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
+      <div class="header-actions">
+        <button type="button" id="langToggle" class="lang-toggle" data-next-lang="ko" aria-label="Change language">한국어</button>
+        <button class="nav-toggle" data-i18n-aria="openMenu" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">☰</button>
+      </div>
+      <nav id="primary-nav" class="nav" aria-label="Primary">
+        <a href="/" data-i18n="navHome">Home</a>
+        <a href="/pomodoro/" data-i18n="navFocusTimer" aria-current="page">Focus Timer</a>
+        <a href="/productivity/" data-i18n="navProductivity">Productivity</a>
+        <a href="/study-timer/" data-i18n="navStudy">Study</a>
+        <a href="/deep-work/" data-i18n="navDeepWork">Deep Work</a>
+        <a href="/resources/" data-i18n="navResources">Resources</a>
+        <a href="/about/" data-i18n="navAbout">About</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <article class="article">
+      <div data-lang="ko">
+        <nav class="breadcrumb" aria-label="탐색 경로"><ol><li><a href="/">홈</a></li><li aria-current="page">포모도로</li></ol></nav>
+        <header>
+          <h1>포모도로 공부법 소개와 타이머 사용법</h1>
+          <p class="article-meta">최종 업데이트 2026년 7월 12일 · 약 4분</p>
+        </header>
+
+        <div class="summary-box">
+          <h2>이 페이지에서 다루는 것</h2>
+          <ul>
+            <li>포모도로가 무엇인지 한 문단으로 짚고, <strong>오늘의 집중 타이머로 실제로 어떻게 실천하는지</strong>에 집중합니다.</li>
+            <li>25분 프리셋 선택 → 시작·정지 → 휴식 제안·자동 시작 → 집중 기록 확인까지 화면 그대로 따라 할 수 있습니다.</li>
+            <li>포모도로의 원리와 시간 변형 같은 깊은 내용은 <a href="/productivity/pomodoro-method/">포모도로 기법 실전 가이드</a>에서 다룹니다.</li>
+          </ul>
+        </div>
+
+        <p class="lead">포모도로는 25분 집중과 5분 휴식을 한 묶음으로 반복하고, 집중을 네 번 마치면 길게 쉬는 시간 관리 방법입니다. 정해진 시간 동안 한 가지 일에만 몰두해 시작 부담과 딴짓을 줄이는 것이 핵심입니다. 이 페이지에서는 그 방법을 이 사이트에서 그대로 실천하는 법을 안내합니다.</p>
+
+        <h2>오늘의 집중에서 포모도로 쓰는 법</h2>
+        <div class="steps">
+          <div class="step"><div class="num">1</div><h3>포모도로 프리셋 선택</h3><p>메인 화면의 빠른 타이머에서 <strong>🍅 포모도로 25분</strong> 카드를 누릅니다. 위쪽 큰 타이머가 25:00으로 맞춰지고 모드에 '집중 시간'이 표시됩니다.</p></div>
+          <div class="step"><div class="num">2</div><h3>시작하고 그 일만 하기</h3><p><strong>시작</strong> 버튼이나 스페이스바로 시작합니다. 급한 일이 생기면 다시 스페이스바로 일시정지, <strong>R</strong> 키로 초기화, 조금 더 필요하면 <strong>+1분</strong>을 누릅니다.</p></div>
+          <div class="step"><div class="num">3</div><h3>끝나면 휴식으로 넘어가기</h3><p>25분이 끝나면 알림음과 함께 <strong>“5분 휴식 시작”</strong> 제안이 뜹니다. 제안을 누르면 휴식 타이머가 시작됩니다. '다음 타이머 자동 시작'을 켜 두면 누르지 않아도 자동으로 이어집니다.</p></div>
+          <div class="step"><div class="num">4</div><h3>기록으로 반복 확인</h3><p>집중을 한 번 마칠 때마다 아래 <strong>오늘의 집중</strong> 통계의 완료 세션 수와 누적 시간이 올라갑니다. 네 번을 채웠는지 여기서 확인하고, 네 번째 뒤에는 긴 휴식 15분 프리셋으로 길게 쉬면 됩니다.</p></div>
+        </div>
+        <div class="callout note"><p>이 사이트의 포모도로 프리셋은 네 번을 자동으로 세어 주지는 않습니다. 대신 종료 후 휴식을 제안하고, 완료 세션 수를 기록해 지금 몇 번째인지 눈으로 확인할 수 있게 했습니다. 긴 휴식은 네 번째 집중을 마친 뒤 <strong>긴 휴식 15분</strong> 프리셋을 직접 고르시면 됩니다.</p></div>
+
+        <div class="ad-slot ad-inarticle" aria-hidden="true"><div class="ad-inner">광고 영역 (심사·승인 후 코드 삽입)</div></div>
+
+        <h2>첫 주 실천 플랜</h2>
+        <p>처음부터 하루 여덟 개씩 채우려 하면 오래가지 못합니다. 아래처럼 세션 수를 조금씩 늘려 보세요. 참고용 예시이며 컨디션에 맞게 조절하시면 됩니다.</p>
+        <div class="table-scroll">
+          <table class="compare">
+            <caption>포모도로 적응 첫 주 (참고용)</caption>
+            <thead><tr><th scope="col">기간</th><th scope="col">목표</th><th scope="col">한 줄 팁</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">1~2일차</th><td>하루 집중 2세션</td><td>“일단 25분만”이라는 마음으로 시작 문턱만 넘기기</td></tr>
+              <tr><th scope="row">3~4일차</th><td>하루 집중 3~4세션</td><td>휴식 때 화면 대신 몸을 움직이기</td></tr>
+              <tr><th scope="row">5~7일차</th><td>4세션 + 긴 휴식 1회</td><td>네 번째 뒤 긴 휴식 15분 프리셋으로 완전히 쉬기</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>이렇게 조정하세요</h2>
+        <ul>
+          <li><strong>집중이 자주 끊긴다면</strong> 직접 설정 칸에 15~20분을 넣어 더 짧게 시작해 보세요.</li>
+          <li><strong>흐름이 잘 이어진다면</strong> 공부 30분이나 딥워크 60분 프리셋으로 길이를 늘려도 됩니다.</li>
+          <li><strong>쉬는 시간을 자꾸 넘긴다면</strong> '다음 타이머 자동 시작'을 켜서 휴식이 끝나면 곧바로 다음 집중으로 이어지게 하세요.</li>
+        </ul>
+
+        <p><a class="btn btn-primary" href="/#timer">이 프리셋으로 지금 시작</a></p>
+
+        <h2>자주 묻는 질문</h2>
+        <div class="faq-list">
+          <details class="faq-item"><summary>오늘의 집중에서 포모도로 프리셋을 고르면 자동으로 4번 반복되나요?</summary><div class="faq-body"><p>자동으로 네 번을 세어 주지는 않습니다. 25분 프리셋은 한 번의 집중을 카운트다운하고, 끝나면 5분 휴식을 제안합니다. '다음 타이머 자동 시작'을 켜면 제안한 타이머가 자동으로 이어지고, 꺼 두면 제안 버튼을 눌렀을 때만 시작됩니다. 몇 번째 집중인지는 아래 '오늘의 집중' 통계의 완료 세션 수로 확인할 수 있습니다.</p></div></details>
+          <details class="faq-item"><summary>집중 도중 알림이 울리지 않게 하려면 어떻게 하나요?</summary><div class="faq-body"><p>타이머 아래 '알림음' 스위치로 종료음을 끌 수 있습니다. 브라우저 알림은 사용자가 직접 '브라우저 알림 켜기'를 눌렀을 때만 요청되므로, 원하지 않으면 켜지 않으면 됩니다. 집중을 방해하는 메신저 알림 등은 기기 자체에서 방해 금지 모드로 꺼 두시길 권합니다.</p></div></details>
+          <details class="faq-item"><summary>25분이 끝나기 전에 자리를 비워도 시간이 정확한가요?</summary><div class="faq-body"><p>네. 남은 시간은 실제 종료 시각을 기준으로 다시 계산하므로, 다른 탭을 보거나 화면이 꺼져도 정확합니다. 페이지를 새로고침해도 진행 중이던 타이머가 복구됩니다.</p></div></details>
+        </div>
+
+        <div class="ad-slot ad-inarticle" aria-hidden="true"><div class="ad-inner">광고 영역 (심사·승인 후 코드 삽입)</div></div>
+
+        <aside class="related">
+          <h2>함께 읽으면 좋은 글</h2>
+          <ul>
+            <li><a href="/productivity/pomodoro-method/">포모도로 기법 실전 가이드 — 원리와 변형까지</a></li>
+            <li><a href="/break-guide/">짧은 휴식과 긴 휴식 잘 쉬는 법</a></li>
+            <li><a href="/study-timer/">공부 타이머 활용법</a></li>
+          </ul>
+        </aside>
+
+        <p class="updated">최종 업데이트: 2026년 7월 12일</p>
+      </div>
+      <div data-lang="en">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Pomodoro</li></ol></nav>
+        <header>
+          <h1>Pomodoro Study Method &amp; Timer Guide</h1>
+          <p class="article-meta">Last updated July 12, 2026 · ~4 min read</p>
+        </header>
+
+        <div class="summary-box">
+          <h2>What this page covers</h2>
+          <ul>
+            <li>A quick overview of what Pomodoro is, with focus on <strong>how to practice it with Today's Focus timer</strong>.</li>
+            <li>Follow along on screen: choose the 25-minute preset → start/pause → break suggestion and auto-start → check your focus log.</li>
+            <li>For deeper material on the method and time variations, see the <a href="/productivity/pomodoro-method/">Pomodoro method practical guide</a>.</li>
+          </ul>
+        </div>
+
+        <p class="lead">Pomodoro alternates 25 minutes of focus with 5 minutes of rest, and after four focus rounds you take a longer break. The idea is to commit to one task for a fixed window, which lowers the barrier to starting and cuts down on drifting. This page shows how to practice that method on this site.</p>
+
+        <h2>Using Pomodoro on Today's Focus</h2>
+        <div class="steps">
+          <div class="step"><div class="num">1</div><h3>Choose the Pomodoro preset</h3><p>On the main screen, tap the <strong>🍅 Pomodoro 25 min</strong> card in Quick Timer. The large timer above sets to 25:00 and the mode shows "Focus time."</p></div>
+          <div class="step"><div class="num">2</div><h3>Start and stick to one task</h3><p>Press <strong>Start</strong> or the spacebar. If something urgent comes up, spacebar pauses, <strong>R</strong> resets, and <strong>+1 min</strong> adds a minute if you need it.</p></div>
+          <div class="step"><div class="num">3</div><h3>Switch to a break when time is up</h3><p>When 25 minutes end, you'll hear a chime and see a <strong>"Start 5-minute break"</strong> suggestion. Tap it to start the break timer. With "Auto-start next timer" on, it continues without a tap.</p></div>
+          <div class="step"><div class="num">4</div><h3>Track rounds in your log</h3><p>Each completed focus round increases the completed session count and total time in <strong>Today's Focus</strong> stats below. Check here whether you've reached four rounds; after the fourth, use the <strong>Long break 15 min</strong> preset for a full rest.</p></div>
+        </div>
+        <div class="callout note"><p>This site's Pomodoro preset does not automatically count four rounds. Instead, it suggests a break after each focus block and logs completed sessions so you can see which round you're on. After your fourth focus block, choose the <strong>Long break 15 min</strong> preset yourself.</p></div>
+
+        <div class="ad-slot ad-inarticle" aria-hidden="true"><div class="ad-inner">Ad slot (pending review &amp; approval)</div></div>
+
+        <h2>First-week practice plan</h2>
+        <p>Trying to hit eight sessions per day from day one usually does not last. Build up gradually as below. This is a reference example — adjust to your energy.</p>
+        <div class="table-scroll">
+          <table class="compare">
+            <caption>Pomodoro adaptation — first week (reference)</caption>
+            <thead><tr><th scope="col">Period</th><th scope="col">Target</th><th scope="col">One-line tip</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Days 1–2</th><td>2 focus sessions per day</td><td>Cross the starting line with "just 25 minutes"</td></tr>
+              <tr><th scope="row">Days 3–4</th><td>3–4 focus sessions per day</td><td>Move your body during breaks instead of scrolling</td></tr>
+              <tr><th scope="row">Days 5–7</th><td>4 sessions + 1 long break</td><td>After the fourth round, use the 15-minute long break preset and rest fully</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Adjust to fit you</h2>
+        <ul>
+          <li><strong>If focus keeps breaking</strong>, try 15–20 minutes in Custom duration to start shorter.</li>
+          <li><strong>If flow is strong</strong>, extend with the Study 30 min or Deep work 60 min presets.</li>
+          <li><strong>If breaks run long</strong>, turn on "Auto-start next timer" so the next focus block starts right after rest.</li>
+        </ul>
+
+        <p><a class="btn btn-primary" href="/#timer">Start with this preset now</a></p>
+
+        <h2>FAQ</h2>
+        <div class="faq-list">
+          <details class="faq-item"><summary>If I pick the Pomodoro preset on Today's Focus, does it automatically count four rounds?</summary><div class="faq-body"><p>No — it does not count four rounds for you. The 25-minute preset runs one focus countdown, then suggests a 5-minute break. With "Auto-start next timer" on, the suggested timer starts automatically; with it off, it starts only when you press the suggestion. Check how many focus rounds you've done in the "Today's Focus" stats completed session count below.</p></div></details>
+          <details class="faq-item"><summary>How do I stop alerts from going off during focus?</summary><div class="faq-body"><p>Use the "Sound" switch under the timer to turn off the end chime. Browser notifications are requested only if you press "Enable browser notifications" — leave that off if you do not want them. For messenger and other distractions, use your device's Do Not Disturb mode.</p></div></details>
+          <details class="faq-item"><summary>If I step away before 25 minutes end, is the time still accurate?</summary><div class="faq-body"><p>Yes. Remaining time is recalculated from the actual end time, so it stays accurate even if you switch tabs or the screen turns off. Refreshing the page restores an in-progress timer.</p></div></details>
+        </div>
+
+        <div class="ad-slot ad-inarticle" aria-hidden="true"><div class="ad-inner">Ad slot (pending review &amp; approval)</div></div>
+
+        <aside class="related">
+          <h2>Related reads</h2>
+          <ul>
+            <li><a href="/productivity/pomodoro-method/">Pomodoro method practical guide — principles and variations</a></li>
+            <li><a href="/break-guide/">How to take short and long breaks well</a></li>
+            <li><a href="/study-timer/">Study timer guide</a></li>
+          </ul>
+        </aside>
+
+        <p class="updated">Last updated: July 12, 2026</p>
+      </div>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4 class="brand-text">Today's Focus</h4>
+          <p data-i18n="footerBlurb">A free web timer for focus and breaks.</p>
+        </div>
+        <div>
+          <h4 data-i18n="footerExplore">Explore</h4>
+          <ul>
+            <li><a href="/" data-i18n="footerTimer">Timer</a></li>
+            <li><a href="/pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
+            <li><a href="/study-timer/" data-i18n="footerStudy">Study timer</a></li>
+            <li><a href="/deep-work/" data-i18n="footerDeep">Deep work</a></li>
+            <li><a href="/break-guide/" data-i18n="footerBreak">Break guide</a></li>
+            <li><a href="/productivity/" data-i18n="footerGuides">Guides</a></li>
+            <li><a href="/dashboard/" data-i18n="footerDash">Dashboard</a></li>
+            <li><a href="/resources/" data-i18n="footerRes">Resources</a></li>
+            <li><a href="/calculators/" data-i18n="footerCalc">Calculators</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="footerSite">Site</h4>
+          <ul>
+            <li><a href="/about/" data-i18n="footerAbout">About</a></li>
+            <li><a href="/contact/" data-i18n="footerContact">Contact</a></li>
+            <li><a href="/privacy/" data-i18n="footerPrivacy">Privacy</a></li>
+            <li><a href="/terms/" data-i18n="footerTerms">Terms</a></li>
+            <li><a href="/disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
+            <li><a href="/sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> <span class="brand-text">Today's Focus</span>. <span data-i18n="footerCopy">All rights reserved.</span></span>
+        <span data-i18n="footerLocal">Focus logs stay in your browser.</span>
+      </div>
+    </div>
+  </footer>
+  <script src="/config.js"></script>
+  <script src="/site.js" defer></script>
+  <script type="module" src="/page.js"></script>
+</body>
+</html>

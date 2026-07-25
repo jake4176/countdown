@@ -13,15 +13,24 @@ const TYPES = {
 };
 
 const server = createServer(async (req, res) => {
-  let url = req.url.split('?')[0];
-  if (url === '/') url = '/index.html';
+  let url = decodeURIComponent(req.url.split('?')[0]);
+  // 클린 URL: 디렉터리 경로(/pomodoro/)는 그 안의 index.html을 제공
+  if (url.endsWith('/')) url += 'index.html';
+  else if (!extname(url)) url += '/index.html';
   try {
     const data = await readFile('.' + url);
     res.writeHead(200, { 'Content-Type': TYPES[extname(url)] || 'application/octet-stream' });
     res.end(data);
   } catch {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('Not found');
+    // 정적 호스트의 404 동작을 흉내: 404.html이 있으면 그것을 404로 제공
+    try {
+      const nf = await readFile('./404.html');
+      res.writeHead(404, { 'Content-Type': TYPES['.html'] });
+      res.end(nf);
+    } catch {
+      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('Not found');
+    }
   }
 });
 

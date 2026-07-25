@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title data-i18n="deepWorkTitle">Deep Work & 60-Minute Focus Timer — Today's Focus</title>
+  <meta name="description" content="오늘의 집중 60분 딥워크 프리셋으로 방해 없는 몰입 시간을 확보하는 실전 사용법. 워밍업, 방해 차단, +1분 활용, 집중 기록 확인까지 화면 그대로 안내합니다.">
+  <link rel="canonical" href="https://focus-timer.example/deep-work/">
+  <meta name="theme-color" content="#6c5ce7">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="오늘의 집중">
+  <meta property="og:title" content="딥워크 집중법과 60분 집중 타이머 — 오늘의 집중">
+  <meta property="og:description" content="오늘의 집중 60분 딥워크 프리셋으로 방해 없는 몰입 시간을 확보하는 실전 사용법을 화면 그대로 안내합니다.">
+  <meta property="og:url" content="https://focus-timer.example/deep-work/">
+  <meta property="og:image" content="https://focus-timer.example/og-image.png">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="딥워크 집중법과 60분 집중 타이머 — 오늘의 집중">
+  <meta name="twitter:description" content="오늘의 집중 60분 딥워크 프리셋으로 방해 없는 몰입 시간을 확보하는 실전 사용법을 안내합니다.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://focus-timer.example/"},{"@type":"ListItem","position":2,"name":"딥워크","item":"https://focus-timer.example/deep-work/"}]}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"60분이 부담되면 딥워크 프리셋을 어떻게 조정하나요?","acceptedAnswer":{"@type":"Answer","text":"처음부터 60분을 채우기는 어렵습니다. 직접 설정 칸에 40~45분을 넣어 시작하고, 익숙해지면 늘려 가시길 권합니다. 몰입이 잘 이어지는 날에는 종료 직전 +1분 버튼으로 흐름을 끊지 않고 조금 더 이어 갈 수도 있습니다."}},
+    {"@type":"Question","name":"딥워크 중에는 알림을 어떻게 관리하나요?","acceptedAnswer":{"@type":"Answer","text":"타이머의 '알림음'은 종료를 알리는 용도이니 켜 두어도 좋지만, 집중을 방해하는 메신저·앱 알림은 기기의 방해 금지 모드로 꺼 두시길 권합니다. 브라우저 알림은 직접 켠 경우에만 동작하며, 화면을 보고 있을 때는 울리지 않습니다."}},
+    {"@type":"Question","name":"60분 몰입 중 자리를 비우거나 새로고침하면 시간이 유지되나요?","acceptedAnswer":{"@type":"Answer","text":"네. 남은 시간은 실제 종료 시각을 기준으로 다시 계산하므로 다른 탭을 보거나 화면이 꺼져도 정확하고, 페이지를 새로고침해도 진행 중이던 60분 타이머가 복구됩니다. 자리를 비운 사이 시간이 다 지났다면 완료로 처리됩니다."}}
+  ]}
+  </script>
+</head>
+<body>
+  <a href="#main" class="skip-link" data-i18n="skipToMain">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
+      <div class="header-actions">
+        <button type="button" id="langToggle" class="lang-toggle" data-next-lang="ko" aria-label="Change language">한국어</button>
+        <button class="nav-toggle" data-i18n-aria="openMenu" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">☰</button>
+      </div>
+      <nav id="primary-nav" class="nav" aria-label="Primary">
+        <a href="/" data-i18n="navHome">Home</a>
+        <a href="/pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
+        <a href="/productivity/" data-i18n="navProductivity">Productivity</a>
+        <a href="/study-timer/" data-i18n="navStudy">Study</a>
+        <a href="/deep-work/" data-i18n="navDeepWork" aria-current="page">Deep Work</a>
+        <a href="/resources/" data-i18n="navResources">Resources</a>
+        <a href="/about/" data-i18n="navAbout">About</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <article class="article">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/" data-i18n="breadcrumbHome">Home</a></li><li aria-current="page" data-i18n="navDeepWork">Deep Work</li></ol></nav>
+
+      <div data-lang="ko">
+        <header>
+          <h1>딥워크 집중법과 60분 집중 타이머</h1>
+          <p class="article-meta">최종 업데이트 2026년 7월 12일 · 약 4분</p>
+        </header>
+
+        <div class="summary-box">
+          <h2>이 페이지에서 다루는 것</h2>
+          <ul>
+            <li>오늘의 집중 <strong>60분 딥워크 프리셋</strong>으로 방해 없는 몰입 한 덩어리를 확보하는 실전 사용법을 다룹니다.</li>
+            <li>워밍업 → 방해 차단 → 60분 몰입 → 긴 휴식까지 화면 그대로 따라 할 수 있습니다.</li>
+            <li>하루 일과 속에 딥워크를 배치하는 루틴 설계는 <a href="/productivity/deep-work-routine/">딥워크 루틴 구성법</a>에서 다룹니다.</li>
+          </ul>
+        </div>
+
+        <p class="lead">짧게 자주 끊어 하는 방식이 잘 맞지 않는 일이 있습니다. 생각을 길게 이어 붙여야 비로소 풀리는 일들이지요. 딥워크는 이런 작업을 위해 방해를 걷어내고 60분을 통째로 확보하는 방법입니다. 이 페이지에서는 그 60분을 이 타이머로 만드는 법을 안내합니다.</p>
+
+        <h2>오늘의 집중에서 딥워크 쓰는 법</h2>
+        <div class="steps">
+          <div class="step"><div class="num">1</div><h3>방해 요소 먼저 치우기</h3><p>시작 전에 메신저·메일 탭을 닫고, 기기를 방해 금지 모드로 둡니다. 이번 60분 동안 다룰 작업 하나와 필요한 자료를 미리 열어 둡니다.</p></div>
+          <div class="step"><div class="num">2</div><h3>딥워크 60분 프리셋 시작</h3><p>빠른 타이머에서 <strong>🎯 Deep Work 60 min</strong> 카드를 누르고 시작합니다. 처음 5~10분은 어제 한 내용을 다시 보는 워밍업으로 써 몰입에 올라탑니다.</p></div>
+          <div class="step"><div class="num">3</div><h3>흐름 지키며 몰입하기</h3><p>딴생각이 떠오르면 메모지에 한 줄 적고 다시 돌아옵니다. 종료 직전 몰입이 아주 잘 되면 <strong>+1분</strong>으로 흐름을 끊지 않고 조금 더 이어 가도 됩니다.</p></div>
+          <div class="step"><div class="num">4</div><h3>끝나면 충분히 쉬기</h3><p>60분은 에너지를 많이 씁니다. 끝나면 긴 휴식 15분 프리셋으로 화면에서 떨어져 완전히 쉽니다. 완료한 몰입은 오늘의 집중 통계에 기록됩니다.</p></div>
+        </div>
+        <div class="callout note"><p>딥워크는 방해가 많은 환경이나 잘게 쪼개진 단순 작업에는 오히려 맞지 않을 수 있습니다. 회의가 잦은 날은 짧은 포모도로가 나을 수 있으니, 일과 상황에 맞게 방식을 골라 쓰세요.</p></div>
+
+        <div class="ad-slot ad-inarticle" aria-hidden="true"><div class="ad-inner" data-i18n="adPlaceholder">Ad slot (placeholder)</div></div>
+
+        <h2>60분 몰입 시간 구성</h2>
+        <p>한 번의 딥워크 블록 안을 이렇게 나누면 몰입에 들어가고 마무리하기가 수월합니다. 참고용 예시이며, 익숙해지기 전에는 40~45분으로 줄여 시작하세요.</p>
+        <div class="table-scroll">
+          <table class="compare">
+            <caption>딥워크 60분 블록 구성 예시 (참고용)</caption>
+            <thead><tr><th scope="col">구간</th><th scope="col">시간</th><th scope="col">할 일</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">워밍업</th><td>0–10분</td><td>어제 작업 다시 보기, 오늘 목표 한 줄로 적기</td></tr>
+              <tr><th scope="row">몰입</th><td>10–50분</td><td>가장 어려운 핵심 작업 하나에만 매달리기</td></tr>
+              <tr><th scope="row">마무리</th><td>50–60분</td><td>진척 정리, 다음에 이어서 할 지점 메모</td></tr>
+              <tr><th scope="row">긴 휴식</th><td>이후 15분</td><td>화면에서 떨어져 산책·휴식</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>이렇게 조정하세요</h2>
+        <ul>
+          <li><strong>60분이 부담되면</strong> 직접 설정 칸에 40~45분을 넣어 시작하고 점차 늘리세요.</li>
+          <li><strong>시작이 매번 어렵다면</strong> 포모도로 25분으로 먼저 문턱을 넘고 딥워크로 이어 가세요.</li>
+          <li><strong>연속 몰입이 필요하면</strong> '다음 타이머 자동 시작'은 끈 채로, 긴 휴식을 직접 챙겨 무리하지 않도록 하세요.</li>
+        </ul>
+
+        <p><a class="btn btn-primary" href="/#timer">딥워크 프리셋으로 지금 시작</a></p>
+
+        <h2>자주 묻는 질문</h2>
+        <div class="faq-list">
+          <details class="faq-item"><summary>60분이 부담되면 딥워크 프리셋을 어떻게 조정하나요?</summary><div class="faq-body"><p>처음부터 60분을 채우기는 어렵습니다. 직접 설정 칸에 40~45분을 넣어 시작하고, 익숙해지면 늘려 가시길 권합니다. 몰입이 잘 이어지는 날에는 종료 직전 +1분 버튼으로 흐름을 끊지 않고 조금 더 이어 갈 수도 있습니다.</p></div></details>
+          <details class="faq-item"><summary>딥워크 중에는 알림을 어떻게 관리하나요?</summary><div class="faq-body"><p>타이머의 '알림음'은 종료를 알리는 용도이니 켜 두어도 좋지만, 집중을 방해하는 메신저·앱 알림은 기기의 방해 금지 모드로 꺼 두시길 권합니다. 브라우저 알림은 직접 켠 경우에만 동작하며, 화면을 보고 있을 때는 울리지 않습니다.</p></div></details>
+          <details class="faq-item"><summary>60분 몰입 중 자리를 비우거나 새로고침하면 시간이 유지되나요?</summary><div class="faq-body"><p>네. 남은 시간은 실제 종료 시각을 기준으로 다시 계산하므로 다른 탭을 보거나 화면이 꺼져도 정확하고, 페이지를 새로고침해도 진행 중이던 60분 타이머가 복구됩니다. 자리를 비운 사이 시간이 다 지났다면 완료로 처리됩니다.</p></div></details>
+        </div>
+
+        <div class="ad-slot ad-inarticle" aria-hidden="true"><div class="ad-inner" data-i18n="adPlaceholder">Ad slot (placeholder)</div></div>
+
+        <aside class="related">
+          <h2>함께 읽으면 좋은 글</h2>
+          <ul>
+            <li><a href="/productivity/deep-work-routine/">딥워크 루틴 구성법</a></li>
+            <li><a href="/break-guide/">짧은 휴식과 긴 휴식 잘 쉬는 법</a></li>
+            <li><a href="/productivity/how-to-focus/">집중이 안 될 때 점검할 방법</a></li>
+          </ul>
+        </aside>
+
+        <p class="updated">최종 업데이트: 2026년 7월 12일</p>
+      </div>
+
+      <div data-lang="en">
+        <header>
+          <h1>Deep work &amp; 60-minute focus timer</h1>
+          <p class="article-meta">Last updated July 12, 2026 · ~4 min read</p>
+        </header>
+
+        <div class="summary-box">
+          <h2>What this page covers</h2>
+          <ul>
+            <li>How to protect one uninterrupted block with the <strong>60-minute Deep Work preset</strong> on Today's Focus.</li>
+            <li>Follow along on screen: warm up → block distractions → 60 minutes of focus → a long break.</li>
+            <li>For placing deep work in your daily schedule, see <a href="/productivity/deep-work-routine/">Design a deep work routine</a>.</li>
+          </ul>
+        </div>
+
+        <p class="lead">Some work does not fit short, frequent sprints. Ideas need room to connect before they click. Deep work clears distractions and reserves a full 60 minutes for that kind of task. This page shows how to build that hour with this timer.</p>
+
+        <h2>Using deep work on Today's Focus</h2>
+        <div class="steps">
+          <div class="step"><div class="num">1</div><h3>Clear distractions first</h3><p>Before you start, close chat and email tabs and turn on Do Not Disturb. Open the one task and materials you'll need for the next 60 minutes.</p></div>
+          <div class="step"><div class="num">2</div><h3>Start the 60-minute Deep Work preset</h3><p>Tap <strong>🎯 Deep Work 60 min</strong> under Quick presets and start. Use the first 5–10 minutes to review yesterday's work — a warm-up into focus.</p></div>
+          <div class="step"><div class="num">3</div><h3>Stay in flow</h3><p>When a stray thought appears, jot one line on a sticky note and return. If you're deeply in flow near the end, <strong>+1 min</strong> can extend without breaking momentum.</p></div>
+          <div class="step"><div class="num">4</div><h3>Rest fully when done</h3><p>Sixty minutes costs energy. When it ends, use the 15-minute Long Break preset and step away from the screen. Completed focus is logged in Today's focus stats.</p></div>
+        </div>
+        <div class="callout note"><p>Deep work may not suit noisy environments or work that is naturally fragmented. On meeting-heavy days, shorter Pomodoro blocks might fit better — match the method to the day.</p></div>
+
+        <div class="ad-slot ad-inarticle" aria-hidden="true"><div class="ad-inner" data-i18n="adPlaceholder">Ad slot (placeholder)</div></div>
+
+        <h2>How to structure 60 minutes</h2>
+        <p>Splitting one deep work block like this makes it easier to enter focus and close cleanly. Reference only — start with 40–45 minutes until it feels natural.</p>
+        <div class="table-scroll">
+          <table class="compare">
+            <caption>Deep work 60-minute block — sample (reference only)</caption>
+            <thead><tr><th scope="col">Phase</th><th scope="col">Time</th><th scope="col">What to do</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Warm-up</th><td>0–10 min</td><td>Review yesterday's work; write today's goal in one line</td></tr>
+              <tr><th scope="row">Focus</th><td>10–50 min</td><td>One hard core task — nothing else</td></tr>
+              <tr><th scope="row">Wrap-up</th><td>50–60 min</td><td>Summarize progress; note where to resume next</td></tr>
+              <tr><th scope="row">Long break</th><td>Next 15 min</td><td>Step away — walk, rest off-screen</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Adjust to fit you</h2>
+        <ul>
+          <li><strong>If 60 minutes feels heavy</strong>, enter 40–45 in Custom and increase gradually.</li>
+          <li><strong>If starting is the hard part</strong>, begin with a 25-minute Pomodoro, then continue into deep work.</li>
+          <li><strong>If you need back-to-back focus</strong>, leave Auto-start off and take long breaks yourself so you do not overdo it.</li>
+        </ul>
+
+        <p><a class="btn btn-primary" href="/#timer">Start with the Deep Work preset</a></p>
+
+        <h2>FAQ</h2>
+        <div class="faq-list">
+          <details class="faq-item"><summary>How do I adjust the preset if 60 minutes is too much?</summary><div class="faq-body"><p>Filling 60 minutes from day one is hard. Enter 40–45 minutes in Custom and build up. On days when flow is strong, +1 min near the end can extend without a hard stop.</p></div></details>
+          <details class="faq-item"><summary>How should I handle notifications during deep work?</summary><div class="faq-body"><p>The timer's sound alert at the end is fine to leave on. Turn off distracting app and messenger alerts with your device's Do Not Disturb. Browser notifications only run if you enabled them; they do not fire while you're actively viewing the page.</p></div></details>
+          <details class="faq-item"><summary>Does the timer stay accurate if I leave or refresh?</summary><div class="faq-body"><p>Yes. Remaining time is recalculated from the real end time, so other tabs or a locked screen stay accurate. Refreshing restores an in-progress 60-minute timer. If time ran out while you were away, it completes as finished.</p></div></details>
+        </div>
+
+        <div class="ad-slot ad-inarticle" aria-hidden="true"><div class="ad-inner" data-i18n="adPlaceholder">Ad slot (placeholder)</div></div>
+
+        <aside class="related">
+          <h2>Related reads</h2>
+          <ul>
+            <li><a href="/productivity/deep-work-routine/">Design a deep work routine</a></li>
+            <li><a href="/break-guide/">Short and long breaks — rest well</a></li>
+            <li><a href="/productivity/how-to-focus/">When focus will not stick</a></li>
+          </ul>
+        </aside>
+
+        <p class="updated">Last updated: July 12, 2026</p>
+      </div>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4 class="brand-text">Today's Focus</h4>
+          <p data-i18n="footerBlurb">A free web timer for focus and breaks.</p>
+        </div>
+        <div>
+          <h4 data-i18n="footerExplore">Explore</h4>
+          <ul>
+            <li><a href="/" data-i18n="footerTimer">Timer</a></li>
+            <li><a href="/pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
+            <li><a href="/study-timer/" data-i18n="footerStudy">Study timer</a></li>
+            <li><a href="/deep-work/" data-i18n="footerDeep">Deep work</a></li>
+            <li><a href="/break-guide/" data-i18n="footerBreak">Break guide</a></li>
+            <li><a href="/productivity/" data-i18n="footerGuides">Guides</a></li>
+            <li><a href="/dashboard/" data-i18n="footerDash">Dashboard</a></li>
+            <li><a href="/resources/" data-i18n="footerRes">Resources</a></li>
+            <li><a href="/calculators/" data-i18n="footerCalc">Calculators</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="footerSite">Site</h4>
+          <ul>
+            <li><a href="/about/" data-i18n="footerAbout">About</a></li>
+            <li><a href="/contact/" data-i18n="footerContact">Contact</a></li>
+            <li><a href="/privacy/" data-i18n="footerPrivacy">Privacy</a></li>
+            <li><a href="/terms/" data-i18n="footerTerms">Terms</a></li>
+            <li><a href="/disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
+            <li><a href="/sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> <span class="brand-text">Today's Focus</span>. <span data-i18n="footerCopy">All rights reserved.</span></span>
+        <span data-i18n="footerLocal">Focus logs stay in your browser.</span>
+      </div>
+    </div>
+  </footer>
+  <script src="/config.js"></script>
+  <script src="/site.js" defer></script>
+  <script type="module" src="/page.js"></script>
+</body>
+</html>

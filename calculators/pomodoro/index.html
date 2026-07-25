@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>포모도로 계산기: 몇 개가 필요할까 — 오늘의 집중</title>
+  <meta name="description" content="집중할 시간을 입력하면 필요한 포모도로(25분) 개수와 짧은·긴 휴식, 휴식을 포함한 총 소요 시간을 바로 계산해 주는 무료 포모도로 계산기입니다.">
+  <link rel="canonical" href="https://focus-timer.example/calculators/pomodoro/">
+  <meta name="theme-color" content="#6c5ce7">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="오늘의 집중">
+  <meta property="og:title" content="포모도로 계산기: 몇 개가 필요할까 — 오늘의 집중">
+  <meta property="og:description" content="집중 시간을 입력하면 필요한 포모도로 개수와 휴식, 총 소요 시간을 계산합니다.">
+  <meta property="og:url" content="https://focus-timer.example/calculators/pomodoro/">
+  <meta property="og:image" content="https://focus-timer.example/og-image.png">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="포모도로 계산기: 몇 개가 필요할까 — 오늘의 집중">
+  <meta name="twitter:description" content="집중 시간을 입력하면 필요한 포모도로 개수와 휴식, 총 소요 시간을 계산합니다.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://focus-timer.example/"},{"@type":"ListItem","position":2,"name":"계산기","item":"https://focus-timer.example/calculators/"},{"@type":"ListItem","position":3,"name":"포모도로 계산기","item":"https://focus-timer.example/calculators/pomodoro/"}]}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"포모도로 개수는 어떻게 계산하나요?","acceptedAnswer":{"@type":"Answer","text":"집중할 총 시간을 포모도로 한 개의 길이(기본 25분)로 나눈 뒤 올림합니다. 예를 들어 100분이면 25분짜리 4개가 필요합니다. 남는 시간이 있으면 마지막 한 개를 더합니다."}},
+    {"@type":"Question","name":"휴식 시간도 총 소요에 포함되나요?","acceptedAnswer":{"@type":"Answer","text":"네. 포모도로 사이마다 짧은 휴식(기본 5분)이 들어가고 4번째마다 긴 휴식(기본 15분)이 들어갑니다. 계산기는 이 휴식까지 더한 실제 소요 시간을 함께 보여 줍니다."}},
+    {"@type":"Question","name":"길이를 바꿔서 계산할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"네. 포모도로 길이와 휴식 길이를 원하는 값으로 바꾸면 그에 맞춰 개수와 총 시간이 다시 계산됩니다. 집중이 잘 되는 날에는 30~50분으로 늘려도 좋습니다."}}
+  ]}
+  </script>
+</head>
+<body>
+  <a href="#main" class="skip-link">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">🎯</span>오늘의 집중</a>
+      <button class="nav-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="primary-nav">☰</button>
+      <nav id="primary-nav" class="nav" aria-label="주요 메뉴">
+        <a href="/">Home</a>
+        <a href="/pomodoro/">Focus Timer</a>
+        <a href="/productivity/">Productivity</a>
+        <a href="/study-timer/">Study</a>
+        <a href="/deep-work/">Deep Work</a>
+        <a href="/resources/">Resources</a>
+        <a href="/about/">About</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="wrap">
+    <nav class="breadcrumb" aria-label="탐색 경로"><ol><li><a href="/">홈</a></li><li><a href="/calculators/">계산기</a></li><li aria-current="page">포모도로 계산기</li></ol></nav>
+    <article class="article">
+      <header>
+        <h1>포모도로 계산기: 몇 개가 필요할까요?</h1>
+        <p class="article-meta">집중할 시간을 넣으면 필요한 포모도로 수와 휴식, 총 소요 시간을 계산합니다.</p>
+      </header>
+
+      <div class="calc-card">
+        <div id="calc-pomodoro" class="calc-form">
+          <div class="calc-field"><label for="pc-hours">집중 시간 (시간)</label><input type="number" id="pc-hours" min="0" max="24" inputmode="numeric" value="2"></div>
+          <div class="calc-field"><label for="pc-minutes">집중 시간 (분)</label><input type="number" id="pc-minutes" min="0" max="59" inputmode="numeric" value="0"></div>
+          <div class="calc-field"><label for="pc-work">포모도로 길이 (분)</label><input type="number" id="pc-work" min="1" max="120" inputmode="numeric" value="25"></div>
+          <div class="calc-field"><label for="pc-break">짧은 휴식 (분)</label><input type="number" id="pc-break" min="0" max="60" inputmode="numeric" value="5"></div>
+        </div>
+        <div id="pc-result" class="calc-result" aria-live="polite"></div>
+      </div>
+
+      <h2>어떻게 계산하나요?</h2>
+      <p>집중할 총 시간을 포모도로 한 개의 길이로 나눈 뒤 올림해 개수를 구합니다. 포모도로 사이마다 짧은 휴식이 들어가고, 네 번째마다 긴 휴식(기본 15분)이 들어갑니다. 총 소요 시간은 집중 시간과 이 휴식을 모두 더한 값입니다. 실제로는 마지막 포모도로 뒤에는 휴식을 넣지 않습니다.</p>
+      <div class="callout note"><p>계산 결과는 계획을 세우기 위한 참고치입니다. 실제로는 컨디션에 따라 개수와 휴식을 유연하게 조정하세요. 결과를 확인했다면 <a href="/#timer">타이머</a>에서 포모도로 프리셋으로 바로 시작할 수 있습니다.</p></div>
+
+      <h2>자주 묻는 질문</h2>
+      <div class="faq-list">
+        <details class="faq-item"><summary>포모도로 개수는 어떻게 계산하나요?</summary><div class="faq-body"><p>집중할 총 시간을 포모도로 한 개의 길이(기본 25분)로 나눈 뒤 올림합니다. 예를 들어 100분이면 25분짜리 4개가 필요합니다. 남는 시간이 있으면 마지막 한 개를 더합니다.</p></div></details>
+        <details class="faq-item"><summary>휴식 시간도 총 소요에 포함되나요?</summary><div class="faq-body"><p>네. 포모도로 사이마다 짧은 휴식(기본 5분)이 들어가고 4번째마다 긴 휴식(기본 15분)이 들어갑니다. 계산기는 이 휴식까지 더한 실제 소요 시간을 함께 보여 줍니다.</p></div></details>
+        <details class="faq-item"><summary>길이를 바꿔서 계산할 수 있나요?</summary><div class="faq-body"><p>네. 포모도로 길이와 휴식 길이를 원하는 값으로 바꾸면 그에 맞춰 개수와 총 시간이 다시 계산됩니다. 집중이 잘 되는 날에는 30~50분으로 늘려도 좋습니다.</p></div></details>
+      </div>
+
+      <aside class="related">
+        <h2>함께 보면 좋은 것</h2>
+        <ul>
+          <li><a href="/pomodoro/">포모도로 공부법과 타이머 사용법</a></li>
+          <li><a href="/calculators/study-time/">공부 시간 계산기</a></li>
+          <li><a href="/calculators/work-session/">작업 세션 플래너</a></li>
+        </ul>
+      </aside>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>오늘의 집중</h4>
+          <p>집중할 시간과 쉴 시간을 간단하게 관리하는 무료 웹 타이머입니다. 이 사이트는 생산성 보조 도구이며 의료 서비스가 아닙니다.</p>
+        </div>
+        <div>
+          <h4>둘러보기</h4>
+          <ul>
+            <li><a href="/">타이머</a></li>
+            <li><a href="/pomodoro/">포모도로</a></li>
+            <li><a href="/study-timer/">공부 타이머</a></li>
+            <li><a href="/deep-work/">딥워크</a></li>
+            <li><a href="/break-guide/">휴식 가이드</a></li>
+            <li><a href="/productivity/">집중 가이드</a></li>
+            <li><a href="/dashboard/">대시보드</a></li>
+            <li><a href="/resources/">자료실</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>사이트 정보</h4>
+          <ul>
+            <li><a href="/about/">소개</a></li>
+            <li><a href="/contact/">문의</a></li>
+            <li><a href="/privacy/">개인정보처리방침</a></li>
+            <li><a href="/terms/">이용약관</a></li>
+            <li><a href="/disclaimer/">면책 안내</a></li>
+            <li><a href="/sitemap/">사이트맵</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> 오늘의 집중. All rights reserved.</span>
+        <span>집중 기록은 브라우저에만 저장됩니다.</span>
+      </div>
+    </div>
+  </footer>
+  <script src="/config.js"></script>
+  <script src="/site.js" defer></script>
+  <script type="module" src="/calculators.js"></script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title data-i18n="aboutTitle">About | Today's Focus</title>
+  <meta name="description" content="오늘의 집중은 집중할 시간과 쉴 시간을 간단하게 관리하는 무료 웹 타이머입니다. 제작 목적과 운영 원칙, 콘텐츠 작성 기준을 소개합니다.">
+  <link rel="canonical" href="https://focus-timer.example/about/">
+  <meta name="theme-color" content="#6c5ce7">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="오늘의 집중">
+  <meta property="og:title" content="사이트 소개 | 오늘의 집중">
+  <meta property="og:description" content="오늘의 집중은 집중할 시간과 쉴 시간을 간단하게 관리하는 무료 웹 타이머입니다. 제작 목적과 운영 원칙, 콘텐츠 작성 기준을 소개합니다.">
+  <meta property="og:url" content="https://focus-timer.example/about/">
+  <meta property="og:image" content="https://focus-timer.example/og-image.png">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="사이트 소개 | 오늘의 집중">
+  <meta name="twitter:description" content="오늘의 집중은 집중할 시간과 쉴 시간을 간단하게 관리하는 무료 웹 타이머입니다. 제작 목적과 운영 원칙, 콘텐츠 작성 기준을 소개합니다.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "홈", "item": "https://focus-timer.example/" },
+      { "@type": "ListItem", "position": 2, "name": "소개", "item": "https://focus-timer.example/about/" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "오늘의 집중",
+    "url": "https://focus-timer.example/about/",
+    "logo": "https://focus-timer.example/og-image.png"
+  }
+  </script>
+</head>
+<body>
+  <a href="#main" class="skip-link" data-i18n="skipToMain">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
+      <div class="header-actions">
+        <button type="button" id="langToggle" class="lang-toggle" data-next-lang="ko" aria-label="Change language">한국어</button>
+        <button class="nav-toggle" data-i18n-aria="openMenu" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">☰</button>
+      </div>
+      <nav id="primary-nav" class="nav" aria-label="Primary">
+        <a href="/" data-i18n="navHome">Home</a>
+        <a href="/pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
+        <a href="/productivity/" data-i18n="navProductivity">Productivity</a>
+        <a href="/study-timer/" data-i18n="navStudy">Study</a>
+        <a href="/deep-work/" data-i18n="navDeepWork">Deep Work</a>
+        <a href="/resources/" data-i18n="navResources">Resources</a>
+        <a href="/about/" data-i18n="navAbout" aria-current="page">About</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="section wrap">
+      <div data-lang="ko" class="prose">
+        <h1>오늘의 집중 소개</h1>
+
+        <p>오늘의 집중은 집중할 시간과 쉴 시간을 간단하게 관리하도록 돕는 무료 웹 타이머입니다. 복잡한 설정이나 회원 가입 없이, 브라우저에서 바로 타이머를 켜고 한 세트씩 집중과 휴식을 반복할 수 있도록 만들었습니다. 화려한 기능을 늘리기보다, 필요한 순간에 방해 없이 시간을 재는 일에 집중했습니다.</p>
+
+        <h2>제작 목적</h2>
+        <p>집중이 어려운 이유는 대부분 의지보다 조건에 있습니다. 언제 얼마나 집중하고 언제 쉴지가 정해져 있지 않으면 매번 처음부터 마음을 다잡아야 하고, 그 과정에서 힘이 빠집니다. 이 사이트는 그 결정을 대신 담아 두는 작은 틀입니다. 시간을 나누어 반복하는 일을 타이머에 맡기고, 사용자는 눈앞의 한 가지 일에만 손을 두도록 돕는 것이 이 사이트를 만든 이유입니다.</p>
+
+        <h2>운영 원칙</h2>
+        <p>몇 가지 원칙을 지키며 운영합니다. 첫째, 과장하지 않습니다. 특정 기법이 누구에게나 똑같이 통한다거나 효과를 보장한다는 식의 표현은 쓰지 않고, 사람마다 맞는 방식이 다를 수 있다는 점을 함께 안내합니다. 둘째, 개인정보를 최소한으로만 다룹니다. 집중 기록과 설정은 사용자의 브라우저 안에만 저장되며, 별도의 서버에 모아 두지 않습니다. 셋째, 무료로 제공합니다. 타이머와 안내 글은 누구나 비용 없이 이용할 수 있습니다.</p>
+
+        <h2>어떤 분에게 유용한가요</h2>
+        <p>공부나 업무를 앞두고 좀처럼 시작하지 못하는 분, 시간을 나눠 집중과 휴식을 규칙적으로 반복하고 싶은 분, 화면 가득한 복잡한 앱 대신 단순한 타이머 하나면 충분한 분에게 유용합니다. 포모도로처럼 짧게 끊어 가는 방식이 필요한 분도, 딥워크처럼 더 긴 몰입 블록이 필요한 분도 각자에게 맞게 시간을 설정해 쓸 수 있습니다.</p>
+
+        <h2>콘텐츠 작성 원칙</h2>
+        <p>사이트에 싣는 안내 글은 직접 작성하며, 특정 상황을 가정한 현실적인 예시와 함께 실천할 수 있는 방법을 담으려 합니다. 근거가 불확실한 단정은 피하고, 방법을 소개할 때에도 "이렇게 하면 무조건 된다"가 아니라 "이런 조건에서 이렇게 시험해 볼 수 있다"는 태도로 씁니다. 글은 계속 다듬으며, 각 글에는 마지막으로 손본 날짜를 표시합니다.</p>
+
+        <h2>알려 드리는 점</h2>
+        <p>이 사이트는 생산성 보조 도구이며 의료 서비스가 아닙니다. 여기에서 소개하는 방법은 집중과 휴식의 시간을 관리하는 데 도움을 주려는 것일 뿐, 질병의 진단이나 치료를 대신하지 않습니다. 집중 곤란이나 관련 어려움이 오래 이어지고 일상생활에 지장이 크다면, 이 사이트의 안내에만 기대지 말고 의료 전문가와 상담하시길 권합니다.</p>
+
+        <h2>문의</h2>
+        <p>오류 제보나 개선 제안이 있으시면 언제든 알려 주세요. 자세한 안내는 <a href="/contact/">문의 페이지</a>에서 확인하실 수 있습니다.</p>
+      </div>
+
+      <div data-lang="en" class="prose">
+        <h1>About Today's Focus</h1>
+
+        <p>Today's Focus is a free web timer that helps you manage focus time and break time simply. There is no complicated setup or sign-up — open your browser, start the timer, and repeat focus and rest one block at a time. Rather than piling on features, we focused on counting time without getting in your way when you need it.</p>
+
+        <h2>Why we built it</h2>
+        <p>Focus is usually harder because of conditions, not willpower. When you have not decided when to focus, for how long, and when to rest, you have to rebuild momentum from scratch every time — and that drains energy. This site is a small frame that holds those decisions for you. The timer handles the rhythm of alternating blocks; you keep your hands on one task in front of you.</p>
+
+        <h2>How we operate</h2>
+        <p>We follow a few principles. First, we do not overpromise. We avoid language that claims any technique works the same for everyone or guarantees results, and we note that what fits varies from person to person. Second, we keep personal data to a minimum. Focus logs and settings stay only in your browser — nothing is collected on a server. Third, the timer and guides are free for anyone to use.</p>
+
+        <h2>Who it helps</h2>
+        <p>This site is useful if you struggle to start studying or work, want a steady rhythm of focus and rest, or prefer one simple timer over a screen full of apps. Whether you need short Pomodoro-style blocks or longer deep-work sessions, you can set the length that fits you.</p>
+
+        <h2>How we write guides</h2>
+        <p>Guides on this site are written in-house with realistic examples and steps you can try. We avoid claims we cannot support, and when we suggest a method we say "you can test this in these conditions" rather than "this always works." We keep revising articles and show the date each page was last updated.</p>
+
+        <h2>Please note</h2>
+        <p>This site is a productivity aid, not a medical service. The methods here are meant to help you manage focus and break time — they do not diagnose or treat illness. If focus difficulties persist and significantly affect daily life, please consult a qualified professional rather than relying on this site alone.</p>
+
+        <h2>Contact</h2>
+        <p>Report bugs or share improvement ideas anytime. See the <a href="/contact/">contact page</a> for details.</p>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4 class="brand-text">Today's Focus</h4>
+          <p data-i18n="footerBlurb">A free web timer for focus and breaks.</p>
+        </div>
+        <div>
+          <h4 data-i18n="footerExplore">Explore</h4>
+          <ul>
+            <li><a href="/" data-i18n="footerTimer">Timer</a></li>
+            <li><a href="/pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
+            <li><a href="/study-timer/" data-i18n="footerStudy">Study timer</a></li>
+            <li><a href="/deep-work/" data-i18n="footerDeep">Deep work</a></li>
+            <li><a href="/break-guide/" data-i18n="footerBreak">Break guide</a></li>
+            <li><a href="/productivity/" data-i18n="footerGuides">Guides</a></li>
+            <li><a href="/dashboard/" data-i18n="footerDash">Dashboard</a></li>
+            <li><a href="/resources/" data-i18n="footerRes">Resources</a></li>
+            <li><a href="/calculators/" data-i18n="footerCalc">Calculators</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="footerSite">Site</h4>
+          <ul>
+            <li><a href="/about/" data-i18n="footerAbout">About</a></li>
+            <li><a href="/contact/" data-i18n="footerContact">Contact</a></li>
+            <li><a href="/privacy/" data-i18n="footerPrivacy">Privacy</a></li>
+            <li><a href="/terms/" data-i18n="footerTerms">Terms</a></li>
+            <li><a href="/disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
+            <li><a href="/sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> <span class="brand-text">Today's Focus</span>. <span data-i18n="footerCopy">All rights reserved.</span></span>
+        <span data-i18n="footerLocal">Focus logs stay in your browser.</span>
+      </div>
+    </div>
+  </footer>
+  <script src="/config.js"></script>
+  <script src="/site.js" defer></script>
+  <script type="module" src="/page.js"></script>
+</body>
+</html>

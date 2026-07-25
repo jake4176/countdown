@@ -5,7 +5,8 @@ import {
   dateKey, humanizeSeconds, MAX_DURATION,
   daySummary, dailySeries, goalProgress, computeStreak, DEFAULT_GOAL,
 } from './core.js';
-import { startOnboarding, markOnboarded, showTipsAgain } from './onboard.js';
+import { startOnboarding, markOnboarded, showTipsAgain, refreshOnboardingCopy } from './onboard.js';
+import { initI18n, getLang, onLangChange, t } from './i18n.js';
 
 // ---------- storage keys ----------
 const K = {
@@ -19,9 +20,17 @@ const K = {
   running: 'ft.running',   // in-progress snapshot
 };
 
-const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const PRESET_NAMES = { pomodoro: 'Pomodoro', shortBreak: 'Short Break', longBreak: 'Long Break', quick: 'Quick Task', study: 'Study', deepWork: 'Deep Work' };
-const hz = (s) => humanizeSeconds(s, 'en');
+const PRESET_KEYS = {
+  pomodoro: 'presetPomodoro',
+  shortBreak: 'presetShortBreak',
+  longBreak: 'presetLongBreak',
+  quick: 'presetQuick',
+  study: 'presetStudy',
+  deepWork: 'presetDeepWork',
+};
+function presetName(id) { return t(PRESET_KEYS[id] || id, getLang()); }
+function weekdays() { return t('weekdays', getLang()).split(','); }
+function hz(s) { return humanizeSeconds(s, getLang()); }
 
 const state = {
   status: 'idle',     // 'idle' | 'running' | 'paused' | 'completed'
@@ -197,7 +206,7 @@ function applyCustom() {
   const sec = document.getElementById('inputSec').value;
   if (min === '' && sec === '') return;
   const total = validateDuration(parseDuration(min, sec));
-  if (total === null) { showCustomError('Enter a time between 1 second and 24 hours.'); return; }
+  if (total === null) { showCustomError(t('customError', getLang())); return; }
   clearCustomError();
   state.presetId = 'custom'; state.kind = 'focus'; state.duration = total;
   state.elapsed = 0; state.baseElapsed = 0; state.status = 'idle'; state.distractions = 0;
@@ -213,29 +222,32 @@ function refreshNotifyButton() {
   if (!('Notification' in window)) { btn.hidden = true; return; }
   if (Notification.permission === 'granted') { btn.hidden = true; return; }
   btn.hidden = false;
-  btn.textContent = Notification.permission === 'denied' ? 'Notifications blocked' : 'Enable notifications';
+  const lang = getLang();
+  btn.textContent = Notification.permission === 'denied' ? t('notifyBlocked', lang) : t('enableNotify', lang);
   btn.disabled = Notification.permission === 'denied';
 }
 function requestNotify() {
   if (!('Notification' in window)) return;
-  Notification.requestPermission().then(() => { refreshNotifyButton(); showToast('Notification preference updated.'); });
+  Notification.requestPermission().then(() => { refreshNotifyButton(); showToast(t('notifyUpdated', getLang())); });
 }
 function notify() {
   if (!('Notification' in window) || Notification.permission !== 'granted') return;
   if (document.visibilityState === 'visible') return;
+  const lang = getLang();
   try {
-    new Notification("Today's Focus", {
-      body: state.kind === 'focus' ? 'Focus block done. Take a short break?' : 'Break over. Ready to focus again?',
+    new Notification(t('notifyTitle', lang), {
+      body: state.kind === 'focus' ? t('notifyFocusDone', lang) : t('notifyBreakDone', lang),
     });
   } catch { /* ignore */ }
 }
 
 // ---------- next timer suggestion ----------
 function suggestNext() {
+  const lang = getLang();
   const next = state.kind === 'focus'
-    ? { preset: PRESETS.find(p => p.id === 'shortBreak'), label: 'Start 5-min break' }
-    : { preset: PRESETS.find(p => p.id === 'pomodoro'), label: 'Start 25-min focus' };
-  const msg = state.kind === 'focus' ? 'Nice work! Take a short break?' : 'Break done! Ready to focus?';
+    ? { preset: PRESETS.find(p => p.id === 'shortBreak'), label: t('toastStartBreak', lang) }
+    : { preset: PRESETS.find(p => p.id === 'pomodoro'), label: t('toastStartFocus', lang) };
+  const msg = state.kind === 'focus' ? t('toastFocusDone', lang) : t('toastBreakDone', lang);
   showToast(msg, next.label, () => { applyPreset(next.preset); start(); });
   if (state.autoStart) { applyPreset(next.preset); start(); }
 }
@@ -253,20 +265,21 @@ function render() {
   const pill = document.getElementById('modePill');
   const isBreak = state.kind === 'break';
   panel.classList.toggle('is-break', isBreak);
+  const lang = getLang();
   const preset = PRESETS.find(p => p.id === state.presetId);
-  const label = state.presetId === 'custom' ? 'Custom' : isBreak ? 'Break' : 'Focus';
+  const label = state.presetId === 'custom' ? t('labelCustom', lang) : isBreak ? t('labelBreak', lang) : t('labelFocus', lang);
   pill.textContent = (preset ? preset.icon + ' ' : '') + label;
 
   const note = document.getElementById('displayNote');
-  if (state.status === 'completed') note.textContent = isBreak ? 'Break done · focus again' : 'Focus complete';
-  else if (state.status === 'running') note.textContent = isBreak ? 'On break' : 'Focusing';
-  else if (state.status === 'paused') note.textContent = 'Paused';
-  else note.textContent = isBreak ? 'Break ready' : 'Ready to focus';
+  if (state.status === 'completed') note.textContent = isBreak ? t('noteBreakDone', lang) : t('noteFocusDone', lang);
+  else if (state.status === 'running') note.textContent = isBreak ? t('noteBreak', lang) : t('noteFocusing', lang);
+  else if (state.status === 'paused') note.textContent = t('notePaused', lang);
+  else note.textContent = isBreak ? t('noteReadyBreak', lang) : t('noteReadyFocus', lang);
 
   const startBtn = document.getElementById('startBtn');
-  startBtn.textContent = state.status === 'running' ? 'Pause'
-    : state.status === 'paused' ? 'Resume'
-    : state.status === 'completed' ? 'Restart' : 'Start';
+  startBtn.textContent = state.status === 'running' ? t('pause', lang)
+    : state.status === 'paused' ? t('resume', lang)
+    : state.status === 'completed' ? t('restart', lang) : t('start', lang);
   startBtn.setAttribute('aria-label', startBtn.textContent);
 
   document.querySelectorAll('.preset-card').forEach(c => c.setAttribute('aria-pressed', String(c.dataset.preset === state.presetId)));
@@ -282,7 +295,7 @@ function render() {
   }
 
   document.title = (state.status === 'running' || state.status === 'paused')
-    ? `${timeStr} · Today's Focus` : "Today's Focus — Pomodoro & Productivity Timer";
+    ? t('docTitleRunning', lang, { time: timeStr }) : t('docTitle', lang);
 }
 
 function renderStats() {
@@ -301,8 +314,9 @@ function renderStats() {
   setText('heroTime', hz(today.seconds));
   setText('heroStreak', String(streak));
 
-  const unit = gp.type === 'minutes' ? 'min' : 'sessions';
-  setText('goalText', `${gp.current} / ${gp.target} ${unit}${gp.met ? ' · done' : ''}`);
+  const lang = getLang();
+  const unit = gp.type === 'minutes' ? t('unitMinutes', lang) : t('unitSessions', lang);
+  setText('goalText', `${gp.current} / ${gp.target} ${unit}${gp.met ? t('goalDone', lang) : ''}`);
   const bar = document.getElementById('goalBar');
   if (bar) { bar.style.width = `${Math.round(gp.ratio * 100)}%`; bar.classList.toggle('done', gp.met); }
   const gt = document.getElementById('goalType'); if (gt) gt.value = goal.type;
@@ -319,13 +333,15 @@ function renderStats() {
       const col = document.createElement('div');
       col.className = 'bar-col';
       const mins = Math.round(d.seconds / 60);
-      const wd = WEEKDAYS[new Date(d.key.split('-')[0], d.key.split('-')[1] - 1, d.key.split('-')[2]).getDay()];
+      const wd = weekdays()[new Date(d.key.split('-')[0], d.key.split('-')[1] - 1, d.key.split('-')[2]).getDay()];
       const h = Math.round((d.seconds / max) * 100);
       col.innerHTML =
         `<span class="bar-val">${mins > 0 ? mins : ''}</span>` +
         `<div class="bar${d.key === todayKey ? ' today' : ''}" style="height:${d.seconds > 0 ? Math.max(6, h) : 2}%"></div>` +
         `<span class="bar-label">${wd}</span>`;
-      col.title = `${d.key} · ${d.sessions} sessions · ${hz(d.seconds)} · ${d.distractions} distractions`;
+      col.title = t('chartTitle', lang, {
+        date: d.key, sessions: d.sessions, time: hz(d.seconds), distract: d.distractions,
+      });
       chart.appendChild(col);
     });
   }
@@ -334,14 +350,14 @@ function renderStats() {
   if (recent) {
     const last = sessions.slice(-5).reverse();
     if (!last.length) {
-      recent.innerHTML = '<li class="recent-empty">No completed sessions yet. Start the timer above.</li>';
+      recent.innerHTML = `<li class="recent-empty">${escapeHtml(t('recentEmpty', lang))}</li>`;
     } else {
       recent.innerHTML = last.map(s => {
-        const t = new Date(s.start);
-        const hh = String(t.getHours()).padStart(2, '0');
-        const mm = String(t.getMinutes()).padStart(2, '0');
-        const lbl = (s.label && s.label.trim()) || 'No label';
-        const dis = s.distractions ? ` · ${s.distractions} distractions` : '';
+        const dt = new Date(s.start);
+        const hh = String(dt.getHours()).padStart(2, '0');
+        const mm = String(dt.getMinutes()).padStart(2, '0');
+        const lbl = (s.label && s.label.trim()) || t('noLabel', lang);
+        const dis = s.distractions ? t('distractN', lang, { n: s.distractions }) : '';
         return `<li><span class="rs-label">${escapeHtml(lbl)}</span><span class="rs-meta">${s.date} ${hh}:${mm} · ${hz(s.dur)}${dis}</span></li>`;
       }).join('');
     }
@@ -371,10 +387,10 @@ function hideToast() { const el = document.getElementById('toast'); if (el) el.c
 
 // ---------- 데이터 초기화 ----------
 function resetData() {
-  if (!window.confirm('Clear all session history and stats? This cannot be undone.')) return;
+  if (!window.confirm(t('clearConfirm', getLang()))) return;
   lsDel(K.stats); lsSet(K.sessions, '[]');
   renderStats();
-  showToast('Focus history cleared.');
+  showToast(t('cleared', getLang()));
 }
 
 // ---------- handlers ----------
@@ -414,7 +430,7 @@ function restoreRunning() {
     state.elapsed = snap.duration; state.baseElapsed = snap.duration; state.startedAt = snap.startedAt;
     state.status = 'completed';
     lsDel(K.running); recordSession(); render();
-    showToast('Your timer finished while you were away.');
+    showToast(t('toastAway', getLang()));
     return true;
   }
   state.baseElapsed = snap.baseElapsed; state.startedAt = snap.startedAt; state.elapsed = elapsedNow;
@@ -433,18 +449,29 @@ function buildPresetCards() {
     const btn = document.createElement('button');
     btn.type = 'button'; btn.className = 'preset-card'; btn.dataset.preset = p.id;
     btn.setAttribute('aria-pressed', 'false');
-    btn.setAttribute('aria-label', `Select ${PRESET_NAMES[p.id]} ${p.min} minute timer`);
+    const lang = getLang();
+    const name = presetName(p.id);
+    btn.setAttribute('aria-label', t('presetAria', lang, { name, min: p.min }));
     btn.innerHTML =
       `<span class="icon" aria-hidden="true">${p.icon}</span>` +
-      `<span class="name">${PRESET_NAMES[p.id]}</span>` +
-      `<span class="time">${p.min} min</span>` +
-      `<span class="badge${p.kind === 'break' ? ' break' : ''}">${p.kind === 'break' ? 'Break' : 'Focus'}</span>`;
+      `<span class="name">${name}</span>` +
+      `<span class="time">${p.min} ${lang === 'ko' ? '분' : 'min'}</span>` +
+      `<span class="badge${p.kind === 'break' ? ' break' : ''}">${p.kind === 'break' ? t('badgeBreak', lang) : t('badgeFocus', lang)}</span>`;
     btn.addEventListener('click', () => applyPreset(p));
     grid.appendChild(btn);
   });
 }
 
 function init() {
+  initI18n();
+  onLangChange(() => {
+    buildPresetCards();
+    render();
+    renderStats();
+    refreshNotifyButton();
+    refreshOnboardingCopy();
+  });
+
   state.soundOn = lsGet(K.sound) !== '0';
   state.autoStart = lsGet(K.autostart) === '1';
   migrateLegacyStats();
@@ -499,7 +526,11 @@ function init() {
   }
 
   // Defer tips so the timer paints first.
-  requestAnimationFrame(() => startOnboarding());
+  // ?tips=1 (or ?tips=true) forces the coachmarks even if already dismissed.
+  requestAnimationFrame(() => {
+    const forceTips = /(?:\?|&)tips=(?:1|true)\b/i.test(location.search);
+    startOnboarding(forceTips);
+  });
 }
 
 init();
