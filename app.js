@@ -1,255 +1,505 @@
-import { formatTime, parseDuration } from './core.js';
-import { t, SUPPORTED_LANGS } from './locales.js';
+// Main timer + focus platform — Today's Focus
+// Pure logic lives in core.js; this file owns DOM, timing, and storage.
+import {
+  formatTime, parseDuration, validateDuration, PRESETS,
+  dateKey, humanizeSeconds, MAX_DURATION,
+  daySummary, dailySeries, goalProgress, computeStreak, DEFAULT_GOAL,
+} from './core.js';
+import { startOnboarding, markOnboarded, showTipsAgain } from './onboard.js';
 
-const MODE_KEY = 'timer.mode';
-const DUR_KEY = 'timer.duration';
-const LANG_KEY = 'timer.lang';
+// ---------- storage keys ----------
+const K = {
+  duration: 'ft.duration',
+  preset: 'ft.preset',
+  sound: 'ft.sound',
+  autostart: 'ft.autostart',
+  stats: 'ft.stats',       // legacy aggregate (migration)
+  sessions: 'ft.sessions', // session log array
+  goal: 'ft.goal',         // { type:'sessions'|'minutes', target:number }
+  running: 'ft.running',   // in-progress snapshot
+};
+
+const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const PRESET_NAMES = { pomodoro: 'Pomodoro', shortBreak: 'Short Break', longBreak: 'Long Break', quick: 'Quick Task', study: 'Study', deepWork: 'Deep Work' };
+const hz = (s) => humanizeSeconds(s, 'en');
 
 const state = {
-  mode: 'countdown',     // 'countdown' | 'stopwatch'
-  status: 'idle',        // 'idle' | 'running' | 'paused'
-  duration: 25 * 60,     // 카운트다운 총 시간(초)
-  elapsed: 0,            // 현재 실행에서 경과한 초
-  baseElapsed: 0,        // 시작/재개 시점에 고정된 경과값
-  startedAt: 0,          // 시작/재개 타임스탬프
-  lang: 'en',
+  status: 'idle',     // 'idle' | 'running' | 'paused' | 'completed'
+  duration: 25 * 60,
+  elapsed: 0,
+  baseElapsed: 0,
+  startedAt: 0,
+  presetId: 'pomodoro',
+  kind: 'focus',
+  soundOn: true,
+  autoStart: false,
+  distractions: 0,    // 현재 세션에서 기록한 방해 수
   timer: null,
 };
 
-// ---------- i18n ----------
-function detectLang() {
-  const saved = localStorage.getItem(LANG_KEY);
-  if (saved && SUPPORTED_LANGS.includes(saved)) return saved;
-  const base = (navigator.language || 'en').toLowerCase().split('-')[0];
-  return SUPPORTED_LANGS.includes(base) ? base : 'en';
+// ---------- 안전한 localStorage ----------
+function lsGet(k) { try { return localStorage.getItem(k); } catch { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); } catch { /* 무시 */ } }
+function lsDel(k) { try { localStorage.removeItem(k); } catch { /* 무시 */ } }
+
+// ---------- 세션 로그 ----------
+function loadSessions() {
+  try { const a = JSON.parse(lsGet(K.sessions) || '[]'); return Array.isArray(a) ? a : []; }
+  catch { return []; }
+}
+function saveSessions(list) {
+  const cutoffKey = dateKey(Date.now() - 180 * 24 * 3600 * 1000); // 최근 180일 보관
+  const pruned = list.filter(s => String(s.date) >= cutoffKey);
+  lsSet(K.sessions, JSON.stringify(pruned));
+}
+// 레거시 ft.stats(일자별 집계)를 세션 로그로 1회 변환.
+function migrateLegacyStats() {
+  if (lsGet(K.sessions) !== null) return;
+  let legacy = {};
+  try { legacy = JSON.parse(lsGet(K.stats) || '{}') || {}; } catch { legacy = {}; }
+  const out = [];
+  for (const [date, d] of Object.entries(legacy)) {
+    const n = Number(d && d.sessions) || 0;
+    const per = n > 0 ? Math.round((Number(d.seconds) || 0) / n) : 0;
+    const [y, m, dd] = date.split('-').map(Number);
+    for (let i = 0; i < n; i++) {
+      const start = new Date(y, (m || 1) - 1, dd || 1, 12, 0, 0).getTime() + i * 1000;
+      out.push({ id: `${date}-${i}`, date, start, dur: per, label: '기록 이전', distractions: 0 });
+    }
+  }
+  lsSet(K.sessions, JSON.stringify(out));
 }
 
-function applyLang(lang) {
-  state.lang = lang;
-  localStorage.setItem(LANG_KEY, lang);
-  document.documentElement.lang = lang;
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    el.textContent = t(el.dataset.i18n, lang);
-  });
-  populateLangSelect();
-  updateButtons();
+// ---------- 목표 ----------
+function loadGoal() {
+  try { const g = JSON.parse(lsGet(K.goal) || 'null'); return g && g.target ? g : { ...DEFAULT_GOAL }; }
+  catch { return { ...DEFAULT_GOAL }; }
 }
+function saveGoal(g) { lsSet(K.goal, JSON.stringify(g)); }
 
-function populateLangSelect() {
-  const sel = document.getElementById('langSelect');
-  sel.innerHTML = '';
-  SUPPORTED_LANGS.forEach(code => {
-    const opt = document.createElement('option');
-    opt.value = code;
-    opt.textContent = code.toUpperCase();
-    if (code === state.lang) opt.selected = true;
-    sel.appendChild(opt);
-  });
-}
-
-// ---------- audio (Web Audio API, 파일 의존성 없음) ----------
+// ---------- 오디오 ----------
 let audioCtx = null;
 function ensureAudio() {
-  if (!audioCtx) {
-    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch { audioCtx = null; }
-  }
+  if (!audioCtx) { try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch { audioCtx = null; } }
   if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
 }
-
 function beep() {
-  if (!audioCtx) return;
+  if (!state.soundOn || !audioCtx) return;
   const now = audioCtx.currentTime;
   for (let i = 0; i < 3; i++) {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.value = 880;
-    const t0 = now + i * 0.45;
+    osc.type = 'sine'; osc.frequency.value = 880;
+    const t0 = now + i * 0.42;
     gain.gain.setValueAtTime(0, t0);
-    gain.gain.linearRampToValueAtTime(0.3, t0 + 0.05);
-    gain.gain.linearRampToValueAtTime(0, t0 + 0.25);
+    gain.gain.linearRampToValueAtTime(0.28, t0 + 0.04);
+    gain.gain.linearRampToValueAtTime(0, t0 + 0.24);
     osc.connect(gain).connect(audioCtx.destination);
-    osc.start(t0);
-    osc.stop(t0 + 0.3);
+    osc.start(t0); osc.stop(t0 + 0.3);
   }
 }
 
-// ---------- timer core ----------
-function currentElapsed() {
-  return state.baseElapsed + (Date.now() - state.startedAt) / 1000;
+// ---------- 타이머 코어 ----------
+function currentElapsed() { return state.baseElapsed + (Date.now() - state.startedAt) / 1000; }
+
+function currentLabel() {
+  const el = document.getElementById('sessionLabel');
+  return el ? el.value.trim().slice(0, 40) : '';
+}
+
+function persistRunning() {
+  lsSet(K.running, JSON.stringify({
+    duration: state.duration, baseElapsed: state.baseElapsed, startedAt: state.startedAt,
+    presetId: state.presetId, kind: state.kind, distractions: state.distractions, label: currentLabel(),
+  }));
 }
 
 function start() {
-  if (state.mode === 'countdown' && state.duration <= 0) return;
-  if (state.status === 'running') return;
+  if (state.duration <= 0 || state.status === 'running') return;
   ensureAudio();
-  // 완료 상태에서 재시작 시 처음부터
-  if (state.mode === 'countdown' && state.elapsed >= state.duration) {
-    state.elapsed = 0;
-    document.body.classList.remove('completed');
-  }
+  if (state.status === 'completed' || state.elapsed >= state.duration) { state.elapsed = 0; state.distractions = 0; }
   state.status = 'running';
   state.baseElapsed = state.elapsed;
   state.startedAt = Date.now();
   state.timer = setInterval(tick, 200);
-  updateButtons();
+  persistRunning();
+  render();
 }
-
 function pause() {
   if (state.status !== 'running') return;
-  state.status = 'paused';
-  clearInterval(state.timer);
-  state.timer = null;
+  clearInterval(state.timer); state.timer = null;
   state.elapsed = currentElapsed();
-  updateButtons();
-}
-
-function reset() {
-  clearInterval(state.timer);
-  state.timer = null;
-  state.status = 'idle';
-  state.elapsed = 0;
-  state.baseElapsed = 0;
-  document.body.classList.remove('completed');
+  state.status = 'paused';
+  lsDel(K.running);
   render();
-  updateButtons();
 }
-
+function reset() {
+  clearInterval(state.timer); state.timer = null;
+  state.status = 'idle';
+  state.elapsed = 0; state.baseElapsed = 0; state.distractions = 0;
+  lsDel(K.running);
+  render();
+}
+function addMinute() {
+  state.duration = Math.min(MAX_DURATION, state.duration + 60);
+  if (state.status === 'completed') { state.status = 'idle'; state.elapsed = 0; }
+  if (state.status === 'running') persistRunning();
+  lsSet(K.duration, String(state.duration));
+  render();
+}
+function logDistraction() {
+  if (state.status !== 'running' && state.status !== 'paused') return;
+  state.distractions += 1;
+  if (state.status === 'running') persistRunning();
+  render();
+}
 function tick() {
   state.elapsed = currentElapsed();
-  if (state.mode === 'countdown' && state.elapsed >= state.duration) {
-    state.elapsed = state.duration;
-    complete();
-    return;
-  }
+  if (state.elapsed >= state.duration) { state.elapsed = state.duration; complete(); return; }
   render();
 }
-
 function complete() {
-  clearInterval(state.timer);
-  state.timer = null;
-  state.status = 'idle';
-  render();
-  beep();
-  document.body.classList.add('completed');
-  showToast(t('timesUp', state.lang));
-  updateButtons();
+  clearInterval(state.timer); state.timer = null;
+  state.status = 'completed';
+  lsDel(K.running);
+  recordSession();
+  beep(); notify(); render(); suggestNext();
 }
 
-function setDuration(sec) {
-  if (state.mode !== 'countdown') return;
-  if (state.status === 'running') return;
-  state.duration = sec > 0 ? sec : 0;
-  state.elapsed = 0;
-  state.baseElapsed = 0;
-  state.status = 'idle';
-  document.body.classList.remove('completed');
-  localStorage.setItem(DUR_KEY, String(state.duration));
-  document.querySelectorAll('.preset-btn').forEach(b => {
-    b.classList.toggle('active', Number(b.dataset.min) * 60 === state.duration);
+// 완료된 집중 세션을 로그에 기록(휴식은 제외).
+function recordSession() {
+  if (state.kind !== 'focus') return;
+  const start = state.startedAt || (Date.now() - state.duration * 1000);
+  const sessions = loadSessions();
+  sessions.push({
+    id: `${Date.now()}-${Math.round(state.duration)}`,
+    date: dateKey(Date.now()),
+    start,
+    dur: Math.round(state.duration),
+    label: currentLabel(),
+    distractions: state.distractions || 0,
   });
-  render();
-  updateButtons();
+  saveSessions(sessions);
+  renderStats();
 }
 
-function setMode(mode) {
-  reset();
-  state.mode = mode;
-  document.getElementById('modeCountdown').classList.toggle('active', mode === 'countdown');
-  document.getElementById('modeStopwatch').classList.toggle('active', mode === 'stopwatch');
-  document.body.classList.toggle('stopwatch', mode === 'stopwatch');
-  localStorage.setItem(MODE_KEY, mode);
-  render();
-  updateButtons();
+// ---------- 프리셋 / 사용자 지정 ----------
+function applyPreset(preset) {
+  if (state.status === 'running') return;
+  state.presetId = preset.id; state.kind = preset.kind; state.duration = preset.min * 60;
+  state.elapsed = 0; state.baseElapsed = 0; state.status = 'idle'; state.distractions = 0;
+  lsSet(K.duration, String(state.duration)); lsSet(K.preset, preset.id);
+  clearCustomError(); render();
+}
+function applyCustom() {
+  if (state.status === 'running') return;
+  const min = document.getElementById('inputMin').value;
+  const sec = document.getElementById('inputSec').value;
+  if (min === '' && sec === '') return;
+  const total = validateDuration(parseDuration(min, sec));
+  if (total === null) { showCustomError('Enter a time between 1 second and 24 hours.'); return; }
+  clearCustomError();
+  state.presetId = 'custom'; state.kind = 'focus'; state.duration = total;
+  state.elapsed = 0; state.baseElapsed = 0; state.status = 'idle'; state.distractions = 0;
+  lsSet(K.duration, String(total)); lsSet(K.preset, 'custom'); render();
+}
+function showCustomError(msg) { const el = document.getElementById('customError'); if (el) { el.textContent = msg; el.hidden = false; } }
+function clearCustomError() { const el = document.getElementById('customError'); if (el) { el.textContent = ''; el.hidden = true; } }
+
+// ---------- 브라우저 알림 ----------
+function refreshNotifyButton() {
+  const btn = document.getElementById('notifyBtn');
+  if (!btn) return;
+  if (!('Notification' in window)) { btn.hidden = true; return; }
+  if (Notification.permission === 'granted') { btn.hidden = true; return; }
+  btn.hidden = false;
+  btn.textContent = Notification.permission === 'denied' ? 'Notifications blocked' : 'Enable notifications';
+  btn.disabled = Notification.permission === 'denied';
+}
+function requestNotify() {
+  if (!('Notification' in window)) return;
+  Notification.requestPermission().then(() => { refreshNotifyButton(); showToast('Notification preference updated.'); });
+}
+function notify() {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  if (document.visibilityState === 'visible') return;
+  try {
+    new Notification("Today's Focus", {
+      body: state.kind === 'focus' ? 'Focus block done. Take a short break?' : 'Break over. Ready to focus again?',
+    });
+  } catch { /* ignore */ }
 }
 
-// ---------- rendering ----------
-function setRing(progress) {
-  document.getElementById('ring').style.setProperty('--progress', Math.max(0, Math.min(1, progress)));
+// ---------- next timer suggestion ----------
+function suggestNext() {
+  const next = state.kind === 'focus'
+    ? { preset: PRESETS.find(p => p.id === 'shortBreak'), label: 'Start 5-min break' }
+    : { preset: PRESETS.find(p => p.id === 'pomodoro'), label: 'Start 25-min focus' };
+  const msg = state.kind === 'focus' ? 'Nice work! Take a short break?' : 'Break done! Ready to focus?';
+  showToast(msg, next.label, () => { applyPreset(next.preset); start(); });
+  if (state.autoStart) { applyPreset(next.preset); start(); }
 }
+
+// ---------- 렌더링 ----------
+function setRing(p) { const r = document.getElementById('ring'); if (r) r.style.setProperty('--progress', Math.max(0, Math.min(1, p))); }
 
 function render() {
-  let displaySec;
-  if (state.mode === 'countdown') {
-    const remaining = Math.max(0, state.duration - state.elapsed);
-    displaySec = Math.ceil(remaining);
-    setRing(state.duration > 0 ? remaining / state.duration : 0);
-  } else {
-    displaySec = Math.floor(state.elapsed);
-    setRing(1);
+  const remaining = Math.max(0, state.duration - state.elapsed);
+  const timeStr = formatTime(Math.ceil(remaining));
+  document.getElementById('display').textContent = timeStr;
+  setRing(state.duration > 0 ? remaining / state.duration : 0);
+
+  const panel = document.getElementById('timerPanel');
+  const pill = document.getElementById('modePill');
+  const isBreak = state.kind === 'break';
+  panel.classList.toggle('is-break', isBreak);
+  const preset = PRESETS.find(p => p.id === state.presetId);
+  const label = state.presetId === 'custom' ? 'Custom' : isBreak ? 'Break' : 'Focus';
+  pill.textContent = (preset ? preset.icon + ' ' : '') + label;
+
+  const note = document.getElementById('displayNote');
+  if (state.status === 'completed') note.textContent = isBreak ? 'Break done · focus again' : 'Focus complete';
+  else if (state.status === 'running') note.textContent = isBreak ? 'On break' : 'Focusing';
+  else if (state.status === 'paused') note.textContent = 'Paused';
+  else note.textContent = isBreak ? 'Break ready' : 'Ready to focus';
+
+  const startBtn = document.getElementById('startBtn');
+  startBtn.textContent = state.status === 'running' ? 'Pause'
+    : state.status === 'paused' ? 'Resume'
+    : state.status === 'completed' ? 'Restart' : 'Start';
+  startBtn.setAttribute('aria-label', startBtn.textContent);
+
+  document.querySelectorAll('.preset-card').forEach(c => c.setAttribute('aria-pressed', String(c.dataset.preset === state.presetId)));
+  panel.classList.toggle('is-completed', state.status === 'completed');
+
+  // 방해 컨트롤: 집중 세션이 진행/일시정지 중일 때만 노출
+  const dWrap = document.getElementById('distractWrap');
+  if (dWrap) {
+    const show = (state.status === 'running' || state.status === 'paused') && state.kind === 'focus';
+    dWrap.hidden = !show;
+    const c = document.getElementById('distractCount');
+    if (c) c.textContent = String(state.distractions);
   }
-  document.getElementById('display').textContent = formatTime(displaySec);
+
+  document.title = (state.status === 'running' || state.status === 'paused')
+    ? `${timeStr} · Today's Focus` : "Today's Focus — Pomodoro & Productivity Timer";
 }
 
-function updateButtons() {
-  const btn = document.getElementById('startBtn');
-  btn.textContent = state.status === 'running' ? t('pause', state.lang) : t('start', state.lang);
-}
+function renderStats() {
+  const sessions = loadSessions();
+  const now = Date.now();
+  const today = daySummary(sessions, dateKey(now));
+  const goal = loadGoal();
+  const gp = goalProgress(today, goal);
+  const streak = computeStreak(sessions, now, goal);
 
-// ---------- toast ----------
+  setText('statSessions', String(today.sessions));
+  setText('statTime', hz(today.seconds));
+  setText('statDistract', String(today.distractions));
+  setText('statStreak', String(streak));
+  setText('heroSessions', String(today.sessions));
+  setText('heroTime', hz(today.seconds));
+  setText('heroStreak', String(streak));
+
+  const unit = gp.type === 'minutes' ? 'min' : 'sessions';
+  setText('goalText', `${gp.current} / ${gp.target} ${unit}${gp.met ? ' · done' : ''}`);
+  const bar = document.getElementById('goalBar');
+  if (bar) { bar.style.width = `${Math.round(gp.ratio * 100)}%`; bar.classList.toggle('done', gp.met); }
+  const gt = document.getElementById('goalType'); if (gt) gt.value = goal.type;
+  const gi = document.getElementById('goalTarget'); if (gi && document.activeElement !== gi) gi.value = String(goal.target);
+
+  // 최근 7일 차트
+  const chart = document.getElementById('weekChart');
+  if (chart) {
+    const week = dailySeries(sessions, now, 7);
+    const max = Math.max(1, ...week.map(d => d.seconds));
+    const todayKey = dateKey(now);
+    chart.innerHTML = '';
+    week.forEach(d => {
+      const col = document.createElement('div');
+      col.className = 'bar-col';
+      const mins = Math.round(d.seconds / 60);
+      const wd = WEEKDAYS[new Date(d.key.split('-')[0], d.key.split('-')[1] - 1, d.key.split('-')[2]).getDay()];
+      const h = Math.round((d.seconds / max) * 100);
+      col.innerHTML =
+        `<span class="bar-val">${mins > 0 ? mins : ''}</span>` +
+        `<div class="bar${d.key === todayKey ? ' today' : ''}" style="height:${d.seconds > 0 ? Math.max(6, h) : 2}%"></div>` +
+        `<span class="bar-label">${wd}</span>`;
+      col.title = `${d.key} · ${d.sessions} sessions · ${hz(d.seconds)} · ${d.distractions} distractions`;
+      chart.appendChild(col);
+    });
+  }
+
+  const recent = document.getElementById('recentSessions');
+  if (recent) {
+    const last = sessions.slice(-5).reverse();
+    if (!last.length) {
+      recent.innerHTML = '<li class="recent-empty">No completed sessions yet. Start the timer above.</li>';
+    } else {
+      recent.innerHTML = last.map(s => {
+        const t = new Date(s.start);
+        const hh = String(t.getHours()).padStart(2, '0');
+        const mm = String(t.getMinutes()).padStart(2, '0');
+        const lbl = (s.label && s.label.trim()) || 'No label';
+        const dis = s.distractions ? ` · ${s.distractions} distractions` : '';
+        return `<li><span class="rs-label">${escapeHtml(lbl)}</span><span class="rs-meta">${s.date} ${hh}:${mm} · ${hz(s.dur)}${dis}</span></li>`;
+      }).join('');
+    }
+  }
+}
+function setText(id, txt) { const el = document.getElementById(id); if (el) el.textContent = txt; }
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+
+// ---------- 토스트 ----------
 let toastTimer;
-function showToast(msg) {
+function showToast(msg, actionLabel, onAction) {
   const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.remove('hidden');
+  if (!el) return;
+  el.innerHTML = '';
+  el.appendChild(document.createTextNode(msg));
+  if (actionLabel && onAction) {
+    const b = document.createElement('button');
+    b.className = 'toast-action'; b.type = 'button'; b.textContent = actionLabel;
+    b.addEventListener('click', () => { hideToast(); onAction(); });
+    el.appendChild(b);
+  }
+  el.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.add('hidden'), 2500);
+  toastTimer = setTimeout(hideToast, actionLabel ? 8000 : 3000);
+}
+function hideToast() { const el = document.getElementById('toast'); if (el) el.classList.remove('show'); }
+
+// ---------- 데이터 초기화 ----------
+function resetData() {
+  if (!window.confirm('Clear all session history and stats? This cannot be undone.')) return;
+  lsDel(K.stats); lsSet(K.sessions, '[]');
+  renderStats();
+  showToast('Focus history cleared.');
 }
 
 // ---------- handlers ----------
 function onStart() {
+  markOnboarded();
   ensureAudio();
   if (state.status === 'running') pause();
   else start();
 }
-
-function onPreset(e) {
-  setDuration(Number(e.currentTarget.dataset.min) * 60);
-}
-
-function onCustomInput() {
-  if (state.status !== 'idle') return;
-  const m = document.getElementById('inputMin').value;
-  const s = document.getElementById('inputSec').value;
-  if (m === '' && s === '') return;
-  setDuration(parseDuration(m, s));
-}
-
 function onKeydown(e) {
-  const tag = e.target.tagName;
-  if (tag === 'INPUT' || tag === 'SELECT' || tag === 'BUTTON') return;
+  const tag = (e.target.tagName || '').toUpperCase();
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
   if (e.code === 'Space') { e.preventDefault(); onStart(); }
   else if (e.key === 'r' || e.key === 'R') reset();
+  else if (e.key === 'd' || e.key === 'D') logDistraction();
+}
+function onVisibility() {
+  if (state.status === 'running') {
+    state.elapsed = currentElapsed();
+    if (state.elapsed >= state.duration) { state.elapsed = state.duration; complete(); } else render();
+  }
 }
 
-// ---------- init ----------
+// ---------- 진행 중 타이머 복구 ----------
+function restoreRunning() {
+  let snap;
+  try { snap = JSON.parse(lsGet(K.running) || 'null'); } catch { snap = null; }
+  if (!snap || typeof snap.duration !== 'number') return false;
+  state.duration = snap.duration;
+  state.presetId = snap.presetId || 'custom';
+  state.kind = snap.kind === 'break' ? 'break' : 'focus';
+  state.distractions = Number(snap.distractions) || 0;
+  const labelEl = document.getElementById('sessionLabel');
+  if (labelEl && snap.label) labelEl.value = snap.label;
+  const elapsedNow = snap.baseElapsed + (Date.now() - snap.startedAt) / 1000;
+  if (elapsedNow >= snap.duration) {
+    state.elapsed = snap.duration; state.baseElapsed = snap.duration; state.startedAt = snap.startedAt;
+    state.status = 'completed';
+    lsDel(K.running); recordSession(); render();
+    showToast('Your timer finished while you were away.');
+    return true;
+  }
+  state.baseElapsed = snap.baseElapsed; state.startedAt = snap.startedAt; state.elapsed = elapsedNow;
+  state.status = 'running';
+  state.timer = setInterval(tick, 200);
+  render();
+  return true;
+}
+
+// ---------- 초기화 ----------
+function buildPresetCards() {
+  const grid = document.getElementById('presetGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  PRESETS.forEach(p => {
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'preset-card'; btn.dataset.preset = p.id;
+    btn.setAttribute('aria-pressed', 'false');
+    btn.setAttribute('aria-label', `Select ${PRESET_NAMES[p.id]} ${p.min} minute timer`);
+    btn.innerHTML =
+      `<span class="icon" aria-hidden="true">${p.icon}</span>` +
+      `<span class="name">${PRESET_NAMES[p.id]}</span>` +
+      `<span class="time">${p.min} min</span>` +
+      `<span class="badge${p.kind === 'break' ? ' break' : ''}">${p.kind === 'break' ? 'Break' : 'Focus'}</span>`;
+    btn.addEventListener('click', () => applyPreset(p));
+    grid.appendChild(btn);
+  });
+}
+
 function init() {
-  state.lang = detectLang();
-  applyLang(state.lang);
+  state.soundOn = lsGet(K.sound) !== '0';
+  state.autoStart = lsGet(K.autostart) === '1';
+  migrateLegacyStats();
 
-  state.mode = localStorage.getItem(MODE_KEY) === 'stopwatch' ? 'stopwatch' : 'countdown';
-  const savedDur = parseInt(localStorage.getItem(DUR_KEY), 10);
-  if (savedDur > 0) state.duration = savedDur;
+  buildPresetCards();
 
-  document.getElementById('langSelect').addEventListener('change', e => applyLang(e.target.value));
+  const soundToggle = document.getElementById('soundToggle');
+  const autoToggle = document.getElementById('autoStartToggle');
+  if (soundToggle) { soundToggle.checked = state.soundOn; soundToggle.addEventListener('change', () => { state.soundOn = soundToggle.checked; lsSet(K.sound, state.soundOn ? '1' : '0'); if (state.soundOn) ensureAudio(); }); }
+  if (autoToggle) { autoToggle.checked = state.autoStart; autoToggle.addEventListener('change', () => { state.autoStart = autoToggle.checked; lsSet(K.autostart, state.autoStart ? '1' : '0'); }); }
+
   document.getElementById('startBtn').addEventListener('click', onStart);
   document.getElementById('resetBtn').addEventListener('click', reset);
-  document.getElementById('modeCountdown').addEventListener('click', () => setMode('countdown'));
-  document.getElementById('modeStopwatch').addEventListener('click', () => setMode('stopwatch'));
-  document.querySelectorAll('.preset-btn').forEach(b => b.addEventListener('click', onPreset));
-  document.getElementById('inputMin').addEventListener('input', onCustomInput);
-  document.getElementById('inputSec').addEventListener('input', onCustomInput);
+  document.getElementById('addMinBtn').addEventListener('click', addMinute);
+  document.getElementById('inputMin').addEventListener('input', applyCustom);
+  document.getElementById('inputSec').addEventListener('input', applyCustom);
+  const distractBtn = document.getElementById('distractBtn');
+  if (distractBtn) distractBtn.addEventListener('click', logDistraction);
+  const notifyBtn = document.getElementById('notifyBtn');
+  if (notifyBtn) notifyBtn.addEventListener('click', requestNotify);
+  const resetDataBtn = document.getElementById('resetDataBtn');
+  if (resetDataBtn) resetDataBtn.addEventListener('click', resetData);
+  const tipsAgainBtn = document.getElementById('tipsAgainBtn');
+  if (tipsAgainBtn) tipsAgainBtn.addEventListener('click', showTipsAgain);
+
+  const goalType = document.getElementById('goalType');
+  const goalTarget = document.getElementById('goalTarget');
+  const commitGoal = () => {
+    const g = loadGoal();
+    if (goalType) g.type = goalType.value === 'minutes' ? 'minutes' : 'sessions';
+    if (goalTarget) { const n = parseInt(goalTarget.value, 10); g.target = Number.isFinite(n) && n > 0 ? Math.min(n, 999) : DEFAULT_GOAL.target; }
+    saveGoal(g); renderStats();
+  };
+  if (goalType) goalType.addEventListener('change', commitGoal);
+  if (goalTarget) goalTarget.addEventListener('change', commitGoal);
+
   document.addEventListener('keydown', onKeydown);
+  document.addEventListener('visibilitychange', onVisibility);
 
-  document.getElementById('modeCountdown').classList.toggle('active', state.mode === 'countdown');
-  document.getElementById('modeStopwatch').classList.toggle('active', state.mode === 'stopwatch');
-  document.body.classList.toggle('stopwatch', state.mode === 'stopwatch');
-  document.querySelectorAll('.preset-btn').forEach(b => {
-    b.classList.toggle('active', Number(b.dataset.min) * 60 === state.duration);
-  });
+  refreshNotifyButton();
+  renderStats();
 
-  render();
-  updateButtons();
+  if (!restoreRunning()) {
+    const savedPreset = lsGet(K.preset);
+    const preset = PRESETS.find(p => p.id === savedPreset);
+    if (preset) { state.presetId = preset.id; state.kind = preset.kind; state.duration = preset.min * 60; }
+    else {
+      const savedDur = validateDuration(parseInt(lsGet(K.duration) || '', 10));
+      if (savedDur) { state.duration = savedDur; state.presetId = savedPreset === 'custom' ? 'custom' : 'pomodoro'; }
+    }
+    render();
+  }
+
+  // Defer tips so the timer paints first.
+  requestAnimationFrame(() => startOnboarding());
 }
 
 init();
