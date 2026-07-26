@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+<script>
+(function () {
+  var base = /^\/countdown(\/|$)/.test(location.pathname) ? '/countdown/' : '/';
+  var el = document.createElement('base');
+  el.href = base;
+  document.head.insertBefore(el, document.currentScript);
+})();
+</script>
+
+<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title data-i18n="aboutTitle">About | Today's Focus</title>
   <meta name="description" content="오늘의 집중은 집중할 시간과 쉴 시간을 간단하게 관리하는 무료 웹 타이머입니다. 제작 목적과 운영 원칙, 콘텐츠 작성 기준을 소개합니다.">
@@ -17,9 +26,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="사이트 소개 | 오늘의 집중">
   <meta name="twitter:description" content="오늘의 집중은 집중할 시간과 쉴 시간을 간단하게 관리하는 무료 웹 타이머입니다. 제작 목적과 운영 원칙, 콘텐츠 작성 기준을 소개합니다.">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -44,19 +53,19 @@
   <a href="#main" class="skip-link" data-i18n="skipToMain">Skip to content</a>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
+      <a class="brand" href=""><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
       <div class="header-actions">
         <button type="button" id="langToggle" class="lang-toggle" data-next-lang="ko" aria-label="Change language">한국어</button>
         <button class="nav-toggle" data-i18n-aria="openMenu" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">☰</button>
       </div>
       <nav id="primary-nav" class="nav" aria-label="Primary">
-        <a href="/" data-i18n="navHome">Home</a>
-        <a href="/pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
-        <a href="/productivity/" data-i18n="navProductivity">Productivity</a>
-        <a href="/study-timer/" data-i18n="navStudy">Study</a>
-        <a href="/deep-work/" data-i18n="navDeepWork">Deep Work</a>
-        <a href="/resources/" data-i18n="navResources">Resources</a>
-        <a href="/about/" data-i18n="navAbout" aria-current="page">About</a>
+        <a href="" data-i18n="navHome">Home</a>
+        <a href="pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
+        <a href="productivity/" data-i18n="navProductivity">Productivity</a>
+        <a href="study-timer/" data-i18n="navStudy">Study</a>
+        <a href="deep-work/" data-i18n="navDeepWork">Deep Work</a>
+        <a href="resources/" data-i18n="navResources">Resources</a>
+        <a href="about/" data-i18n="navAbout" aria-current="page">About</a>
       </nav>
     </div>
   </header>
@@ -83,7 +92,7 @@
         <p>이 사이트는 생산성 보조 도구이며 의료 서비스가 아닙니다. 여기에서 소개하는 방법은 집중과 휴식의 시간을 관리하는 데 도움을 주려는 것일 뿐, 질병의 진단이나 치료를 대신하지 않습니다. 집중 곤란이나 관련 어려움이 오래 이어지고 일상생활에 지장이 크다면, 이 사이트의 안내에만 기대지 말고 의료 전문가와 상담하시길 권합니다.</p>
 
         <h2>문의</h2>
-        <p>오류 제보나 개선 제안이 있으시면 언제든 알려 주세요. 자세한 안내는 <a href="/contact/">문의 페이지</a>에서 확인하실 수 있습니다.</p>
+        <p>오류 제보나 개선 제안이 있으시면 언제든 알려 주세요. 자세한 안내는 <a href="contact/">문의 페이지</a>에서 확인하실 수 있습니다.</p>
       </div>
 
       <div data-lang="en" class="prose">
@@ -107,7 +116,7 @@
         <p>This site is a productivity aid, not a medical service. The methods here are meant to help you manage focus and break time — they do not diagnose or treat illness. If focus difficulties persist and significantly affect daily life, please consult a qualified professional rather than relying on this site alone.</p>
 
         <h2>Contact</h2>
-        <p>Report bugs or share improvement ideas anytime. See the <a href="/contact/">contact page</a> for details.</p>
+        <p>Report bugs or share improvement ideas anytime. See the <a href="contact/">contact page</a> for details.</p>
       </div>
     </section>
   </main>
@@ -121,26 +130,26 @@
         <div>
           <h4 data-i18n="footerExplore">Explore</h4>
           <ul>
-            <li><a href="/" data-i18n="footerTimer">Timer</a></li>
-            <li><a href="/pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
-            <li><a href="/study-timer/" data-i18n="footerStudy">Study timer</a></li>
-            <li><a href="/deep-work/" data-i18n="footerDeep">Deep work</a></li>
-            <li><a href="/break-guide/" data-i18n="footerBreak">Break guide</a></li>
-            <li><a href="/productivity/" data-i18n="footerGuides">Guides</a></li>
-            <li><a href="/dashboard/" data-i18n="footerDash">Dashboard</a></li>
-            <li><a href="/resources/" data-i18n="footerRes">Resources</a></li>
-            <li><a href="/calculators/" data-i18n="footerCalc">Calculators</a></li>
+            <li><a href="" data-i18n="footerTimer">Timer</a></li>
+            <li><a href="pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
+            <li><a href="study-timer/" data-i18n="footerStudy">Study timer</a></li>
+            <li><a href="deep-work/" data-i18n="footerDeep">Deep work</a></li>
+            <li><a href="break-guide/" data-i18n="footerBreak">Break guide</a></li>
+            <li><a href="productivity/" data-i18n="footerGuides">Guides</a></li>
+            <li><a href="dashboard/" data-i18n="footerDash">Dashboard</a></li>
+            <li><a href="resources/" data-i18n="footerRes">Resources</a></li>
+            <li><a href="calculators/" data-i18n="footerCalc">Calculators</a></li>
           </ul>
         </div>
         <div>
           <h4 data-i18n="footerSite">Site</h4>
           <ul>
-            <li><a href="/about/" data-i18n="footerAbout">About</a></li>
-            <li><a href="/contact/" data-i18n="footerContact">Contact</a></li>
-            <li><a href="/privacy/" data-i18n="footerPrivacy">Privacy</a></li>
-            <li><a href="/terms/" data-i18n="footerTerms">Terms</a></li>
-            <li><a href="/disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
-            <li><a href="/sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
+            <li><a href="about/" data-i18n="footerAbout">About</a></li>
+            <li><a href="contact/" data-i18n="footerContact">Contact</a></li>
+            <li><a href="privacy/" data-i18n="footerPrivacy">Privacy</a></li>
+            <li><a href="terms/" data-i18n="footerTerms">Terms</a></li>
+            <li><a href="disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
+            <li><a href="sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
           </ul>
         </div>
       </div>
@@ -150,8 +159,8 @@
       </div>
     </div>
   </footer>
-  <script src="/config.js"></script>
-  <script src="/site.js" defer></script>
-  <script type="module" src="/page.js"></script>
+  <script src="config.js"></script>
+  <script src="site.js" defer></script>
+  <script type="module" src="page.js"></script>
 </body>
 </html>

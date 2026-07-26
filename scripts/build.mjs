@@ -31,13 +31,17 @@ for (const f of htmls) {
   let m;
   while ((m = attrRe.exec(html))) {
     let url = m[1];
-    if (!url.startsWith('/') || url.startsWith('//')) continue;
+    if (!url || url.startsWith('#') || url.startsWith('mailto:') || url.startsWith('tel:')) continue;
+    if (/^[a-z]+:/i.test(url) || url.startsWith('//')) continue; // absolute / protocol-relative
+    if (/['"+]/.test(url)) continue; // skip JS string fragments accidentally matched in <script>
+    // Root-absolute ("/x") or site-relative ("x") — both resolve from site root (via <base>).
+    if (url.startsWith('/')) url = url.slice(1);
     url = url.split('#')[0].split('?')[0];
-    if (!url) continue;
+    if (!url || url.startsWith('.')) continue;
     let fsPath = join(root, url);
     if (url.endsWith('/')) fsPath = join(fsPath, 'index.html');
     else if (!extname(url)) fsPath = join(fsPath, 'index.html');
-    if (!existsSync(fsPath)) errors.push(`${rel(f)} → 깨진 링크 ${url}`);
+    if (!existsSync(fsPath)) errors.push(`${rel(f)} → 깨진 링크 /${url}`);
   }
 }
 

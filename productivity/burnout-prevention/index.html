@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+<script>
+(function () {
+  var base = /^\/countdown(\/|$)/.test(location.pathname) ? '/countdown/' : '/';
+  var el = document.createElement('base');
+  el.href = base;
+  document.head.insertBefore(el, document.currentScript);
+})();
+</script>
+
+<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title data-i18n="burnoutPreventionTitle">Sustainable Focus Habits to Prevent Burnout — Today's Focus</title>
   <meta name="description" content="Sustainable focus habits from an environment and habit perspective: a pace you can keep, real rest, boundaries, and seeing your workload clearly. Not medical advice.">
@@ -18,9 +27,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Sustainable Focus Habits to Prevent Burnout — Today's Focus">
   <meta name="twitter:description" content="Sustainable focus habits: a pace you can keep, real rest, boundaries, and seeing your workload clearly. Not medical advice.">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -95,19 +104,19 @@
   <a href="#main" class="skip-link" data-i18n="skipToMain">Skip to content</a>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
+      <a class="brand" href=""><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
       <div class="header-actions">
         <button type="button" id="langToggle" class="lang-toggle" data-next-lang="ko" aria-label="Change language">한국어</button>
         <button class="nav-toggle" data-i18n-aria="openMenu" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">☰</button>
       </div>
       <nav id="primary-nav" class="nav" aria-label="Primary">
-        <a href="/" data-i18n="navHome">Home</a>
-        <a href="/pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
-        <a href="/productivity/" data-i18n="navProductivity" aria-current="page">Productivity</a>
-        <a href="/study-timer/" data-i18n="navStudy">Study</a>
-        <a href="/deep-work/" data-i18n="navDeepWork">Deep Work</a>
-        <a href="/resources/" data-i18n="navResources">Resources</a>
-        <a href="/about/" data-i18n="navAbout">About</a>
+        <a href="" data-i18n="navHome">Home</a>
+        <a href="pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
+        <a href="productivity/" data-i18n="navProductivity" aria-current="page">Productivity</a>
+        <a href="study-timer/" data-i18n="navStudy">Study</a>
+        <a href="deep-work/" data-i18n="navDeepWork">Deep Work</a>
+        <a href="resources/" data-i18n="navResources">Resources</a>
+        <a href="about/" data-i18n="navAbout">About</a>
       </nav>
     </div>
   </header>
@@ -116,8 +125,8 @@
       <div data-lang="ko">
         <nav class="breadcrumb" aria-label="탐색 경로">
           <ol>
-            <li><a href="/">홈</a></li>
-            <li><a href="/productivity/">집중 가이드</a></li>
+            <li><a href="">홈</a></li>
+            <li><a href="productivity/">집중 가이드</a></li>
             <li aria-current="page">번아웃을 예방하는 지속 가능한 집중 습관</li>
           </ol>
         </nav>
@@ -206,7 +215,7 @@
           <li><strong>어려움이 지속되면 전문가와 상의하세요.</strong> 이런 신호가 오래 이어지거나 일상에 지장이 크다면, 이 방법에만 기대지 말고 의사·상담사 같은 전문가의 도움을 받는 것이 안전합니다.</li>
         </ul>
 
-        <p><a class="btn btn-primary" href="/#timer">타이머로 시작해 보기</a></p>
+        <p><a class="btn btn-primary" href="#timer">타이머로 시작해 보기</a></p>
 
         <h2>자주 묻는 질문</h2>
         <div class="faq-list">
@@ -241,9 +250,9 @@
         <aside class="related">
           <h2>함께 읽으면 좋은 글</h2>
           <ul>
-            <li><a href="/break-guide/">휴식 시간을 잘 쓰는 방법</a></li>
-            <li><a href="/productivity/remote-work/">재택근무에서 리듬 지키기</a></li>
-            <li><a href="/productivity/time-blocking/">타임 블로킹으로 일정 설계하기</a></li>
+            <li><a href="break-guide/">휴식 시간을 잘 쓰는 방법</a></li>
+            <li><a href="productivity/remote-work/">재택근무에서 리듬 지키기</a></li>
+            <li><a href="productivity/time-blocking/">타임 블로킹으로 일정 설계하기</a></li>
           </ul>
         </aside>
 
@@ -252,8 +261,8 @@
       <div data-lang="en">
         <nav class="breadcrumb" aria-label="Breadcrumb">
           <ol>
-            <li><a href="/">Home</a></li>
-            <li><a href="/productivity/">Productivity</a></li>
+            <li><a href="">Home</a></li>
+            <li><a href="productivity/">Productivity</a></li>
             <li aria-current="page">Sustainable Focus Habits to Prevent Burnout</li>
           </ol>
         </nav>
@@ -342,7 +351,7 @@
           <li><strong>Seek professional help if difficulty persists.</strong> If these signals continue or significantly affect daily life, do not rely on this page alone — talk to a doctor or counselor.</li>
         </ul>
 
-        <p><a class="btn btn-primary" href="/#timer">Try it with the timer</a></p>
+        <p><a class="btn btn-primary" href="#timer">Try it with the timer</a></p>
 
         <h2>FAQ</h2>
         <div class="faq-list">
@@ -377,9 +386,9 @@
         <aside class="related">
           <h2>Related reads</h2>
           <ul>
-            <li><a href="/break-guide/">How to use break time well</a></li>
-            <li><a href="/productivity/remote-work/">Keeping rhythm while working remotely</a></li>
-            <li><a href="/productivity/time-blocking/">Design your schedule with time blocking</a></li>
+            <li><a href="break-guide/">How to use break time well</a></li>
+            <li><a href="productivity/remote-work/">Keeping rhythm while working remotely</a></li>
+            <li><a href="productivity/time-blocking/">Design your schedule with time blocking</a></li>
           </ul>
         </aside>
 
@@ -397,26 +406,26 @@
         <div>
           <h4 data-i18n="footerExplore">Explore</h4>
           <ul>
-            <li><a href="/" data-i18n="footerTimer">Timer</a></li>
-            <li><a href="/pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
-            <li><a href="/study-timer/" data-i18n="footerStudy">Study timer</a></li>
-            <li><a href="/deep-work/" data-i18n="footerDeep">Deep work</a></li>
-            <li><a href="/break-guide/" data-i18n="footerBreak">Break guide</a></li>
-            <li><a href="/productivity/" data-i18n="footerGuides">Guides</a></li>
-            <li><a href="/dashboard/" data-i18n="footerDash">Dashboard</a></li>
-            <li><a href="/resources/" data-i18n="footerRes">Resources</a></li>
-            <li><a href="/calculators/" data-i18n="footerCalc">Calculators</a></li>
+            <li><a href="" data-i18n="footerTimer">Timer</a></li>
+            <li><a href="pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
+            <li><a href="study-timer/" data-i18n="footerStudy">Study timer</a></li>
+            <li><a href="deep-work/" data-i18n="footerDeep">Deep work</a></li>
+            <li><a href="break-guide/" data-i18n="footerBreak">Break guide</a></li>
+            <li><a href="productivity/" data-i18n="footerGuides">Guides</a></li>
+            <li><a href="dashboard/" data-i18n="footerDash">Dashboard</a></li>
+            <li><a href="resources/" data-i18n="footerRes">Resources</a></li>
+            <li><a href="calculators/" data-i18n="footerCalc">Calculators</a></li>
           </ul>
         </div>
         <div>
           <h4 data-i18n="footerSite">Site</h4>
           <ul>
-            <li><a href="/about/" data-i18n="footerAbout">About</a></li>
-            <li><a href="/contact/" data-i18n="footerContact">Contact</a></li>
-            <li><a href="/privacy/" data-i18n="footerPrivacy">Privacy</a></li>
-            <li><a href="/terms/" data-i18n="footerTerms">Terms</a></li>
-            <li><a href="/disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
-            <li><a href="/sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
+            <li><a href="about/" data-i18n="footerAbout">About</a></li>
+            <li><a href="contact/" data-i18n="footerContact">Contact</a></li>
+            <li><a href="privacy/" data-i18n="footerPrivacy">Privacy</a></li>
+            <li><a href="terms/" data-i18n="footerTerms">Terms</a></li>
+            <li><a href="disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
+            <li><a href="sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
           </ul>
         </div>
       </div>
@@ -426,8 +435,8 @@
       </div>
     </div>
   </footer>
-  <script src="/config.js"></script>
-  <script src="/site.js" defer></script>
-  <script type="module" src="/page.js"></script>
+  <script src="config.js"></script>
+  <script src="site.js" defer></script>
+  <script type="module" src="page.js"></script>
 </body>
 </html>

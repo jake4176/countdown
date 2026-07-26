@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+<script>
+(function () {
+  var base = /^\/countdown(\/|$)/.test(location.pathname) ? '/countdown/' : '/';
+  var el = document.createElement('base');
+  el.href = base;
+  document.head.insertBefore(el, document.currentScript);
+})();
+</script>
+
+<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>문의 | 오늘의 집중</title>
   <meta name="description" content="오늘의 집중에 오류 제보나 개선 제안을 보내는 방법을 안내합니다. 이메일로 편하게 문의해 주세요.">
@@ -17,9 +26,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="문의 | 오늘의 집중">
   <meta name="twitter:description" content="오늘의 집중에 오류 제보나 개선 제안을 보내는 방법을 안내합니다. 이메일로 편하게 문의해 주세요.">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -44,16 +53,16 @@
   <a href="#main" class="skip-link">본문으로 건너뛰기</a>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">🎯</span>오늘의 집중</a>
+      <a class="brand" href=""><span class="brand-mark" aria-hidden="true">🎯</span>오늘의 집중</a>
       <button class="nav-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="primary-nav">☰</button>
       <nav id="primary-nav" class="nav" aria-label="주요 메뉴">
-        <a href="/">Home</a>
-        <a href="/pomodoro/">Focus Timer</a>
-        <a href="/productivity/">Productivity</a>
-        <a href="/study-timer/">Study</a>
-        <a href="/deep-work/">Deep Work</a>
-        <a href="/resources/">Resources</a>
-        <a href="/about/">About</a>
+        <a href="">Home</a>
+        <a href="pomodoro/">Focus Timer</a>
+        <a href="productivity/">Productivity</a>
+        <a href="study-timer/">Study</a>
+        <a href="deep-work/">Deep Work</a>
+        <a href="resources/">Resources</a>
+        <a href="about/">About</a>
       </nav>
     </div>
   </header>
@@ -108,26 +117,26 @@
         <div>
           <h4>둘러보기</h4>
           <ul>
-            <li><a href="/">타이머</a></li>
-            <li><a href="/pomodoro/">포모도로</a></li>
-            <li><a href="/study-timer/">공부 타이머</a></li>
-            <li><a href="/deep-work/">딥워크</a></li>
-            <li><a href="/break-guide/">휴식 가이드</a></li>
-            <li><a href="/productivity/">집중 가이드</a></li>
-            <li><a href="/dashboard/">대시보드</a></li>
-            <li><a href="/resources/">자료실</a></li>
-            <li><a href="/calculators/">계산기</a></li>
+            <li><a href="">타이머</a></li>
+            <li><a href="pomodoro/">포모도로</a></li>
+            <li><a href="study-timer/">공부 타이머</a></li>
+            <li><a href="deep-work/">딥워크</a></li>
+            <li><a href="break-guide/">휴식 가이드</a></li>
+            <li><a href="productivity/">집중 가이드</a></li>
+            <li><a href="dashboard/">대시보드</a></li>
+            <li><a href="resources/">자료실</a></li>
+            <li><a href="calculators/">계산기</a></li>
           </ul>
         </div>
         <div>
           <h4>사이트 정보</h4>
           <ul>
-            <li><a href="/about/">소개</a></li>
-            <li><a href="/contact/">문의</a></li>
-            <li><a href="/privacy/">개인정보처리방침</a></li>
-            <li><a href="/terms/">이용약관</a></li>
-            <li><a href="/disclaimer/">면책 안내</a></li>
-            <li><a href="/sitemap/">사이트맵</a></li>
+            <li><a href="about/">소개</a></li>
+            <li><a href="contact/">문의</a></li>
+            <li><a href="privacy/">개인정보처리방침</a></li>
+            <li><a href="terms/">이용약관</a></li>
+            <li><a href="disclaimer/">면책 안내</a></li>
+            <li><a href="sitemap/">사이트맵</a></li>
           </ul>
         </div>
       </div>
@@ -137,7 +146,7 @@
       </div>
     </div>
   </footer>
-  <script src="/config.js"></script>
-  <script src="/site.js" defer></script>
+  <script src="config.js"></script>
+  <script src="site.js" defer></script>
 </body>
 </html>

@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+<script>
+(function () {
+  var base = /^\/countdown(\/|$)/.test(location.pathname) ? '/countdown/' : '/';
+  var el = document.createElement('base');
+  el.href = base;
+  document.head.insertBefore(el, document.currentScript);
+})();
+</script>
+
+<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>작업 세션 플래너: 하루 일정표 만들기 — 오늘의 집중</title>
   <meta name="description" content="시작 시각과 세션 수·길이·휴식을 입력하면 집중과 휴식을 배치한 하루 작업 일정표와 종료 시각을 만들어 주는 무료 작업 세션 플래너입니다.">
@@ -17,9 +26,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="작업 세션 플래너: 하루 일정표 만들기 — 오늘의 집중">
   <meta name="twitter:description" content="시작 시각과 세션 구성으로 휴식까지 포함한 하루 일정표를 만듭니다.">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://focus-timer.example/"},{"@type":"ListItem","position":2,"name":"계산기","item":"https://focus-timer.example/calculators/"},{"@type":"ListItem","position":3,"name":"작업 세션 플래너","item":"https://focus-timer.example/calculators/work-session/"}]}
   </script>
@@ -35,21 +44,21 @@
   <a href="#main" class="skip-link">본문으로 건너뛰기</a>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">🎯</span>오늘의 집중</a>
+      <a class="brand" href=""><span class="brand-mark" aria-hidden="true">🎯</span>오늘의 집중</a>
       <button class="nav-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="primary-nav">☰</button>
       <nav id="primary-nav" class="nav" aria-label="주요 메뉴">
-        <a href="/">Home</a>
-        <a href="/pomodoro/">Focus Timer</a>
-        <a href="/productivity/">Productivity</a>
-        <a href="/study-timer/">Study</a>
-        <a href="/deep-work/">Deep Work</a>
-        <a href="/resources/">Resources</a>
-        <a href="/about/">About</a>
+        <a href="">Home</a>
+        <a href="pomodoro/">Focus Timer</a>
+        <a href="productivity/">Productivity</a>
+        <a href="study-timer/">Study</a>
+        <a href="deep-work/">Deep Work</a>
+        <a href="resources/">Resources</a>
+        <a href="about/">About</a>
       </nav>
     </div>
   </header>
   <main id="main" class="wrap">
-    <nav class="breadcrumb" aria-label="탐색 경로"><ol><li><a href="/">홈</a></li><li><a href="/calculators/">계산기</a></li><li aria-current="page">작업 세션 플래너</li></ol></nav>
+    <nav class="breadcrumb" aria-label="탐색 경로"><ol><li><a href="">홈</a></li><li><a href="calculators/">계산기</a></li><li aria-current="page">작업 세션 플래너</li></ol></nav>
     <article class="article">
       <header>
         <h1>작업 세션 플래너</h1>
@@ -69,7 +78,7 @@
       </div>
 
       <h2>어떻게 만들어지나요?</h2>
-      <p>시작 시각부터 세션 길이만큼 집중 구간을 배치하고, 세션 사이에 휴식을 넣습니다. 긴 휴식 주기를 정하면 그 주기마다 긴 휴식이 들어갑니다. 완성한 일정을 실제로 실행할 때는 <a href="/#timer">타이머</a>의 직접 설정으로 각 세션 길이를 맞춰 사용할 수 있습니다.</p>
+      <p>시작 시각부터 세션 길이만큼 집중 구간을 배치하고, 세션 사이에 휴식을 넣습니다. 긴 휴식 주기를 정하면 그 주기마다 긴 휴식이 들어갑니다. 완성한 일정을 실제로 실행할 때는 <a href="#timer">타이머</a>의 직접 설정으로 각 세션 길이를 맞춰 사용할 수 있습니다.</p>
 
       <h2>자주 묻는 질문</h2>
       <div class="faq-list">
@@ -81,9 +90,9 @@
       <aside class="related">
         <h2>함께 보면 좋은 것</h2>
         <ul>
-          <li><a href="/productivity/time-blocking/">타임블로킹으로 하루 설계하기</a></li>
-          <li><a href="/deep-work/">딥워크와 60분 집중 타이머</a></li>
-          <li><a href="/calculators/project-time/">프로젝트 시간 계산기</a></li>
+          <li><a href="productivity/time-blocking/">타임블로킹으로 하루 설계하기</a></li>
+          <li><a href="deep-work/">딥워크와 60분 집중 타이머</a></li>
+          <li><a href="calculators/project-time/">프로젝트 시간 계산기</a></li>
         </ul>
       </aside>
     </article>
@@ -98,25 +107,25 @@
         <div>
           <h4>둘러보기</h4>
           <ul>
-            <li><a href="/">타이머</a></li>
-            <li><a href="/pomodoro/">포모도로</a></li>
-            <li><a href="/study-timer/">공부 타이머</a></li>
-            <li><a href="/deep-work/">딥워크</a></li>
-            <li><a href="/break-guide/">휴식 가이드</a></li>
-            <li><a href="/productivity/">집중 가이드</a></li>
-            <li><a href="/dashboard/">대시보드</a></li>
-            <li><a href="/resources/">자료실</a></li>
+            <li><a href="">타이머</a></li>
+            <li><a href="pomodoro/">포모도로</a></li>
+            <li><a href="study-timer/">공부 타이머</a></li>
+            <li><a href="deep-work/">딥워크</a></li>
+            <li><a href="break-guide/">휴식 가이드</a></li>
+            <li><a href="productivity/">집중 가이드</a></li>
+            <li><a href="dashboard/">대시보드</a></li>
+            <li><a href="resources/">자료실</a></li>
           </ul>
         </div>
         <div>
           <h4>사이트 정보</h4>
           <ul>
-            <li><a href="/about/">소개</a></li>
-            <li><a href="/contact/">문의</a></li>
-            <li><a href="/privacy/">개인정보처리방침</a></li>
-            <li><a href="/terms/">이용약관</a></li>
-            <li><a href="/disclaimer/">면책 안내</a></li>
-            <li><a href="/sitemap/">사이트맵</a></li>
+            <li><a href="about/">소개</a></li>
+            <li><a href="contact/">문의</a></li>
+            <li><a href="privacy/">개인정보처리방침</a></li>
+            <li><a href="terms/">이용약관</a></li>
+            <li><a href="disclaimer/">면책 안내</a></li>
+            <li><a href="sitemap/">사이트맵</a></li>
           </ul>
         </div>
       </div>
@@ -126,8 +135,8 @@
       </div>
     </div>
   </footer>
-  <script src="/config.js"></script>
-  <script src="/site.js" defer></script>
-  <script type="module" src="/calculators.js"></script>
+  <script src="config.js"></script>
+  <script src="site.js" defer></script>
+  <script type="module" src="calculators.js"></script>
 </body>
 </html>

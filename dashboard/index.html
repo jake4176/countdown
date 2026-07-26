@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+<script>
+(function () {
+  var base = /^\/countdown(\/|$)/.test(location.pathname) ? '/countdown/' : '/';
+  var el = document.createElement('base');
+  el.href = base;
+  document.head.insertBefore(el, document.currentScript);
+})();
+</script>
+
+<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>집중 인사이트 대시보드 — 오늘의 집중</title>
   <meta name="description" content="완료한 집중 세션, 라벨별 시간, 방해 패턴, 목표 달성과 연속 기록을 한 화면에서 확인하는 인사이트 대시보드. 모든 데이터는 이 브라우저에만 저장됩니다.">
@@ -17,9 +26,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="집중 인사이트 대시보드 — 오늘의 집중">
   <meta name="twitter:description" content="집중 세션·라벨·방해 패턴·목표 달성을 한 화면에서 확인합니다.">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://focus-timer.example/"},{"@type":"ListItem","position":2,"name":"대시보드","item":"https://focus-timer.example/dashboard/"}]}
   </script>
@@ -28,21 +37,21 @@
   <a href="#main" class="skip-link">본문으로 건너뛰기</a>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">🎯</span>오늘의 집중</a>
+      <a class="brand" href=""><span class="brand-mark" aria-hidden="true">🎯</span>오늘의 집중</a>
       <button class="nav-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="primary-nav">☰</button>
       <nav id="primary-nav" class="nav" aria-label="주요 메뉴">
-        <a href="/">Home</a>
-        <a href="/pomodoro/">Focus Timer</a>
-        <a href="/productivity/">Productivity</a>
-        <a href="/study-timer/">Study</a>
-        <a href="/deep-work/">Deep Work</a>
-        <a href="/resources/">Resources</a>
-        <a href="/about/">About</a>
+        <a href="">Home</a>
+        <a href="pomodoro/">Focus Timer</a>
+        <a href="productivity/">Productivity</a>
+        <a href="study-timer/">Study</a>
+        <a href="deep-work/">Deep Work</a>
+        <a href="resources/">Resources</a>
+        <a href="about/">About</a>
       </nav>
     </div>
   </header>
   <main id="main" class="wrap">
-    <nav class="breadcrumb" aria-label="탐색 경로"><ol><li><a href="/">홈</a></li><li aria-current="page">대시보드</li></ol></nav>
+    <nav class="breadcrumb" aria-label="탐색 경로"><ol><li><a href="">홈</a></li><li aria-current="page">대시보드</li></ol></nav>
 
     <section class="section" aria-label="집중 인사이트 대시보드" style="padding-top:1rem">
       <div class="section-head" style="margin-bottom:1.25rem">
@@ -55,7 +64,7 @@
       <div id="dEmpty" class="dash-card dash-empty" hidden>
         <p style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem">아직 집중 기록이 없어요</p>
         <p>타이머로 집중 세션을 완료하면 여기에서 라벨별 시간과 방해 패턴, 목표 달성 흐름을 확인할 수 있습니다.</p>
-        <p style="margin-top:1rem"><a href="/#timer" class="btn btn-primary">첫 집중 시작하기</a></p>
+        <p style="margin-top:1rem"><a href="#timer" class="btn btn-primary">첫 집중 시작하기</a></p>
       </div>
 
       <div id="dContent" hidden>
@@ -72,7 +81,7 @@
           <div class="goal-head"><h3>오늘 목표 진행</h3></div>
           <div class="goal-track"><div class="goal-fill" id="dGoalBar"></div></div>
           <p class="goal-value" id="dGoalText">0 / 4회</p>
-          <p style="font-size:0.82rem;color:var(--ink-faint);margin:0.5rem 0 0">목표 수치는 <a href="/#timer">타이머 화면</a>에서 바꿀 수 있습니다.</p>
+          <p style="font-size:0.82rem;color:var(--ink-faint);margin:0.5rem 0 0">목표 수치는 <a href="#timer">타이머 화면</a>에서 바꿀 수 있습니다.</p>
         </div>
 
         <div class="dash-grid">
@@ -116,26 +125,26 @@
         <div>
           <h4>둘러보기</h4>
           <ul>
-            <li><a href="/">타이머</a></li>
-            <li><a href="/pomodoro/">포모도로</a></li>
-            <li><a href="/study-timer/">공부 타이머</a></li>
-            <li><a href="/deep-work/">딥워크</a></li>
-            <li><a href="/break-guide/">휴식 가이드</a></li>
-            <li><a href="/productivity/">집중 가이드</a></li>
-            <li><a href="/dashboard/">대시보드</a></li>
-            <li><a href="/resources/">자료실</a></li>
-            <li><a href="/calculators/">계산기</a></li>
+            <li><a href="">타이머</a></li>
+            <li><a href="pomodoro/">포모도로</a></li>
+            <li><a href="study-timer/">공부 타이머</a></li>
+            <li><a href="deep-work/">딥워크</a></li>
+            <li><a href="break-guide/">휴식 가이드</a></li>
+            <li><a href="productivity/">집중 가이드</a></li>
+            <li><a href="dashboard/">대시보드</a></li>
+            <li><a href="resources/">자료실</a></li>
+            <li><a href="calculators/">계산기</a></li>
           </ul>
         </div>
         <div>
           <h4>사이트 정보</h4>
           <ul>
-            <li><a href="/about/">소개</a></li>
-            <li><a href="/contact/">문의</a></li>
-            <li><a href="/privacy/">개인정보처리방침</a></li>
-            <li><a href="/terms/">이용약관</a></li>
-            <li><a href="/disclaimer/">면책 안내</a></li>
-            <li><a href="/sitemap/">사이트맵</a></li>
+            <li><a href="about/">소개</a></li>
+            <li><a href="contact/">문의</a></li>
+            <li><a href="privacy/">개인정보처리방침</a></li>
+            <li><a href="terms/">이용약관</a></li>
+            <li><a href="disclaimer/">면책 안내</a></li>
+            <li><a href="sitemap/">사이트맵</a></li>
           </ul>
         </div>
       </div>
@@ -146,8 +155,8 @@
     </div>
   </footer>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="/config.js"></script>
-  <script src="/site.js" defer></script>
-  <script type="module" src="/dashboard.js"></script>
+  <script src="config.js"></script>
+  <script src="site.js" defer></script>
+  <script type="module" src="dashboard.js"></script>
 </body>
 </html>

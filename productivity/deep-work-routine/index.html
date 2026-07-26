@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+<script>
+(function () {
+  var base = /^\/countdown(\/|$)/.test(location.pathname) ? '/countdown/' : '/';
+  var el = document.createElement('base');
+  el.href = base;
+  document.head.insertBefore(el, document.currentScript);
+})();
+</script>
+
+<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title data-i18n="titleDeepWorkRoutine">딥워크 루틴 구성법 | 오늘의 집중</title>
   <meta name="description" content="방해 없이 깊게 몰입하는 딥워크 루틴을 처음 구성하는 분을 위해, 시간 블록을 확보하고 방해 요소를 차단하며 90분 몰입 세트를 반복하는 방법을 단계별로 정리했습니다.">
@@ -17,9 +26,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="딥워크 루틴 구성법 | 오늘의 집중">
   <meta name="twitter:description" content="방해 없이 깊게 몰입하는 딥워크 루틴을 처음 구성하는 분을 위해, 시간 블록을 확보하고 방해 요소를 차단하며 90분 몰입 세트를 반복하는 방법을 단계별로 정리했습니다.">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -82,19 +91,19 @@
     <a href="#main" class="skip-link" data-i18n="skipToMain">Skip to content</a>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
+      <a class="brand" href=""><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
       <div class="header-actions">
         <button type="button" id="langToggle" class="lang-toggle" data-next-lang="ko" aria-label="Change language">한국어</button>
         <button class="nav-toggle" data-i18n-aria="openMenu" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">☰</button>
       </div>
       <nav id="primary-nav" class="nav" aria-label="Primary">
-        <a href="/" data-i18n="navHome">Home</a>
-        <a href="/pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
-        <a href="/productivity/" data-i18n="navProductivity" aria-current="page">Productivity</a>
-        <a href="/study-timer/" data-i18n="navStudy">Study</a>
-        <a href="/deep-work/" data-i18n="navDeepWork">Deep Work</a>
-        <a href="/resources/" data-i18n="navResources">Resources</a>
-        <a href="/about/" data-i18n="navAbout">About</a>
+        <a href="" data-i18n="navHome">Home</a>
+        <a href="pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
+        <a href="productivity/" data-i18n="navProductivity" aria-current="page">Productivity</a>
+        <a href="study-timer/" data-i18n="navStudy">Study</a>
+        <a href="deep-work/" data-i18n="navDeepWork">Deep Work</a>
+        <a href="resources/" data-i18n="navResources">Resources</a>
+        <a href="about/" data-i18n="navAbout">About</a>
       </nav>
     </div>
   </header>
@@ -103,8 +112,8 @@
       <div data-lang="ko">
       <nav class="breadcrumb" aria-label="탐색 경로">
         <ol>
-          <li><a href="/">홈</a></li>
-          <li><a href="/productivity/">집중 가이드</a></li>
+          <li><a href="">홈</a></li>
+          <li><a href="productivity/">집중 가이드</a></li>
           <li aria-current="page">딥워크 루틴 구성법</li>
         </ol>
       </nav>
@@ -194,7 +203,7 @@
         <li><strong>방해가 많은 시간대에 블록을 배치하기.</strong> 회의와 잡무가 몰리는 시간은 피하고, 조용한 시간대를 먼저 확보합니다.</li>
       </ul>
 
-      <p><a class="btn btn-primary" href="/#timer">타이머로 실천하기</a></p>
+      <p><a class="btn btn-primary" href="#timer">타이머로 실천하기</a></p>
 
       <h2>자주 묻는 질문</h2>
       <div class="faq-list">
@@ -229,9 +238,9 @@
       <aside class="related">
         <h2>함께 읽으면 좋은 글</h2>
         <ul>
-          <li><a href="/deep-work/">딥워크 타이머 사용하기</a></li>
-          <li><a href="/break-guide/">휴식 시간을 잘 쓰는 방법</a></li>
-          <li><a href="/productivity/how-to-focus/">집중이 안 될 때 점검할 방법</a></li>
+          <li><a href="deep-work/">딥워크 타이머 사용하기</a></li>
+          <li><a href="break-guide/">휴식 시간을 잘 쓰는 방법</a></li>
+          <li><a href="productivity/how-to-focus/">집중이 안 될 때 점검할 방법</a></li>
         </ul>
       </aside>
 
@@ -240,8 +249,8 @@
       <div data-lang="en">
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <ol>
-          <li><a href="/">Home</a></li>
-          <li><a href="/productivity/">Guides</a></li>
+          <li><a href="">Home</a></li>
+          <li><a href="productivity/">Guides</a></li>
           <li aria-current="page">Building a Deep Work Routine</li>
         </ol>
       </nav>
@@ -331,7 +340,7 @@
         <li><strong>Scheduling blocks in noisy hours.</strong> Protect quiet windows first; avoid meeting-heavy slots.</li>
       </ul>
 
-      <p><a class="btn btn-primary" href="/#timer">Try it with the timer</a></p>
+      <p><a class="btn btn-primary" href="#timer">Try it with the timer</a></p>
 
       <h2>FAQ</h2>
       <div class="faq-list">
@@ -366,9 +375,9 @@
       <aside class="related">
         <h2>Related reading</h2>
         <ul>
-          <li><a href="/deep-work/">Use the deep work timer</a></li>
-          <li><a href="/break-guide/">How to use break time well</a></li>
-          <li><a href="/productivity/how-to-focus/">What to check when you can't focus</a></li>
+          <li><a href="deep-work/">Use the deep work timer</a></li>
+          <li><a href="break-guide/">How to use break time well</a></li>
+          <li><a href="productivity/how-to-focus/">What to check when you can't focus</a></li>
         </ul>
       </aside>
 
@@ -386,26 +395,26 @@
         <div>
           <h4 data-i18n="footerExplore">Explore</h4>
           <ul>
-            <li><a href="/" data-i18n="footerTimer">Timer</a></li>
-            <li><a href="/pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
-            <li><a href="/study-timer/" data-i18n="footerStudy">Study timer</a></li>
-            <li><a href="/deep-work/" data-i18n="footerDeep">Deep work</a></li>
-            <li><a href="/break-guide/" data-i18n="footerBreak">Break guide</a></li>
-            <li><a href="/productivity/" data-i18n="footerGuides">Guides</a></li>
-            <li><a href="/dashboard/" data-i18n="footerDash">Dashboard</a></li>
-            <li><a href="/resources/" data-i18n="footerRes">Resources</a></li>
-            <li><a href="/calculators/" data-i18n="footerCalc">Calculators</a></li>
+            <li><a href="" data-i18n="footerTimer">Timer</a></li>
+            <li><a href="pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
+            <li><a href="study-timer/" data-i18n="footerStudy">Study timer</a></li>
+            <li><a href="deep-work/" data-i18n="footerDeep">Deep work</a></li>
+            <li><a href="break-guide/" data-i18n="footerBreak">Break guide</a></li>
+            <li><a href="productivity/" data-i18n="footerGuides">Guides</a></li>
+            <li><a href="dashboard/" data-i18n="footerDash">Dashboard</a></li>
+            <li><a href="resources/" data-i18n="footerRes">Resources</a></li>
+            <li><a href="calculators/" data-i18n="footerCalc">Calculators</a></li>
           </ul>
         </div>
         <div>
           <h4 data-i18n="footerSite">Site</h4>
           <ul>
-            <li><a href="/about/" data-i18n="footerAbout">About</a></li>
-            <li><a href="/contact/" data-i18n="footerContact">Contact</a></li>
-            <li><a href="/privacy/" data-i18n="footerPrivacy">Privacy</a></li>
-            <li><a href="/terms/" data-i18n="footerTerms">Terms</a></li>
-            <li><a href="/disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
-            <li><a href="/sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
+            <li><a href="about/" data-i18n="footerAbout">About</a></li>
+            <li><a href="contact/" data-i18n="footerContact">Contact</a></li>
+            <li><a href="privacy/" data-i18n="footerPrivacy">Privacy</a></li>
+            <li><a href="terms/" data-i18n="footerTerms">Terms</a></li>
+            <li><a href="disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
+            <li><a href="sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
           </ul>
         </div>
       </div>
@@ -415,8 +424,8 @@
       </div>
     </div>
   </footer>
-    <script src="/config.js"></script>
-  <script src="/site.js" defer></script>
-  <script type="module" src="/page.js"></script>
+    <script src="config.js"></script>
+  <script src="site.js" defer></script>
+  <script type="module" src="page.js"></script>
 </body>
 </html>

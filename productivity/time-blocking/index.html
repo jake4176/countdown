@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+<script>
+(function () {
+  var base = /^\/countdown(\/|$)/.test(location.pathname) ? '/countdown/' : '/';
+  var el = document.createElement('base');
+  el.href = base;
+  document.head.insertBefore(el, document.currentScript);
+})();
+</script>
+
+<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title data-i18n="titleTimeBlocking">타임블로킹으로 하루 설계하기 — 오늘의 집중</title>
   <meta name="description" content="하루를 시간 블록으로 미리 배분해 딥워크와 얕은 업무를 분리하고, 버퍼 시간을 확보하는 타임블로킹 실천법을 단계별로 안내합니다.">
@@ -17,9 +26,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="타임블로킹으로 하루 설계하기 — 오늘의 집중">
   <meta name="twitter:description" content="하루를 시간 블록으로 미리 배분해 딥워크와 얕은 업무를 분리하고, 버퍼 시간을 확보하는 타임블로킹 실천법을 단계별로 안내합니다.">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -73,26 +82,26 @@
     <a href="#main" class="skip-link" data-i18n="skipToMain">Skip to content</a>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
+      <a class="brand" href=""><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
       <div class="header-actions">
         <button type="button" id="langToggle" class="lang-toggle" data-next-lang="ko" aria-label="Change language">한국어</button>
         <button class="nav-toggle" data-i18n-aria="openMenu" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">☰</button>
       </div>
       <nav id="primary-nav" class="nav" aria-label="Primary">
-        <a href="/" data-i18n="navHome">Home</a>
-        <a href="/pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
-        <a href="/productivity/" data-i18n="navProductivity" aria-current="page">Productivity</a>
-        <a href="/study-timer/" data-i18n="navStudy">Study</a>
-        <a href="/deep-work/" data-i18n="navDeepWork">Deep Work</a>
-        <a href="/resources/" data-i18n="navResources">Resources</a>
-        <a href="/about/" data-i18n="navAbout">About</a>
+        <a href="" data-i18n="navHome">Home</a>
+        <a href="pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
+        <a href="productivity/" data-i18n="navProductivity" aria-current="page">Productivity</a>
+        <a href="study-timer/" data-i18n="navStudy">Study</a>
+        <a href="deep-work/" data-i18n="navDeepWork">Deep Work</a>
+        <a href="resources/" data-i18n="navResources">Resources</a>
+        <a href="about/" data-i18n="navAbout">About</a>
       </nav>
     </div>
   </header>
   <main id="main">
     <article class="article">
       <div data-lang="ko">
-      <nav class="breadcrumb" aria-label="탐색 경로"><ol><li><a href="/">홈</a></li><li><a href="/productivity/">Productivity</a></li><li aria-current="page">타임블로킹으로 하루 설계하기</li></ol></nav>
+      <nav class="breadcrumb" aria-label="탐색 경로"><ol><li><a href="">홈</a></li><li><a href="productivity/">Productivity</a></li><li aria-current="page">타임블로킹으로 하루 설계하기</li></ol></nav>
       <header><h1>타임블로킹으로 하루 설계하기</h1><p class="article-meta">최종 업데이트 2026년 7월 13일 · 약 6분</p></header>
       <div class="summary-box">
         <h2>핵심 요약</h2>
@@ -147,7 +156,7 @@
         <li>예상 소요 시간을 지나치게 낙관적으로 잡아 매일 계획이 빗나가는 경우</li>
         <li>계획만 세우고 실제 실행 시간을 재지 않아, 어디서 시간이 새는지 모르는 경우</li>
       </ul>
-      <p><a class="btn btn-primary" href="/#timer">타이머로 실천하기</a></p>
+      <p><a class="btn btn-primary" href="#timer">타이머로 실천하기</a></p>
       <h2>자주 묻는 질문</h2>
       <div class="faq-list">
         <details class="faq-item"><summary>타임블로킹은 하루 전체를 다 채워야 하나요?</summary><div class="faq-body"><p>아닙니다. 처음에는 가장 중요한 딥워크 블록 한두 개만 정하고 나머지는 비워 두는 편이 낫습니다. 하루를 빈틈없이 채우면 작은 지연에도 계획 전체가 무너지기 쉽습니다. 익숙해질수록 블록 수를 조금씩 늘려 가세요.</p></div></details>
@@ -158,15 +167,15 @@
       <aside class="related">
         <h2>함께 읽으면 좋은 글</h2>
         <ul>
-          <li><a href="/productivity/goal-planning/">목표 계획 세우기: 큰 목표를 오늘 할 일로</a></li>
-          <li><a href="/deep-work/">딥워크 타이머로 몰입 시간 만들기</a></li>
-          <li><a href="/productivity/deep-work-routine/">딥워크 루틴 설계하기</a></li>
+          <li><a href="productivity/goal-planning/">목표 계획 세우기: 큰 목표를 오늘 할 일로</a></li>
+          <li><a href="deep-work/">딥워크 타이머로 몰입 시간 만들기</a></li>
+          <li><a href="productivity/deep-work-routine/">딥워크 루틴 설계하기</a></li>
         </ul>
       </aside>
       <p class="updated">최종 업데이트: 2026년 7월 13일</p>
       </div>
       <div data-lang="en">
-      <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/productivity/">Guides</a></li><li aria-current="page">Design Your Day with Time Blocking</li></ol></nav>
+      <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="">Home</a></li><li><a href="productivity/">Guides</a></li><li aria-current="page">Design Your Day with Time Blocking</li></ol></nav>
       <header><h1>Design Your Day with Time Blocking</h1><p class="article-meta">Last updated July 13, 2026 · ~6 min</p></header>
       <div class="summary-box">
         <h2>Key takeaways</h2>
@@ -221,7 +230,7 @@
         <li>Optimistic time estimates that slip every day</li>
         <li>Planning without timing execution, so leaks stay invisible</li>
       </ul>
-      <p><a class="btn btn-primary" href="/#timer">Try it with the timer</a></p>
+      <p><a class="btn btn-primary" href="#timer">Try it with the timer</a></p>
       <h2>FAQ</h2>
       <div class="faq-list">
         <details class="faq-item"><summary>Do I need to fill the entire day?</summary><div class="faq-body"><p>No. Start with one or two important deep blocks and leave the rest open. A packed schedule breaks easily; add blocks gradually as you get comfortable.</p></div></details>
@@ -232,9 +241,9 @@
       <aside class="related">
         <h2>Related reading</h2>
         <ul>
-          <li><a href="/productivity/goal-planning/">Goal planning: big goals into today's tasks</a></li>
-          <li><a href="/deep-work/">Create immersion time with the deep work timer</a></li>
-          <li><a href="/productivity/deep-work-routine/">Design a deep work routine</a></li>
+          <li><a href="productivity/goal-planning/">Goal planning: big goals into today's tasks</a></li>
+          <li><a href="deep-work/">Create immersion time with the deep work timer</a></li>
+          <li><a href="productivity/deep-work-routine/">Design a deep work routine</a></li>
         </ul>
       </aside>
       <p class="updated">Last updated: July 13, 2026</p>
@@ -251,26 +260,26 @@
         <div>
           <h4 data-i18n="footerExplore">Explore</h4>
           <ul>
-            <li><a href="/" data-i18n="footerTimer">Timer</a></li>
-            <li><a href="/pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
-            <li><a href="/study-timer/" data-i18n="footerStudy">Study timer</a></li>
-            <li><a href="/deep-work/" data-i18n="footerDeep">Deep work</a></li>
-            <li><a href="/break-guide/" data-i18n="footerBreak">Break guide</a></li>
-            <li><a href="/productivity/" data-i18n="footerGuides">Guides</a></li>
-            <li><a href="/dashboard/" data-i18n="footerDash">Dashboard</a></li>
-            <li><a href="/resources/" data-i18n="footerRes">Resources</a></li>
-            <li><a href="/calculators/" data-i18n="footerCalc">Calculators</a></li>
+            <li><a href="" data-i18n="footerTimer">Timer</a></li>
+            <li><a href="pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
+            <li><a href="study-timer/" data-i18n="footerStudy">Study timer</a></li>
+            <li><a href="deep-work/" data-i18n="footerDeep">Deep work</a></li>
+            <li><a href="break-guide/" data-i18n="footerBreak">Break guide</a></li>
+            <li><a href="productivity/" data-i18n="footerGuides">Guides</a></li>
+            <li><a href="dashboard/" data-i18n="footerDash">Dashboard</a></li>
+            <li><a href="resources/" data-i18n="footerRes">Resources</a></li>
+            <li><a href="calculators/" data-i18n="footerCalc">Calculators</a></li>
           </ul>
         </div>
         <div>
           <h4 data-i18n="footerSite">Site</h4>
           <ul>
-            <li><a href="/about/" data-i18n="footerAbout">About</a></li>
-            <li><a href="/contact/" data-i18n="footerContact">Contact</a></li>
-            <li><a href="/privacy/" data-i18n="footerPrivacy">Privacy</a></li>
-            <li><a href="/terms/" data-i18n="footerTerms">Terms</a></li>
-            <li><a href="/disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
-            <li><a href="/sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
+            <li><a href="about/" data-i18n="footerAbout">About</a></li>
+            <li><a href="contact/" data-i18n="footerContact">Contact</a></li>
+            <li><a href="privacy/" data-i18n="footerPrivacy">Privacy</a></li>
+            <li><a href="terms/" data-i18n="footerTerms">Terms</a></li>
+            <li><a href="disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
+            <li><a href="sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
           </ul>
         </div>
       </div>
@@ -280,8 +289,8 @@
       </div>
     </div>
   </footer>
-    <script src="/config.js"></script>
-  <script src="/site.js" defer></script>
-  <script type="module" src="/page.js"></script>
+    <script src="config.js"></script>
+  <script src="site.js" defer></script>
+  <script type="module" src="page.js"></script>
 </body>
 </html>

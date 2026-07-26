@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+<script>
+(function () {
+  var base = /^\/countdown(\/|$)/.test(location.pathname) ? '/countdown/' : '/';
+  var el = document.createElement('base');
+  el.href = base;
+  document.head.insertBefore(el, document.currentScript);
+})();
+</script>
+
+<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title data-i18n="studyTimerTitle">Study Timer Guide — Today's Focus</title>
   <meta name="description" content="오늘의 집중 30분 공부 프리셋으로 공부를 블록으로 나누는 실전 사용법. 프리셋 선택, 블록 안 인출 배치, 휴식 제안, 집중 기록 확인까지 화면 그대로 안내합니다.">
@@ -17,9 +26,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="공부 타이머 활용법 — 오늘의 집중">
   <meta name="twitter:description" content="오늘의 집중 30분 공부 프리셋으로 공부를 블록으로 나누는 실전 사용법을 안내합니다.">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://focus-timer.example/"},{"@type":"ListItem","position":2,"name":"공부 타이머","item":"https://focus-timer.example/study-timer/"}]}
   </script>
@@ -35,25 +44,25 @@
   <a href="#main" class="skip-link" data-i18n="skipToMain">Skip to content</a>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
+      <a class="brand" href=""><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
       <div class="header-actions">
         <button type="button" id="langToggle" class="lang-toggle" data-next-lang="ko" aria-label="Change language">한국어</button>
         <button class="nav-toggle" data-i18n-aria="openMenu" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">☰</button>
       </div>
       <nav id="primary-nav" class="nav" aria-label="Primary">
-        <a href="/" data-i18n="navHome">Home</a>
-        <a href="/pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
-        <a href="/productivity/" data-i18n="navProductivity">Productivity</a>
-        <a href="/study-timer/" data-i18n="navStudy" aria-current="page">Study</a>
-        <a href="/deep-work/" data-i18n="navDeepWork">Deep Work</a>
-        <a href="/resources/" data-i18n="navResources">Resources</a>
-        <a href="/about/" data-i18n="navAbout">About</a>
+        <a href="" data-i18n="navHome">Home</a>
+        <a href="pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
+        <a href="productivity/" data-i18n="navProductivity">Productivity</a>
+        <a href="study-timer/" data-i18n="navStudy" aria-current="page">Study</a>
+        <a href="deep-work/" data-i18n="navDeepWork">Deep Work</a>
+        <a href="resources/" data-i18n="navResources">Resources</a>
+        <a href="about/" data-i18n="navAbout">About</a>
       </nav>
     </div>
   </header>
   <main id="main">
     <article class="article">
-      <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/" data-i18n="breadcrumbHome">Home</a></li><li aria-current="page" data-i18n="navStudy">Study</li></ol></nav>
+      <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="" data-i18n="breadcrumbHome">Home</a></li><li aria-current="page" data-i18n="navStudy">Study</li></ol></nav>
 
       <div data-lang="ko">
         <header>
@@ -66,7 +75,7 @@
           <ul>
             <li>오늘의 집중 <strong>30분 공부 프리셋</strong>으로 공부를 다룰 수 있는 크기의 블록으로 나누는 실전 사용법을 다룹니다.</li>
             <li>프리셋 선택 → 블록 안 학습·인출 배치 → 휴식 → 집중 기록 확인까지 화면 그대로 따라 할 수 있습니다.</li>
-            <li>매일 흔들리지 않는 공부 루틴을 설계하는 방법은 <a href="/productivity/study-routine/">흔들리지 않는 공부 루틴 만들기</a>에서 다룹니다.</li>
+            <li>매일 흔들리지 않는 공부 루틴을 설계하는 방법은 <a href="productivity/study-routine/">흔들리지 않는 공부 루틴 만들기</a>에서 다룹니다.</li>
           </ul>
         </div>
 
@@ -108,7 +117,7 @@
           <li><strong>쉬다가 다음 블록을 놓친다면</strong> '다음 타이머 자동 시작'을 켜서 휴식 뒤 곧바로 다음 집중이 이어지게 하세요.</li>
         </ul>
 
-        <p><a class="btn btn-primary" href="/#timer">공부 프리셋으로 지금 시작</a></p>
+        <p><a class="btn btn-primary" href="#timer">공부 프리셋으로 지금 시작</a></p>
 
         <h2>자주 묻는 질문</h2>
         <div class="faq-list">
@@ -122,9 +131,9 @@
         <aside class="related">
           <h2>함께 읽으면 좋은 글</h2>
           <ul>
-            <li><a href="/productivity/study-routine/">흔들리지 않는 공부 루틴 만들기</a></li>
-            <li><a href="/pomodoro/">포모도로 공부법 소개와 타이머 사용법</a></li>
-            <li><a href="/deep-work/">딥워크 집중법과 60분 집중 타이머</a></li>
+            <li><a href="productivity/study-routine/">흔들리지 않는 공부 루틴 만들기</a></li>
+            <li><a href="pomodoro/">포모도로 공부법 소개와 타이머 사용법</a></li>
+            <li><a href="deep-work/">딥워크 집중법과 60분 집중 타이머</a></li>
           </ul>
         </aside>
 
@@ -142,7 +151,7 @@
           <ul>
             <li>How to split study into manageable blocks with the <strong>30-minute Study preset</strong> on Today's Focus.</li>
             <li>Follow along on screen: pick a preset → learn and recall inside each block → rest → check your log.</li>
-            <li>For building a steady daily routine, see <a href="/productivity/study-routine/">Build a study routine</a>.</li>
+            <li>For building a steady daily routine, see <a href="productivity/study-routine/">Build a study routine</a>.</li>
           </ul>
         </div>
 
@@ -184,7 +193,7 @@
           <li><strong>If you miss the next block after resting</strong>, turn on Auto-start next so focus resumes right after a break.</li>
         </ul>
 
-        <p><a class="btn btn-primary" href="/#timer">Start with the Study preset</a></p>
+        <p><a class="btn btn-primary" href="#timer">Start with the Study preset</a></p>
 
         <h2>FAQ</h2>
         <div class="faq-list">
@@ -198,9 +207,9 @@
         <aside class="related">
           <h2>Related reads</h2>
           <ul>
-            <li><a href="/productivity/study-routine/">Build a study routine</a></li>
-            <li><a href="/pomodoro/">Pomodoro intro &amp; timer how-to</a></li>
-            <li><a href="/deep-work/">Deep work &amp; 60-minute focus timer</a></li>
+            <li><a href="productivity/study-routine/">Build a study routine</a></li>
+            <li><a href="pomodoro/">Pomodoro intro &amp; timer how-to</a></li>
+            <li><a href="deep-work/">Deep work &amp; 60-minute focus timer</a></li>
           </ul>
         </aside>
 
@@ -218,26 +227,26 @@
         <div>
           <h4 data-i18n="footerExplore">Explore</h4>
           <ul>
-            <li><a href="/" data-i18n="footerTimer">Timer</a></li>
-            <li><a href="/pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
-            <li><a href="/study-timer/" data-i18n="footerStudy">Study timer</a></li>
-            <li><a href="/deep-work/" data-i18n="footerDeep">Deep work</a></li>
-            <li><a href="/break-guide/" data-i18n="footerBreak">Break guide</a></li>
-            <li><a href="/productivity/" data-i18n="footerGuides">Guides</a></li>
-            <li><a href="/dashboard/" data-i18n="footerDash">Dashboard</a></li>
-            <li><a href="/resources/" data-i18n="footerRes">Resources</a></li>
-            <li><a href="/calculators/" data-i18n="footerCalc">Calculators</a></li>
+            <li><a href="" data-i18n="footerTimer">Timer</a></li>
+            <li><a href="pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
+            <li><a href="study-timer/" data-i18n="footerStudy">Study timer</a></li>
+            <li><a href="deep-work/" data-i18n="footerDeep">Deep work</a></li>
+            <li><a href="break-guide/" data-i18n="footerBreak">Break guide</a></li>
+            <li><a href="productivity/" data-i18n="footerGuides">Guides</a></li>
+            <li><a href="dashboard/" data-i18n="footerDash">Dashboard</a></li>
+            <li><a href="resources/" data-i18n="footerRes">Resources</a></li>
+            <li><a href="calculators/" data-i18n="footerCalc">Calculators</a></li>
           </ul>
         </div>
         <div>
           <h4 data-i18n="footerSite">Site</h4>
           <ul>
-            <li><a href="/about/" data-i18n="footerAbout">About</a></li>
-            <li><a href="/contact/" data-i18n="footerContact">Contact</a></li>
-            <li><a href="/privacy/" data-i18n="footerPrivacy">Privacy</a></li>
-            <li><a href="/terms/" data-i18n="footerTerms">Terms</a></li>
-            <li><a href="/disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
-            <li><a href="/sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
+            <li><a href="about/" data-i18n="footerAbout">About</a></li>
+            <li><a href="contact/" data-i18n="footerContact">Contact</a></li>
+            <li><a href="privacy/" data-i18n="footerPrivacy">Privacy</a></li>
+            <li><a href="terms/" data-i18n="footerTerms">Terms</a></li>
+            <li><a href="disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
+            <li><a href="sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
           </ul>
         </div>
       </div>
@@ -247,8 +256,8 @@
       </div>
     </div>
   </footer>
-  <script src="/config.js"></script>
-  <script src="/site.js" defer></script>
-  <script type="module" src="/page.js"></script>
+  <script src="config.js"></script>
+  <script src="site.js" defer></script>
+  <script type="module" src="page.js"></script>
 </body>
 </html>
