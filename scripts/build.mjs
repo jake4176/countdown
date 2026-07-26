@@ -34,8 +34,9 @@ for (const f of htmls) {
     if (!url || url.startsWith('#') || url.startsWith('mailto:') || url.startsWith('tel:')) continue;
     if (/^[a-z]+:/i.test(url) || url.startsWith('//')) continue; // absolute / protocol-relative
     if (/['"+]/.test(url)) continue; // skip JS string fragments accidentally matched in <script>
-    // Root-absolute ("/x") or site-relative ("x") — both resolve from site root (via <base>).
-    if (url.startsWith('/')) url = url.slice(1);
+    // GitHub Pages project prefix, root-absolute, or site-relative.
+    if (url.startsWith('/countdown/')) url = url.slice('/countdown/'.length);
+    else if (url.startsWith('/')) url = url.slice(1);
     url = url.split('#')[0].split('?')[0];
     if (!url || url.startsWith('.')) continue;
     let fsPath = join(root, url);

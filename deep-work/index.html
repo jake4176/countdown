@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<script>
-(function () {
-  var base = /^\/countdown(\/|$)/.test(location.pathname) ? '/countdown/' : '/';
-  var el = document.createElement('base');
-  el.href = base;
-  document.head.insertBefore(el, document.currentScript);
-})();
-</script>
-
 <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title data-i18n="deepWorkTitle">Deep Work & 60-Minute Focus Timer — Today's Focus</title>
@@ -26,9 +17,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="딥워크 집중법과 60분 집중 타이머 — 오늘의 집중">
   <meta name="twitter:description" content="오늘의 집중 60분 딥워크 프리셋으로 방해 없는 몰입 시간을 확보하는 실전 사용법을 안내합니다.">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="/countdown/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/countdown/manifest.webmanifest">
+  <link rel="stylesheet" href="/countdown/styles.css?v=20260726b">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://focus-timer.example/"},{"@type":"ListItem","position":2,"name":"딥워크","item":"https://focus-timer.example/deep-work/"}]}
   </script>
@@ -44,25 +35,25 @@
   <a href="#main" class="skip-link" data-i18n="skipToMain">Skip to content</a>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href=""><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
+      <a class="brand" href="/countdown/"><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
       <div class="header-actions">
         <button type="button" id="langToggle" class="lang-toggle" data-next-lang="ko" aria-label="Change language">한국어</button>
         <button class="nav-toggle" data-i18n-aria="openMenu" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">☰</button>
       </div>
       <nav id="primary-nav" class="nav" aria-label="Primary">
-        <a href="" data-i18n="navHome">Home</a>
-        <a href="pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
-        <a href="productivity/" data-i18n="navProductivity">Productivity</a>
-        <a href="study-timer/" data-i18n="navStudy">Study</a>
-        <a href="deep-work/" data-i18n="navDeepWork" aria-current="page">Deep Work</a>
-        <a href="resources/" data-i18n="navResources">Resources</a>
-        <a href="about/" data-i18n="navAbout">About</a>
+        <a href="/countdown/" data-i18n="navHome">Home</a>
+        <a href="/countdown/pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
+        <a href="/countdown/productivity/" data-i18n="navProductivity">Productivity</a>
+        <a href="/countdown/study-timer/" data-i18n="navStudy">Study</a>
+        <a href="/countdown/deep-work/" data-i18n="navDeepWork" aria-current="page">Deep Work</a>
+        <a href="/countdown/resources/" data-i18n="navResources">Resources</a>
+        <a href="/countdown/about/" data-i18n="navAbout">About</a>
       </nav>
     </div>
   </header>
   <main id="main">
     <article class="article">
-      <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="" data-i18n="breadcrumbHome">Home</a></li><li aria-current="page" data-i18n="navDeepWork">Deep Work</li></ol></nav>
+      <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/countdown/" data-i18n="breadcrumbHome">Home</a></li><li aria-current="page" data-i18n="navDeepWork">Deep Work</li></ol></nav>
 
       <div data-lang="ko">
         <header>
@@ -75,7 +66,7 @@
           <ul>
             <li>오늘의 집중 <strong>60분 딥워크 프리셋</strong>으로 방해 없는 몰입 한 덩어리를 확보하는 실전 사용법을 다룹니다.</li>
             <li>워밍업 → 방해 차단 → 60분 몰입 → 긴 휴식까지 화면 그대로 따라 할 수 있습니다.</li>
-            <li>하루 일과 속에 딥워크를 배치하는 루틴 설계는 <a href="productivity/deep-work-routine/">딥워크 루틴 구성법</a>에서 다룹니다.</li>
+            <li>하루 일과 속에 딥워크를 배치하는 루틴 설계는 <a href="/countdown/productivity/deep-work-routine/">딥워크 루틴 구성법</a>에서 다룹니다.</li>
           </ul>
         </div>
 
@@ -128,9 +119,9 @@
         <aside class="related">
           <h2>함께 읽으면 좋은 글</h2>
           <ul>
-            <li><a href="productivity/deep-work-routine/">딥워크 루틴 구성법</a></li>
-            <li><a href="break-guide/">짧은 휴식과 긴 휴식 잘 쉬는 법</a></li>
-            <li><a href="productivity/how-to-focus/">집중이 안 될 때 점검할 방법</a></li>
+            <li><a href="/countdown/productivity/deep-work-routine/">딥워크 루틴 구성법</a></li>
+            <li><a href="/countdown/break-guide/">짧은 휴식과 긴 휴식 잘 쉬는 법</a></li>
+            <li><a href="/countdown/productivity/how-to-focus/">집중이 안 될 때 점검할 방법</a></li>
           </ul>
         </aside>
 
@@ -148,7 +139,7 @@
           <ul>
             <li>How to protect one uninterrupted block with the <strong>60-minute Deep Work preset</strong> on Today's Focus.</li>
             <li>Follow along on screen: warm up → block distractions → 60 minutes of focus → a long break.</li>
-            <li>For placing deep work in your daily schedule, see <a href="productivity/deep-work-routine/">Design a deep work routine</a>.</li>
+            <li>For placing deep work in your daily schedule, see <a href="/countdown/productivity/deep-work-routine/">Design a deep work routine</a>.</li>
           </ul>
         </div>
 
@@ -201,9 +192,9 @@
         <aside class="related">
           <h2>Related reads</h2>
           <ul>
-            <li><a href="productivity/deep-work-routine/">Design a deep work routine</a></li>
-            <li><a href="break-guide/">Short and long breaks — rest well</a></li>
-            <li><a href="productivity/how-to-focus/">When focus will not stick</a></li>
+            <li><a href="/countdown/productivity/deep-work-routine/">Design a deep work routine</a></li>
+            <li><a href="/countdown/break-guide/">Short and long breaks — rest well</a></li>
+            <li><a href="/countdown/productivity/how-to-focus/">When focus will not stick</a></li>
           </ul>
         </aside>
 
@@ -221,26 +212,26 @@
         <div>
           <h4 data-i18n="footerExplore">Explore</h4>
           <ul>
-            <li><a href="" data-i18n="footerTimer">Timer</a></li>
-            <li><a href="pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
-            <li><a href="study-timer/" data-i18n="footerStudy">Study timer</a></li>
-            <li><a href="deep-work/" data-i18n="footerDeep">Deep work</a></li>
-            <li><a href="break-guide/" data-i18n="footerBreak">Break guide</a></li>
-            <li><a href="productivity/" data-i18n="footerGuides">Guides</a></li>
-            <li><a href="dashboard/" data-i18n="footerDash">Dashboard</a></li>
-            <li><a href="resources/" data-i18n="footerRes">Resources</a></li>
-            <li><a href="calculators/" data-i18n="footerCalc">Calculators</a></li>
+            <li><a href="/countdown/" data-i18n="footerTimer">Timer</a></li>
+            <li><a href="/countdown/pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
+            <li><a href="/countdown/study-timer/" data-i18n="footerStudy">Study timer</a></li>
+            <li><a href="/countdown/deep-work/" data-i18n="footerDeep">Deep work</a></li>
+            <li><a href="/countdown/break-guide/" data-i18n="footerBreak">Break guide</a></li>
+            <li><a href="/countdown/productivity/" data-i18n="footerGuides">Guides</a></li>
+            <li><a href="/countdown/dashboard/" data-i18n="footerDash">Dashboard</a></li>
+            <li><a href="/countdown/resources/" data-i18n="footerRes">Resources</a></li>
+            <li><a href="/countdown/calculators/" data-i18n="footerCalc">Calculators</a></li>
           </ul>
         </div>
         <div>
           <h4 data-i18n="footerSite">Site</h4>
           <ul>
-            <li><a href="about/" data-i18n="footerAbout">About</a></li>
-            <li><a href="contact/" data-i18n="footerContact">Contact</a></li>
-            <li><a href="privacy/" data-i18n="footerPrivacy">Privacy</a></li>
-            <li><a href="terms/" data-i18n="footerTerms">Terms</a></li>
-            <li><a href="disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
-            <li><a href="sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
+            <li><a href="/countdown/about/" data-i18n="footerAbout">About</a></li>
+            <li><a href="/countdown/contact/" data-i18n="footerContact">Contact</a></li>
+            <li><a href="/countdown/privacy/" data-i18n="footerPrivacy">Privacy</a></li>
+            <li><a href="/countdown/terms/" data-i18n="footerTerms">Terms</a></li>
+            <li><a href="/countdown/disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
+            <li><a href="/countdown/sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
           </ul>
         </div>
       </div>
@@ -250,8 +241,8 @@
       </div>
     </div>
   </footer>
-  <script src="config.js"></script>
-  <script src="site.js" defer></script>
-  <script type="module" src="page.js"></script>
+  <script src="/countdown/config.js"></script>
+  <script src="/countdown/site.js" defer></script>
+  <script type="module" src="/countdown/page.js"></script>
 </body>
 </html>

@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<script>
-(function () {
-  var base = /^\/countdown(\/|$)/.test(location.pathname) ? '/countdown/' : '/';
-  var el = document.createElement('base');
-  el.href = base;
-  document.head.insertBefore(el, document.currentScript);
-})();
-</script>
-
 <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>면책 안내 — 오늘의 집중</title>
@@ -22,32 +13,32 @@
   <meta property="og:description" content="오늘의 집중이 제공하는 정보는 일반 참고용 생산성 정보이며 의학적·전문적 조언이 아닙니다. 이용에 따른 책임 한계를 안내합니다.">
   <meta property="og:url" content="https://focus-timer.example/disclaimer/">
   <meta property="og:locale" content="ko_KR">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="/countdown/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/countdown/manifest.webmanifest">
+  <link rel="stylesheet" href="/countdown/styles.css?v=20260726b">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://focus-timer.example/"},{"@type":"ListItem","position":2,"name":"면책 안내","item":"https://focus-timer.example/disclaimer/"}]}</script>
 </head>
 <body>
   <a href="#main" class="skip-link">본문으로 건너뛰기</a>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href=""><span class="brand-mark" aria-hidden="true">🎯</span>오늘의 집중</a>
+      <a class="brand" href="/countdown/"><span class="brand-mark" aria-hidden="true">🎯</span>오늘의 집중</a>
       <button class="nav-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="primary-nav">☰</button>
       <nav id="primary-nav" class="nav" aria-label="주요 메뉴">
-        <a href="">Home</a>
-        <a href="pomodoro/">Focus Timer</a>
-        <a href="productivity/">Productivity</a>
-        <a href="study-timer/">Study</a>
-        <a href="deep-work/">Deep Work</a>
-        <a href="resources/">Resources</a>
-        <a href="about/">About</a>
+        <a href="/countdown/">Home</a>
+        <a href="/countdown/pomodoro/">Focus Timer</a>
+        <a href="/countdown/productivity/">Productivity</a>
+        <a href="/countdown/study-timer/">Study</a>
+        <a href="/countdown/deep-work/">Deep Work</a>
+        <a href="/countdown/resources/">Resources</a>
+        <a href="/countdown/about/">About</a>
       </nav>
     </div>
   </header>
   <main id="main">
     <section class="section wrap">
       <div class="prose">
-        <nav class="breadcrumb" aria-label="탐색 경로"><ol><li><a href="">홈</a></li><li aria-current="page">면책 안내</li></ol></nav>
+        <nav class="breadcrumb" aria-label="탐색 경로"><ol><li><a href="/countdown/">홈</a></li><li aria-current="page">면책 안내</li></ol></nav>
         <h1>면책 안내</h1>
         <p>오늘의 집중(이하 "본 사이트")은 이용자에게 집중과 휴식 관리에 도움을 주기 위한 무료 웹 타이머와 관련 정보를 제공합니다. 본 사이트를 이용하시기 전에 아래 면책 사항을 확인해 주시기 바랍니다.</p>
 
@@ -80,26 +71,26 @@
         <div>
           <h4>둘러보기</h4>
           <ul>
-            <li><a href="">타이머</a></li>
-            <li><a href="pomodoro/">포모도로</a></li>
-            <li><a href="study-timer/">공부 타이머</a></li>
-            <li><a href="deep-work/">딥워크</a></li>
-            <li><a href="break-guide/">휴식 가이드</a></li>
-            <li><a href="productivity/">집중 가이드</a></li>
-            <li><a href="dashboard/">대시보드</a></li>
-            <li><a href="resources/">자료실</a></li>
-            <li><a href="calculators/">계산기</a></li>
+            <li><a href="/countdown/">타이머</a></li>
+            <li><a href="/countdown/pomodoro/">포모도로</a></li>
+            <li><a href="/countdown/study-timer/">공부 타이머</a></li>
+            <li><a href="/countdown/deep-work/">딥워크</a></li>
+            <li><a href="/countdown/break-guide/">휴식 가이드</a></li>
+            <li><a href="/countdown/productivity/">집중 가이드</a></li>
+            <li><a href="/countdown/dashboard/">대시보드</a></li>
+            <li><a href="/countdown/resources/">자료실</a></li>
+            <li><a href="/countdown/calculators/">계산기</a></li>
           </ul>
         </div>
         <div>
           <h4>사이트 정보</h4>
           <ul>
-            <li><a href="about/">소개</a></li>
-            <li><a href="contact/">문의</a></li>
-            <li><a href="privacy/">개인정보처리방침</a></li>
-            <li><a href="terms/">이용약관</a></li>
-            <li><a href="disclaimer/">면책 안내</a></li>
-            <li><a href="sitemap/">사이트맵</a></li>
+            <li><a href="/countdown/about/">소개</a></li>
+            <li><a href="/countdown/contact/">문의</a></li>
+            <li><a href="/countdown/privacy/">개인정보처리방침</a></li>
+            <li><a href="/countdown/terms/">이용약관</a></li>
+            <li><a href="/countdown/disclaimer/">면책 안내</a></li>
+            <li><a href="/countdown/sitemap/">사이트맵</a></li>
           </ul>
         </div>
       </div>
@@ -109,7 +100,7 @@
       </div>
     </div>
   </footer>
-  <script src="config.js"></script>
-  <script src="site.js" defer></script>
+  <script src="/countdown/config.js"></script>
+  <script src="/countdown/site.js" defer></script>
 </body>
 </html>

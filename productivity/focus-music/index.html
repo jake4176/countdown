@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
-(function () {
-  var base = /^\/countdown(\/|$)/.test(location.pathname) ? '/countdown/' : '/';
-  var el = document.createElement('base');
-  el.href = base;
-  document.head.insertBefore(el, document.currentScript);
-})();
-</script>
-
 <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title data-i18n="focusMusicTitle">Sounds and Music for Focus — Today's Focus</title>
@@ -27,9 +18,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Sounds and Music for Focus — Today's Focus">
   <meta name="twitter:description" content="White noise, ambient, lyric-free music, and nature sounds. Practical ways to choose sound for your situation and pair it with a timer.">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="/countdown/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/countdown/manifest.webmanifest">
+  <link rel="stylesheet" href="/countdown/styles.css?v=20260726b">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -96,19 +87,19 @@
   <a href="#main" class="skip-link" data-i18n="skipToMain">Skip to content</a>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href=""><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
+      <a class="brand" href="/countdown/"><span class="brand-mark" aria-hidden="true">◎</span><span class="brand-text">Today's Focus</span></a>
       <div class="header-actions">
         <button type="button" id="langToggle" class="lang-toggle" data-next-lang="ko" aria-label="Change language">한국어</button>
         <button class="nav-toggle" data-i18n-aria="openMenu" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">☰</button>
       </div>
       <nav id="primary-nav" class="nav" aria-label="Primary">
-        <a href="" data-i18n="navHome">Home</a>
-        <a href="pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
-        <a href="productivity/" data-i18n="navProductivity" aria-current="page">Productivity</a>
-        <a href="study-timer/" data-i18n="navStudy">Study</a>
-        <a href="deep-work/" data-i18n="navDeepWork">Deep Work</a>
-        <a href="resources/" data-i18n="navResources">Resources</a>
-        <a href="about/" data-i18n="navAbout">About</a>
+        <a href="/countdown/" data-i18n="navHome">Home</a>
+        <a href="/countdown/pomodoro/" data-i18n="navFocusTimer">Focus Timer</a>
+        <a href="/countdown/productivity/" data-i18n="navProductivity" aria-current="page">Productivity</a>
+        <a href="/countdown/study-timer/" data-i18n="navStudy">Study</a>
+        <a href="/countdown/deep-work/" data-i18n="navDeepWork">Deep Work</a>
+        <a href="/countdown/resources/" data-i18n="navResources">Resources</a>
+        <a href="/countdown/about/" data-i18n="navAbout">About</a>
       </nav>
     </div>
   </header>
@@ -116,7 +107,7 @@
     <article class="article">
       <div data-lang="ko">
         <nav class="breadcrumb" aria-label="위치 경로">
-          <a href="">홈</a> &gt; <a href="productivity/">Productivity</a> &gt; <span>집중에 도움이 되는 소리와 음악 활용법</span>
+          <a href="/countdown/">홈</a> &gt; <a href="/countdown/productivity/">Productivity</a> &gt; <span>집중에 도움이 되는 소리와 음악 활용법</span>
         </nav>
 
         <header>
@@ -168,7 +159,7 @@
           </div>
           <div class="step">
             <h3>5. 타이머와 함께 켜고 끄세요</h3>
-            <p>소리를 집중의 리듬에 연결해 보세요. <a href="pomodoro/">타이머</a>로 집중 블록을 시작할 때 소리를 켜고, 휴식 시간에는 소리를 끄고 귀를 쉬게 하는 방식입니다. 이렇게 하면 소리와 집중 상태가 짝지어지고, 장시간 사용 시 청각 피로도 줄일 수 있습니다. 쉬는 방법은 <a href="break-guide/">휴식 가이드</a>를 참고하세요.</p>
+            <p>소리를 집중의 리듬에 연결해 보세요. <a href="/countdown/pomodoro/">타이머</a>로 집중 블록을 시작할 때 소리를 켜고, 휴식 시간에는 소리를 끄고 귀를 쉬게 하는 방식입니다. 이렇게 하면 소리와 집중 상태가 짝지어지고, 장시간 사용 시 청각 피로도 줄일 수 있습니다. 쉬는 방법은 <a href="/countdown/break-guide/">휴식 가이드</a>를 참고하세요.</p>
           </div>
         </div>
 
@@ -176,7 +167,7 @@
 
         <h2>현실적인 예시</h2>
         <p>보고서를 쓰는 직장인 B씨는 카페에서 일할 때 옆자리 대화가 자꾸 귀에 들어와 집중이 끊겼습니다. 그는 완전한 정적 대신 낮은 볼륨의 백색소음을 배경으로 두어 대화 소리를 덮었더니 글 쓰는 흐름이 덜 끊긴다고 느꼈습니다. 반면 자료를 정리하고 파일 이름을 바꾸는 단순 작업을 할 때는 가사 없는 잔잔한 음악을 틀어 지루함을 줄였습니다.</p>
-        <p>B씨가 찾은 규칙은 단순했습니다. 머리를 많이 써야 하는 언어 작업에는 정보가 적은 소리를, 손이 바쁜 단순 작업에는 리듬이 있는 소리를 쓰는 것입니다. 여기에 25분 집중·5분 휴식 리듬을 더해, 집중 블록에는 소리를 켜고 휴식에는 껐습니다. 자신에게 맞는 조합을 찾는 과정은 <a href="productivity/how-to-focus/">집중하는 법</a>을 익히는 과정의 일부이기도 합니다.</p>
+        <p>B씨가 찾은 규칙은 단순했습니다. 머리를 많이 써야 하는 언어 작업에는 정보가 적은 소리를, 손이 바쁜 단순 작업에는 리듬이 있는 소리를 쓰는 것입니다. 여기에 25분 집중·5분 휴식 리듬을 더해, 집중 블록에는 소리를 켜고 휴식에는 껐습니다. 자신에게 맞는 조합을 찾는 과정은 <a href="/countdown/productivity/how-to-focus/">집중하는 법</a>을 익히는 과정의 일부이기도 합니다.</p>
 
         <div class="table-scroll">
           <table class="compare">
@@ -246,9 +237,9 @@
         <aside class="related">
           <h2>함께 읽으면 좋은 글</h2>
           <ul>
-            <li><a href="productivity/how-to-focus/">집중하는 법: 산만함을 줄이는 원리</a></li>
-            <li><a href="pomodoro/">포모도로 타이머로 리듬 만들기</a></li>
-            <li><a href="break-guide/">잘 쉬는 법: 휴식 가이드</a></li>
+            <li><a href="/countdown/productivity/how-to-focus/">집중하는 법: 산만함을 줄이는 원리</a></li>
+            <li><a href="/countdown/pomodoro/">포모도로 타이머로 리듬 만들기</a></li>
+            <li><a href="/countdown/break-guide/">잘 쉬는 법: 휴식 가이드</a></li>
           </ul>
         </aside>
 
@@ -256,7 +247,7 @@
       </div>
       <div data-lang="en">
         <nav class="breadcrumb" aria-label="Breadcrumb">
-          <a href="">Home</a> &gt; <a href="productivity/">Productivity</a> &gt; <span>Sounds and Music for Focus</span>
+          <a href="/countdown/">Home</a> &gt; <a href="/countdown/productivity/">Productivity</a> &gt; <span>Sounds and Music for Focus</span>
         </nav>
 
         <header>
@@ -308,7 +299,7 @@
           </div>
           <div class="step">
             <h3>5. Turn sound on and off with your timer</h3>
-            <p>Link sound to your focus rhythm. Start sound when a <a href="pomodoro/">timer</a> focus block begins; turn it off during breaks so your ears rest. That pairs sound with focus state and reduces auditory fatigue over long sessions. See the <a href="break-guide/">break guide</a> for rest ideas.</p>
+            <p>Link sound to your focus rhythm. Start sound when a <a href="/countdown/pomodoro/">timer</a> focus block begins; turn it off during breaks so your ears rest. That pairs sound with focus state and reduces auditory fatigue over long sessions. See the <a href="/countdown/break-guide/">break guide</a> for rest ideas.</p>
           </div>
         </div>
 
@@ -316,7 +307,7 @@
 
         <h2>A realistic example</h2>
         <p>B, writing a report at a café, kept losing flow to nearby conversations. Low-volume white noise in the background masked chat and made writing feel less interrupted. For filing and renaming documents — simple, repetitive work — quiet lyric-free music reduced boredom.</p>
-        <p>B's rule was simple: low-information sound for language-heavy work, rhythmic sound for hands-busy simple tasks. Add a 25-minute focus / 5-minute break rhythm: sound on during focus blocks, off during breaks. Finding your combination is part of learning <a href="productivity/how-to-focus/">how to focus</a>.</p>
+        <p>B's rule was simple: low-information sound for language-heavy work, rhythmic sound for hands-busy simple tasks. Add a 25-minute focus / 5-minute break rhythm: sound on during focus blocks, off during breaks. Finding your combination is part of learning <a href="/countdown/productivity/how-to-focus/">how to focus</a>.</p>
 
         <div class="table-scroll">
           <table class="compare">
@@ -386,9 +377,9 @@
         <aside class="related">
           <h2>Related reads</h2>
           <ul>
-            <li><a href="productivity/how-to-focus/">How to focus: reducing distraction</a></li>
-            <li><a href="pomodoro/">Build rhythm with the Pomodoro timer</a></li>
-            <li><a href="break-guide/">How to rest well: break guide</a></li>
+            <li><a href="/countdown/productivity/how-to-focus/">How to focus: reducing distraction</a></li>
+            <li><a href="/countdown/pomodoro/">Build rhythm with the Pomodoro timer</a></li>
+            <li><a href="/countdown/break-guide/">How to rest well: break guide</a></li>
           </ul>
         </aside>
 
@@ -406,26 +397,26 @@
         <div>
           <h4 data-i18n="footerExplore">Explore</h4>
           <ul>
-            <li><a href="" data-i18n="footerTimer">Timer</a></li>
-            <li><a href="pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
-            <li><a href="study-timer/" data-i18n="footerStudy">Study timer</a></li>
-            <li><a href="deep-work/" data-i18n="footerDeep">Deep work</a></li>
-            <li><a href="break-guide/" data-i18n="footerBreak">Break guide</a></li>
-            <li><a href="productivity/" data-i18n="footerGuides">Guides</a></li>
-            <li><a href="dashboard/" data-i18n="footerDash">Dashboard</a></li>
-            <li><a href="resources/" data-i18n="footerRes">Resources</a></li>
-            <li><a href="calculators/" data-i18n="footerCalc">Calculators</a></li>
+            <li><a href="/countdown/" data-i18n="footerTimer">Timer</a></li>
+            <li><a href="/countdown/pomodoro/" data-i18n="footerPomo">Pomodoro</a></li>
+            <li><a href="/countdown/study-timer/" data-i18n="footerStudy">Study timer</a></li>
+            <li><a href="/countdown/deep-work/" data-i18n="footerDeep">Deep work</a></li>
+            <li><a href="/countdown/break-guide/" data-i18n="footerBreak">Break guide</a></li>
+            <li><a href="/countdown/productivity/" data-i18n="footerGuides">Guides</a></li>
+            <li><a href="/countdown/dashboard/" data-i18n="footerDash">Dashboard</a></li>
+            <li><a href="/countdown/resources/" data-i18n="footerRes">Resources</a></li>
+            <li><a href="/countdown/calculators/" data-i18n="footerCalc">Calculators</a></li>
           </ul>
         </div>
         <div>
           <h4 data-i18n="footerSite">Site</h4>
           <ul>
-            <li><a href="about/" data-i18n="footerAbout">About</a></li>
-            <li><a href="contact/" data-i18n="footerContact">Contact</a></li>
-            <li><a href="privacy/" data-i18n="footerPrivacy">Privacy</a></li>
-            <li><a href="terms/" data-i18n="footerTerms">Terms</a></li>
-            <li><a href="disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
-            <li><a href="sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
+            <li><a href="/countdown/about/" data-i18n="footerAbout">About</a></li>
+            <li><a href="/countdown/contact/" data-i18n="footerContact">Contact</a></li>
+            <li><a href="/countdown/privacy/" data-i18n="footerPrivacy">Privacy</a></li>
+            <li><a href="/countdown/terms/" data-i18n="footerTerms">Terms</a></li>
+            <li><a href="/countdown/disclaimer/" data-i18n="footerDisclaimer">Disclaimer</a></li>
+            <li><a href="/countdown/sitemap/" data-i18n="footerSitemap">Sitemap</a></li>
           </ul>
         </div>
       </div>
@@ -435,8 +426,8 @@
       </div>
     </div>
   </footer>
-  <script src="config.js"></script>
-  <script src="site.js" defer></script>
-  <script type="module" src="page.js"></script>
+  <script src="/countdown/config.js"></script>
+  <script src="/countdown/site.js" defer></script>
+  <script type="module" src="/countdown/page.js"></script>
 </body>
 </html>

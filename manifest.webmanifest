@@ -3,12 +3,12 @@
   "short_name": "Today's Focus",
   "description": "Free web focus timer with Pomodoro, study, and deep-work presets.",
   "lang": "en",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/countdown/",
+  "scope": "/countdown/",
   "display": "standalone",
   "background_color": "#f6f4ff",
   "theme_color": "#6c5ce7",
   "icons": [
-    { "src": "favicon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" }
+    { "src": "/countdown/favicon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" }
   ]
 }

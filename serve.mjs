@@ -14,6 +14,10 @@ const TYPES = {
 
 const server = createServer(async (req, res) => {
   let url = decodeURIComponent(req.url.split('?')[0]);
+  // GitHub Pages 프로젝트 경로(/countdown/…)를 로컬에서도 그대로 제공
+  if (url === '/countdown' || url.startsWith('/countdown/')) {
+    url = url.slice('/countdown'.length) || '/';
+  }
   // 클린 URL: 디렉터리 경로(/pomodoro/)는 그 안의 index.html을 제공
   if (url.endsWith('/')) url += 'index.html';
   else if (!extname(url)) url += '/index.html';
