@@ -33,8 +33,10 @@ for (const f of walk(root, ['.js', '.mjs'])) {
 // 2) HTML 검사
 const titles = new Map(), descs = new Map();
 for (const f of walk(root, ['.html'])) {
-  const h = readFileSync(f, 'utf8');
   const r = rel(f);
+  // Google Search Console 소유권 확인 파일은 일반 페이지 규칙에서 제외
+  if (/^\/google[a-f0-9]+\.html$/i.test(r)) continue;
+  const h = readFileSync(f, 'utf8');
   if (!/<html[^>]*\blang=/.test(h)) errors.push(`${r}: <html>에 lang 속성 없음`);
   const title = (h.match(/<title[^>]*>([^<]*)<\/title>/i) || [])[1];
   if (!title || !title.trim()) errors.push(`${r}: <title> 없음`);

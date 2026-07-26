@@ -51,6 +51,8 @@ const sm = readFileSync(join(root, 'sitemap.xml'), 'utf8');
 for (const loc of [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map(x => x[1].trim())) {
   let path;
   try { path = new URL(loc).pathname; } catch { errors.push(`sitemap.xml → 잘못된 URL ${loc}`); continue; }
+  if (path.startsWith('/countdown/')) path = path.slice('/countdown'.length);
+  else if (path === '/countdown') path = '/';
   let fsPath = join(root, path);
   if (path.endsWith('/')) fsPath = join(fsPath, 'index.html');
   else if (!extname(path)) fsPath = join(fsPath, 'index.html');

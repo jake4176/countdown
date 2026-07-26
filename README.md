@@ -85,7 +85,7 @@ tests/                core.js · locales.js 자동화 테스트
 
 ### 배포 전 반드시 바꿔야 할 항목
 
-1. **도메인 치환** — 현재 자리표시자 도메인은 `focus-timer.example` 입니다. 아래 파일 전체에서 `focus-timer.example`(및 `https://focus-timer.example`)을 실제 도메인으로 일괄 치환하세요.
+1. **도메인 치환** — 현재 자리표시자 도메인은 `focus-timer.example` 입니다. 아래 파일 전체에서 `focus-timer.example`(및 `https://jake4176.github.io/countdown`)을 실제 도메인으로 일괄 치환하세요.
    - 모든 `index.html`의 `canonical` / `og:url` / JSON-LD
    - `robots.txt`, `sitemap.xml`
 2. **`config.js`** — `siteUrl`을 실제 도메인으로 설정(선택), 분석을 쓸 경우 `gaId` 설정.
