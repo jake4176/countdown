@@ -20,7 +20,7 @@ const rel = f => f.replace(root, '').replace(/\\/g, '/') || '/';
 const errors = [];
 
 // 1) 필수 파일
-const required = ['index.html', '404.html', 'robots.txt', 'sitemap.xml', 'manifest.webmanifest', 'favicon.svg', 'styles.css', 'app.js', 'core.js', 'onboard.js', 'locales.js', 'i18n.js', 'page.js'];
+const required = ['index.html', '404.html', 'robots.txt', 'sitemap.xml', 'manifest.webmanifest', 'favicon.svg', 'styles.css', 'app.js', 'core.js', 'onboard.js', 'locales.js', 'i18n.js', 'page.js', 'amplitude.js'];
 for (const f of required) if (!existsSync(join(root, f))) errors.push(`필수 파일 없음: ${f}`);
 
 // 2) 내부 링크·자산 참조 검사

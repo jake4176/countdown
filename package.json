@@ -7,6 +7,10 @@
     "test": "node --test",
     "dev": "node serve.mjs",
     "lint": "node scripts/lint.mjs",
-    "build": "node scripts/build.mjs"
+    "build": "node scripts/build.mjs",
+    "build:amplitude": "node scripts/build-amplitude.mjs"
+  },
+  "dependencies": {
+    "@amplitude/unified": "^1.1.27"
   }
 }

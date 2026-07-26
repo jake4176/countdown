@@ -24,8 +24,9 @@ function walk(dir, exts) {
 const errors = [];
 const rel = f => f.replace(root, '').replace(/\\/g, '/') || '/';
 
-// 1) JS 문법
+// 1) JS 문법 (번들된 amplitude.js는 제외)
 for (const f of walk(root, ['.js', '.mjs'])) {
+  if (rel(f) === '/amplitude.js') continue;
   try { execFileSync(process.execPath, ['--check', f], { stdio: 'pipe' }); }
   catch (e) { errors.push(`${rel(f)}: 문법 오류\n${String(e.stderr || e.message).trim()}`); }
 }
