@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>우리 집 조명 견적 계산기 — 노랑조명 (부산 동래)</title>
+  <meta name="description" content="공간과 평수만 입력하면 필요한 밝기(lm), 조명 개수와 배치, 추천 색온도, 예상 제품·시공 비용까지 한 번에 계산합니다. 부산 동래 명륜역 노랑조명이 만든 무료 조명 견적 계산기입니다.">
+  <link rel="canonical" href="https://jake4176.github.io/countdown/lighting/">
+  <meta name="theme-color" content="#FAC00D">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="노랑조명">
+  <meta property="og:title" content="우리 집 조명 견적 계산기 — 노랑조명">
+  <meta property="og:description" content="평수만 넣으면 조명 개수·밝기·색온도·예상 비용이 나옵니다.">
+  <meta property="og:url" content="https://jake4176.github.io/countdown/lighting/">
+  <meta property="og:locale" content="ko_KR">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='28' r='18' fill='%23FAC00D'/%3E%3Crect x='24' y='46' width='16' height='10' rx='3' fill='%232B2B2B'/%3E%3C/svg%3E">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"거실 조명은 몇 W가 적당한가요?","acceptedAnswer":{"@type":"Answer","text":"거실 6평(약 20㎡) 기준으로 LED 약 90W(약 8,800lm)가 기본 밝기입니다. 아늑하게 쓰려면 60W대, 밝게 쓰려면 110W대로 잡으면 됩니다."}},
+    {"@type":"Question","name":"색온도는 어떻게 고르나요?","acceptedAnswer":{"@type":"Answer","text":"침실·식탁은 3000K 전구색, 거실은 4000K, 공부방과 주방은 5000K 주백색을 기본으로 추천합니다. 카페는 2700~3000K가 음식과 인테리어를 따뜻하게 보여 줍니다."}},
+    {"@type":"Question","name":"계산기 견적은 정확한가요?","acceptedAnswer":{"@type":"Answer","text":"광속법 간이식으로 계산한 예상 범위입니다. 천장 구조, 배선 상태, 제품 등급에 따라 달라지므로 정확한 금액은 상담으로 확인해 주세요."}}
+  ]}
+  </script>
+  <style>
+    :root {
+      --yellow: #FAC00D;
+      --yellow-soft: #FFF6D6;
+      --ink: #2B2B2B;
+      --ink-2: #5A5A5A;
+      --line: #E7E2D6;
+      --bg: #FBFAF6;
+      --card: #FFFFFF;
+      --focus: #B07F00;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --yellow-soft: #3A3218;
+        --ink: #F2EFE7;
+        --ink-2: #BDB8AC;
+        --line: #3B3934;
+        --bg: #1C1B19;
+        --card: #262522;
+        --focus: #FAC00D;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--ink);
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
+      line-height: 1.6; -webkit-text-size-adjust: 100%;
+    }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+    .top { background: #2B2B2B; color: #fff; }
+    .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .brand { font-weight: 800; letter-spacing: -0.02em; text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .brand i { width: 14px; height: 14px; border-radius: 50%; background: var(--yellow); box-shadow: 0 0 12px var(--yellow); }
+    .top small { color: #cfcfcf; }
+    .hero { padding: 36px 0 20px; }
+    .hero p.eyebrow { display: inline-block; margin: 0 0 10px; padding: 4px 10px; border-radius: 99px; background: var(--yellow-soft); font-size: 13px; font-weight: 700; }
+    h1 { font-size: clamp(26px, 6vw, 36px); line-height: 1.25; margin: 0 0 10px; letter-spacing: -0.03em; }
+    h1 mark { background: linear-gradient(transparent 55%, var(--yellow) 55%); color: inherit; }
+    .hero p.lead { margin: 0; color: var(--ink-2); }
+    section.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; margin: 16px 0; }
+    h2 { font-size: 18px; margin: 0 0 14px; letter-spacing: -0.02em; }
+    h2 .n { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--yellow); color: #2B2B2B; font-size: 13px; margin-right: 6px; }
+    .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+    .seg button { border: 0; background: transparent; color: var(--ink); padding: 10px 16px; font: inherit; cursor: pointer; min-height: 44px; }
+    .seg button[aria-checked="true"] { background: var(--yellow); color: #2B2B2B; font-weight: 700; }
+    .opts { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
+    .chk { display: flex; gap: 8px; align-items: center; min-height: 44px; cursor: pointer; }
+    .chk input { width: 20px; height: 20px; accent-color: var(--yellow); }
+    .room { display: grid; grid-template-columns: 1.2fr 1fr 1.2fr 44px; gap: 10px; align-items: end; padding: 12px 0; border-bottom: 1px dashed var(--line); }
+    .lf { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--ink-2); min-width: 0; }
+    .lf select, .lf input { font: inherit; font-size: 16px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px; min-height: 44px; width: 100%; }
+    .rm { height: 44px; border: 1px solid var(--line); background: transparent; color: var(--ink-2); border-radius: 10px; cursor: pointer; font-size: 16px; }
+    .add { margin-top: 14px; width: 100%; min-height: 48px; border: 2px dashed var(--line); background: transparent; color: var(--ink); border-radius: 12px; font: inherit; font-weight: 700; cursor: pointer; }
+    .hint { color: var(--ink-2); margin: 0; }
+    .plan { border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+    .plan header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 10px; }
+    .plan h3 { margin: 0; font-size: 17px; }
+    .tag { font-size: 13px; color: var(--ink-2); }
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
+    .metrics div { background: var(--yellow-soft); border-radius: 10px; padding: 10px; text-align: center; }
+    .metrics b { display: block; font-size: 18px; }
+    .metrics span { font-size: 12px; color: var(--ink-2); }
+    .kelvin { margin: 0 0 8px; font-size: 14px; }
+    .items { margin: 0 0 8px; padding-left: 18px; }
+    .items li { margin-bottom: 6px; }
+    .items .sub { display: block; font-size: 13px; color: var(--ink-2); }
+    .alt { font-size: 14px; margin-bottom: 10px; }
+    .alt summary { cursor: pointer; color: var(--ink-2); min-height: 32px; }
+    .cost { margin: 0; border-top: 1px solid var(--line); padding-top: 8px; font-size: 14px; }
+    .cost div { display: flex; justify-content: space-between; padding: 2px 0; }
+    .cost dt { color: var(--ink-2); } .cost dd { margin: 0; }
+    .cost .sum { font-weight: 700; font-size: 15px; }
+    .total { background: #2B2B2B; color: #fff; border-radius: var(--radius); padding: 22px 20px; margin: 16px 0; }
+    .total p { margin: 0; }
+    .total .big { font-size: clamp(24px, 6vw, 30px); font-weight: 800; color: var(--yellow); margin: 4px 0; letter-spacing: -0.02em; }
+    .total .detail { color: #cfcfcf; font-size: 14px; }
+    .btns { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+    .btn { display: flex; align-items: center; justify-content: center; min-height: 50px; border-radius: 12px; border: 1px solid #555; color: #fff; background: transparent; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; padding: 0 16px; text-align: center; }
+    .btn.primary { background: var(--yellow); border-color: var(--yellow); color: #2B2B2B; }
+    #copy-msg { font-size: 14px; color: #f2e3a9; min-height: 1.4em; margin-top: 8px; }
+    #copy-fallback { width: 100%; min-height: 160px; margin-top: 8px; font: inherit; font-size: 14px; border-radius: 10px; padding: 10px; }
+    .note { font-size: 13px; color: var(--ink-2); }
+    .faq details { border-bottom: 1px solid var(--line); padding: 12px 0; }
+    .faq summary { cursor: pointer; font-weight: 700; }
+    .faq p { margin: 8px 0 0; color: var(--ink-2); }
+    footer { padding: 28px 0 40px; color: var(--ink-2); font-size: 13px; }
+    @media (max-width: 560px) {
+      .room { grid-template-columns: 1fr 1fr 44px; }
+      .room .lf:nth-of-type(3) { grid-column: 1 / 3; grid-row: 2; }
+      .room .rm { grid-column: 3; grid-row: 1; }
+      .metrics b { font-size: 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="#main"><i aria-hidden="true"></i>노랑조명</a>
+      <small>부산 동래 · 명륜역</small>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <div class="hero">
+      <p class="eyebrow">무료 · 3분이면 끝</p>
+      <h1>우리 집 조명,<br><mark>몇 개 · 몇 W</mark>가 맞을까?</h1>
+      <p class="lead">공간과 평수만 넣으세요. 필요한 밝기와 조명 개수, 색온도, 예상 비용까지 바로 나옵니다.</p>
+    </div>
+
+    <section class="card" aria-labelledby="s1">
+      <h2 id="s1"><span class="n">1</span>원하는 분위기</h2>
+      <div class="opts">
+        <div id="mood" class="seg" role="radiogroup" aria-label="분위기"></div>
+        <label class="chk"><input type="checkbox" id="ceiling"> 천장이 높아요 (2.7m 이상)</label>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="s2">
+      <h2 id="s2"><span class="n">2</span>공간 입력</h2>
+      <div id="rooms"></div>
+      <button type="button" id="add" class="add">+ 공간 추가</button>
+    </section>
+
+    <section class="card" aria-labelledby="s3">
+      <h2 id="s3"><span class="n">3</span>추천 조명 설계</h2>
+      <div id="result" aria-live="polite"></div>
+    </section>
+
+    <section id="total" class="total" aria-labelledby="t-title" hidden>
+      <p id="t-title">전체 예상 비용</p>
+      <p class="big" id="total-range"></p>
+      <p class="detail" id="total-detail"></p>
+      <div class="btns">
+        <button type="button" class="btn primary" id="copy">견적 내용 복사하기</button>
+        <div id="cta-links" class="btns" style="margin-top:0"></div>
+      </div>
+      <p id="copy-msg" role="status"></p>
+      <textarea id="copy-fallback" readonly hidden aria-label="견적 요약"></textarea>
+    </section>
+
+    <p class="note">※ 광속법 간이식(조명률·보수율 0.45)으로 계산한 예상 범위입니다. 천장 구조, 배선 상태, 제품 등급에 따라 실제 금액은 달라집니다. 정확한 견적은 상담으로 확인해 주세요.</p>
+
+    <section class="card faq" aria-labelledby="faq">
+      <h2 id="faq">자주 묻는 질문</h2>
+      <details><summary>거실 조명은 몇 W가 적당한가요?</summary><p>거실 6평(약 20㎡) 기준으로 LED 약 90W(약 8,800lm)가 기본 밝기입니다. 아늑하게 쓰려면 60W대, 밝게 쓰려면 110W대로 잡으면 됩니다.</p></details>
+      <details><summary>색온도는 어떻게 고르나요?</summary><p>침실·식탁은 3000K 전구색, 거실은 4000K, 공부방과 주방은 5000K 주백색을 기본으로 추천합니다. 카페는 2700~3000K가 음식과 인테리어를 따뜻하게 보여 줍니다.</p></details>
+      <details><summary>메인등과 다운라이트 중 뭐가 나을까요?</summary><p>메인등은 시공이 간단하고 비용이 적게 듭니다. 다운라이트는 천장 타공이 필요하지만 공간이 넓고 깔끔해 보입니다. 이사·리모델링 시점이라면 다운라이트를, 교체만 할 거라면 메인등을 추천합니다.</p></details>
+      <details><summary>계산기 견적은 정확한가요?</summary><p>광속법 간이식으로 계산한 예상 범위입니다. 천장 구조, 배선 상태, 제품 등급에 따라 달라지므로 정확한 금액은 상담으로 확인해 주세요.</p></details>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <p>노랑조명 · 부산 동래구 명륜역 인근 조명 매장<br>입력한 내용은 저장하거나 전송하지 않습니다.</p>
+  </footer>
+
+  <script type="module" src="/countdown/lighting-ui.js"></script>
+</body>
+</html>
