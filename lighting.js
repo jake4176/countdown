@@ -11,18 +11,18 @@ export const LED_LM_PER_W = 100; // 일반 LED 조명의 대략적인 효율
 const UTILIZATION = 0.45;
 const HIGH_CEILING_FACTOR = 1.15;
 
-// 가격은 "예상 범위"다. 노랑조명 실제 판매가·시공비로 반드시 바꿔서 쓴다.
-// [최소, 최대] 원 단위.
+// 제품 가격: 노랑조명 자사몰(ylt67.com) 판매가 기준, 2026-10-31 확인. [최소, 최대] 원 단위.
+// 시공비(installSwap·installNew)는 자사몰·스토어에 공개된 금액이 없어 대표 확인이 필요하다.
 export const PRICES = {
-  livingMain: [80000, 250000],   // 거실등 LED 평판·사각등
-  roomMain: [30000, 100000],     // 방등
-  kitchenMain: [30000, 80000],   // 주방등
-  downlight: [10000, 25000],     // 다운라이트 4인치(개당)
-  pendant: [30000, 150000],      // 식탁 펜던트(개당)
-  track: [150000, 400000],       // 레일 + 스포트 세트(매장)
-  officeFlat: [40000, 90000],    // 사무실 평판등(개당)
-  installSwap: [20000, 40000],   // 기존 자리 교체 시공(개당)
-  installNew: [30000, 50000],    // 다운라이트 타공·신규 배선(개당)
+  livingMain: [199000, 490000],  // 거실등 100~200W (모니카 미니·더블링 199,000 ~ 그라나다 490,000)
+  roomMain: [51200, 149000],     // 방등 50~60W (스텔라 51,200 ~ 스웨그 149,000)
+  kitchenMain: [17700, 140000],  // 주방등 (시스템 프리미엄 17,700 ~ 에코 인테리어 라인 140,000)
+  downlight: [3800, 31500],      // 다운라이트 4인치 (YM 홀컵 3,800 ~ 라우드 COB 31,500)
+  pendant: [32000, 254000],      // 식탁 펜던트 (와이즈 32,000 ~ 카이져 254,000)
+  track: [25000, 77000],         // 레일 조명 세트 1.5~2M (원통 4등 25,000 ~ 사각레일 5구 77,000)
+  officeFlat: [35900, 51400],    // LED 엣지 평판등 (640 35,900 / 1285 51,400)
+  installSwap: [20000, 40000],   // [확인 필요] 기존 자리 교체 시공(개당)
+  installNew: [30000, 50000],    // [확인 필요] 다운라이트 타공·신규 배선(개당)
 };
 
 // 공간 유형별 기본값.
@@ -32,7 +32,7 @@ export const PRICES = {
 export const SPACES = {
   living:  { label: '거실',        lux: 200, kelvin: '4000K (아늑하게는 3000K)', mainKey: 'livingMain', mainLm: 10000, mainName: '거실등' },
   bedroom: { label: '침실·방',     lux: 120, kelvin: '3000K 전구색',            mainKey: 'roomMain',   mainLm: 5000,  mainName: '방등' },
-  kitchen: { label: '주방',        lux: 300, kelvin: '4000~5000K',              mainKey: 'kitchenMain', mainLm: 4000, mainName: '주방등' },
+  kitchen: { label: '주방',        lux: 300, kelvin: '4000~5000K',              mainKey: 'kitchenMain', mainLm: 5000, mainName: '주방등' },
   dining:  { label: '식탁',        lux: 200, kelvin: '3000K 전구색',            pendant: true },
   oneroom: { label: '원룸·오피스텔', lux: 200, kelvin: '4000K + 무드등 3000K',   mainKey: 'roomMain',   mainLm: 5000,  mainName: '메인등' },
   study:   { label: '공부방·서재',  lux: 400, kelvin: '5000K 주백색',            mainKey: 'roomMain',   mainLm: 5000,  mainName: '방등' },
@@ -46,10 +46,10 @@ export const MOODS = {
   bright: { label: '밝게',     factor: 1.3 },
 };
 
-export const DOWNLIGHT_LM = 1000;   // 4인치 10W급
-export const OFFICE_FLAT_LM = 4500; // 640×640 평판 45W급
-export const TRACK_SPOT_LM = 900;   // 레일 스포트 1개
-export const SPOTS_PER_TRACK_SET = 6;
+export const DOWNLIGHT_LM = 1000;   // 4인치 8~10W급
+export const OFFICE_FLAT_LM = 3500; // 엣지 평판 640·1285 평균
+export const TRACK_SPOT_LM = 1200;  // 레일 스포트 1개 (PAR30·COB 15W급)
+export const SPOTS_PER_TRACK_SET = 4; // 1.5~2M 레일 세트 3~5구
 
 export function pyeongToM2(pyeong) {
   const p = Number(pyeong);
@@ -99,10 +99,10 @@ export function planRoom(room, ctx = {}) {
   } else if (sp.track) {
     const spots = Math.max(1, Math.ceil(lumens / TRACK_SPOT_LM));
     const sets = Math.max(1, Math.ceil(spots / SPOTS_PER_TRACK_SET));
-    items.push({ name: `레일 + 스포트 세트 (스포트 ${spots}개)`, qty: sets, priceKey: 'track', note: '테이블·메뉴판·포토존에 빛을 모아 줍니다' });
+    items.push({ name: `레일 + 스포트 세트 (스포트 ${spots}개)`, qty: sets, priceKey: 'track', note: '테이블·메뉴판·포토존에 빛을 모아 줍니다. 전구 포함 여부는 제품마다 다릅니다' });
   } else if (sp.office) {
     const n = Math.max(1, Math.ceil(lumens / OFFICE_FLAT_LM));
-    items.push({ name: '평판등 640×640', qty: n, priceKey: 'officeFlat', note: '눈부심 적은 확산형' });
+    items.push({ name: 'LED 엣지 평판등', qty: n, priceKey: 'officeFlat', note: '눈부심 적은 면조명. 640·1285 규격' });
   } else {
     const n = Math.max(1, Math.ceil(lumens / sp.mainLm));
     items.push({ name: sp.mainName, qty: n, priceKey: sp.mainKey, note: `약 ${Math.round(sp.mainLm / LED_LM_PER_W)}W급` });
@@ -112,7 +112,7 @@ export function planRoom(room, ctx = {}) {
   let alternative = null;
   if (!sp.pendant && !sp.office && lumens > 0) {
     const dl = Math.max(1, Math.ceil(lumens / DOWNLIGHT_LM));
-    alternative = { name: '다운라이트 4인치', qty: dl, priceKey: 'downlight', note: '천장 타공 필요. 메인등 없이 깔끔한 분산 배치' };
+    alternative = { name: '다운라이트 4인치', qty: dl, priceKey: 'downlight', note: '8~10W급. 천장 타공 필요. 메인등 없이 깔끔한 분산 배치' };
   }
 
   // 견적 범위

@@ -139,6 +139,7 @@ tests/                core.js · locales.js 자동화 테스트
 | `lighting.js` | 순수 계산 로직: 광속법 간이식, 공간별 조도·색온도, 조명 개수, 예상 비용 (테스트: `tests/lighting.test.mjs`) |
 | `lighting-ui.js` | 화면 연결, 견적 복사, 연락 버튼 |
 
-**배포 전 수정할 곳**
-- `lighting.js`의 `PRICES`: 예시 가격 범위입니다. 실제 판매가·시공비로 바꾸세요.
-- `lighting-ui.js`의 `NORANG`: 톡톡·전화·스마트스토어·플레이스 주소를 채우면 버튼이 나타납니다.
+**가격·연락처 출처**
+- `lighting.js`의 `PRICES`: 제품 가격은 노랑조명 자사몰(ylt67.com) 판매가 기준(2026-10-31 확인). 가격이 바뀌면 여기만 고치면 됩니다.
+- 시공비(`installSwap`·`installNew`)는 공개된 금액이 없어 `[확인 필요]` 표시 상태입니다.
+- `lighting-ui.js`의 `NORANG`: 톡톡·대표전화·스마트스토어·자사몰 주소 입력 완료. 네이버 플레이스 주소는 비어 있어 버튼이 숨겨져 있습니다.

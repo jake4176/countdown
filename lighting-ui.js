@@ -1,12 +1,13 @@
 // lighting-ui.js — /lighting/ 조명 견적·설계 계산기 화면 연결. 계산은 lighting.js에 위임.
 import { SPACES, MOODS, PRICES, planHome, wonRange, summaryText } from './lighting.js';
 
-// ▼ 노랑조명 연락 채널 — 실제 주소로 채우면 버튼이 나타납니다. 비워두면 숨김.
+// ▼ 노랑조명 연락 채널(자사몰·블로그에서 확인, 2026-10-31). 비워둔 항목은 버튼이 숨겨집니다.
 const NORANG = {
-  talktalk: '', // 네이버 톡톡 URL (예: https://talk.naver.com/...)
-  store: '',    // 스마트스토어 URL
-  tel: '',      // 매장 전화번호 (예: 051-000-0000)
-  place: '',    // 네이버 플레이스(지도) URL
+  talktalk: 'https://talk.naver.com/wc1oyg',
+  tel: '1800-5906',
+  store: 'https://smartstore.naver.com/donglim5906',
+  mall: 'https://ylt67.com/',
+  place: '', // 네이버 플레이스(지도) URL — 확인되면 입력
 };
 
 const $ = (sel, el = document) => el.querySelector(sel);
@@ -139,6 +140,7 @@ function bind() {
   if (NORANG.talktalk) links.push(`<a class="btn primary" href="${esc(NORANG.talktalk)}" target="_blank" rel="noopener">네이버 톡톡으로 견적 받기</a>`);
   if (NORANG.tel) links.push(`<a class="btn" href="tel:${esc(NORANG.tel.replace(/[^0-9+]/g, ''))}">전화 상담 ${esc(NORANG.tel)}</a>`);
   if (NORANG.store) links.push(`<a class="btn" href="${esc(NORANG.store)}" target="_blank" rel="noopener">스마트스토어에서 제품 보기</a>`);
+  if (NORANG.mall) links.push(`<a class="btn" href="${esc(NORANG.mall)}" target="_blank" rel="noopener">노랑조명 쇼핑몰 둘러보기</a>`);
   if (NORANG.place) links.push(`<a class="btn" href="${esc(NORANG.place)}" target="_blank" rel="noopener">매장 위치 보기</a>`);
   $('#cta-links').innerHTML = links.join('');
 }
