@@ -19,6 +19,7 @@ description: 노랑조명 쇼츠·릴스 편집 스킬. 음성/영상 파일을 
 
 ## 순서
 1. 받아쓰기: `whisper 파일 --model medium --language ko --word_timestamps True --output_format json`
+   `--initial_prompt "노랑조명, 전구색, 주백색, 주광색, 색온도, 레일조명, 펜던트, 매입등, 다운라이트, 스마트스토어"`를 붙여 조명 용어 오인식을 줄인다. 받아쓴 뒤 제품명·숫자(W, K, 평)는 사람 말 기준으로 한 번 더 확인한다.
    → 결과에서 단어마다 `{word, start, end}`만 뽑아 `words.json`으로 저장.
 2. 쉼 줄이기: `python3 scripts/cut_pauses.py 입력 cut.mp4` (기본값: 0.18초 넘는 쉼은 0.12초만 남김, 목소리 속도는 그대로)
    → 컷 뒤에는 시각이 바뀌므로 **cut.mp4로 1번 받아쓰기를 다시** 해서 words.json을 새로 만든다.
